@@ -36,7 +36,7 @@
     <!-- Task Create page end -->
 
 
-    <string name="app_name"></string>
+    <string name="app_name">Study Application</string>
 
     <string name="back_button_home_screen">Back</string>
     <string name="menu_button">menu</string>

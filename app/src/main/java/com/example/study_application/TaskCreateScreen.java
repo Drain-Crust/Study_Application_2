@@ -14,6 +14,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.lang.reflect.Array;
+import java.util.Arrays;
 
 public class TaskCreateScreen extends AppCompatActivity {
     EditText taskSpecification, taskName;
@@ -62,31 +64,35 @@ public class TaskCreateScreen extends AppCompatActivity {
 
     public void saveFile(String  file,String text,Boolean create){
         int id = 0;
-        boolean empty;
-        File files;
         String textDataNew = "";
-        files = new File(file);
+
 
         if (!create){
-            empty = files.exists() && files.length() == 0;
-
             String fileData = readFile(file);
-            System.out.println(fileData);
             String[] DataString = fileData.split("\n");
 
-            for (int i=0; i<DataString.length; i++){
-                if(empty){
-                    id = id;
-                } else {
-                    id = id + 1;
-                }
-                System.out.println(id);
+            String[][] DoubleData = new String[DataString.length][];
+
+
+            for (int i = 1; i < DataString.length;i++){
+                String[] values = DataString[i].split(" ");
+
+                String a = values[0];
+                String b = values[1];
+
+                String[] value = {a, b};
+
+                DoubleData[i]= value;
+            }
+            for (int i = 0;i<DoubleData.length;i++){
+                System.out.println(Arrays.toString(DoubleData[i]));
             }
 
+            for (int i=0; i<DataString.length; i++){
+                id = id + 1;
+            }
 
-
-
-            textDataNew = id + "||" + text + "\r\n";
+            textDataNew = id + " " + text + "\n";
         }
 
         try {
