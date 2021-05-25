@@ -1,0 +1,55 @@
+<resources>
+    <!-- activity main strings -->
+    <string name="kindness_photo">kindness</string>
+    <string name="login_button">Sign In</string>
+    <string name="text_email">Email</string>
+    <string name="text_password">Password</string>
+    <string name="text_signup">Sign In</string>
+    <string name="password_and_email_hint">Type Here</string>
+    <string name="mrgs_logo">mrgs logo</string>
+    <string name="curved_rectangle_image">rectangle</string>
+    <string name="kindness_image">kindness_image</string>
+    <!-- activity main strings -->
+
+
+    <!-- home page -->
+    <string name="navigation_drawer_open">Open Navigation Drawer</string>
+    <string name="navigation_drawer_close">Close Navigation Drawer</string>
+    <!-- home page end -->
+
+    <!-- register page -->
+    <string name="username">Type Here</string>
+    <string name="usernameText">Username</string>
+    <string name="confirmationText">Confirm Password</string>
+    <string name="passwordText">Password</string>
+    <string name="registerButton">Button</string>
+    <string name="Email">Type Here</string>
+    <string name="emailText">Email</string>
+
+    <string name="RegistrationText">Sign up</string>
+    <string name="registerEmail">Type Here</string>
+    <string name="taskBar">taskBar</string>
+    <!-- register page end -->
+
+    <!-- Task Create page -->
+    <string name="create">Create</string>
+    <!-- Task Create page end -->
+
+
+    <string name="app_name"></string>
+
+    <string name="back_button_home_screen">Back</string>
+    <string name="menu_button">menu</string>
+    <string name="task_button">Create</string>
+    <string name="plant_button">Plant</string>
+
+    <string name="progression_button">Progress</string>
+    <string name="its_a_plant">its a plant</string>
+    <string name="RectangleImage">Rectangle</string>
+    <string name="todos">TODO</string>
+    <string name="todo">TODO</string>
+    <string name="TaskSpecification">Specification</string>
+    <string name="TaskName">Task Name</string>
+    <string name="ReadButton">Read</string>
+
+</resources>
