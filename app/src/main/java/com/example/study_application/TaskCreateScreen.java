@@ -21,22 +21,18 @@ public class TaskCreateScreen extends AppCompatActivity {
     Button createTask, ReadTxt;
 
     String fileTasks = "TaskSpecifications.txt";
-    String fileNames = "TaskNames.txt";
-    String fileFinishedAndUnfinishedTasks = "FinishedAndUnfinishedTasks";
+    String fileNames = "TaskNamesAndType.txt";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_popup);
 
-        if (!fileExist(fileNames)){
-            saveFile(fileNames, "",true);
-        }
-        if (!fileExist(fileFinishedAndUnfinishedTasks)){
-            saveFile(fileFinishedAndUnfinishedTasks, "", true);
+        if (!fileExist(fileNames)) {
+            saveFile(fileNames, "", "", true);
         }
         if (!fileExist(fileTasks)){
-            saveFile(fileTasks,"", true);
+            saveFile(fileTasks,"", "", true);
         }
 
         taskName = findViewById(R.id.TaskName);
@@ -44,7 +40,7 @@ public class TaskCreateScreen extends AppCompatActivity {
         createTask = findViewById(R.id.createTask);
         ReadTxt = findViewById(R.id.readTxt);
 
-        createTask.setOnClickListener(v -> saveFile(fileTasks, taskName.getText().toString(), false));
+        createTask.setOnClickListener(v -> saveFile(fileNames, taskName.getText().toString(), taskSpecification.getText().toString(), false));
 
         ReadTxt.setOnClickListener(v -> {
             String txts = readFile(fileTasks);
@@ -72,10 +68,15 @@ public class TaskCreateScreen extends AppCompatActivity {
         return file.exists();
     }
 
-    public void saveFile(String  file,String text,Boolean create){
+    public void saveFile(String  file,String textName,String textBody,Boolean create){
         int id = 0;
-        String textDataNew = "dont_delete_important_text\n";
-        text = text.replace(" ","_");
+        String textNameData = "dont_delete_important_text\n";
+        String textBodyData = "";
+        textName = textName.replace(" ","_");
+        textBody = textBody.replace(" ","_");
+        String typeOfCompletion;
+        typeOfCompletion = "not_started";
+
 
         if (!create){
             String fileData = readFile(file);
@@ -100,12 +101,19 @@ public class TaskCreateScreen extends AppCompatActivity {
             for (int i=0; i<DataString.length; i++){
                 id = id + 1;
             }
-            textDataNew = id + " " + text + "\n";
-        }
+            textNameData = id + " " + textName + " " + typeOfCompletion + "\n";
+            textBodyData = id + " " + textBody + "\n";
 
+            write("TaskSpecifications.txt",textBodyData);
+        }
+        write(file,textNameData);
+
+    }
+
+    public void write(String file, String textData){
         try {
             FileOutputStream fos = openFileOutput(file, Context.MODE_APPEND);
-            fos.write(textDataNew.getBytes());
+            fos.write(textData.getBytes());
             fos.close();
             Toast.makeText(this,"saving file successful",Toast.LENGTH_SHORT).show();
 
@@ -113,6 +121,7 @@ public class TaskCreateScreen extends AppCompatActivity {
             e.printStackTrace();
             Toast.makeText(this,"Error saving file",Toast.LENGTH_SHORT).show();
         }
+
     }
 
     public String readFile(String file){
@@ -122,7 +131,6 @@ public class TaskCreateScreen extends AppCompatActivity {
             FileInputStream fis = openFileInput(file);
             int size = fis.available();
             byte[] buffer = new byte[size];
-            fis.read(buffer);
             fis.close();
             text = new String(buffer);
         } catch (Exception e ){
