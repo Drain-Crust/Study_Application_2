@@ -2,7 +2,6 @@ package com.example.study_application;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.os.Environment;
 import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.WindowManager;
@@ -15,8 +14,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.FileWriter;
-import java.io.IOException;
 
 public class TaskCreateScreen extends AppCompatActivity {
     EditText taskSpecification, taskName;
@@ -26,25 +23,26 @@ public class TaskCreateScreen extends AppCompatActivity {
     String fileNames = "TaskNames.txt";
     String fileFinishedAndUnfinishedTasks = "FinishedAndUnfinishedTasks";
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_popup);
 
+        saveFile(fileNames, "",true);
+        saveFile(fileFinishedAndUnfinishedTasks, "", true);
+        saveFile(fileTasks,"", true);
 
         taskName = findViewById(R.id.TaskName);
         taskSpecification = findViewById(R.id.TaskSpecfication);
         createTask = findViewById(R.id.createTask);
         ReadTxt = findViewById(R.id.readTxt);
 
-        createTask.setOnClickListener(v -> saveFile(fileTasks, taskName.getText().toString()));
+        createTask.setOnClickListener(v -> saveFile(fileTasks, taskName.getText().toString(), false));
 
         ReadTxt.setOnClickListener(v -> {
             String txts = readFile(fileTasks);
             Toast.makeText(TaskCreateScreen.this, txts, Toast.LENGTH_SHORT).show();
         });
-
 
         DisplayMetrics displayMetrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
@@ -62,46 +60,45 @@ public class TaskCreateScreen extends AppCompatActivity {
         getWindow().setAttributes(params);
     }
 
-    public void saveFile(String  file,String text){
-        try {
-            File root = new File(Environment.getExternalStorageDirectory(),"My Folder");
+    public void saveFile(String  file,String text,Boolean create){
+        int id = 0;
+        boolean empty;
+        File files;
+        String textDataNew = "";
+        files = new File(file);
 
-            if(!root.exists()){
-                root.mkdir();
+        if (!create){
+            empty = files.exists() && files.length() == 0;
+
+            String fileData = readFile(file);
+            System.out.println(fileData);
+            String[] DataString = fileData.split("\n");
+
+            for (int i=0; i<DataString.length; i++){
+                if(empty){
+                    id = id;
+                } else {
+                    id = id + 1;
+                }
+                System.out.println(id);
             }
 
-            File filepath = new File(root, file);
-
-            FileWriter writer = new FileWriter(filepath);
-            writer.append(text);
-            writer.flush();
-            writer.close();
-
-        } catch (IOException e){
 
 
 
-
-
-
-
+            textDataNew = id + "||" + text + "\r\n";
         }
+
         try {
-            FileOutputStream fos = openFileOutput(file, Context.MODE_PRIVATE);
-            fos.write(text.getBytes());
+            FileOutputStream fos = openFileOutput(file, Context.MODE_APPEND);
+            fos.write(textDataNew.getBytes());
             fos.close();
             Toast.makeText(this,"saving file successful",Toast.LENGTH_SHORT).show();
+
         } catch (Exception e){
             e.printStackTrace();
             Toast.makeText(this,"Error saving file",Toast.LENGTH_SHORT).show();
         }
-
-
-
-
-
-
-
     }
 
     public String readFile(String file){
@@ -118,6 +115,7 @@ public class TaskCreateScreen extends AppCompatActivity {
             e.printStackTrace();
             Toast.makeText(this,"Error reading file",Toast.LENGTH_SHORT).show();
         }
+
         return text;
     }
 }
