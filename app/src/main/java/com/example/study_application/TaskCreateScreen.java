@@ -14,7 +14,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.lang.reflect.Array;
 import java.util.Arrays;
 
 public class TaskCreateScreen extends AppCompatActivity {
@@ -30,9 +29,15 @@ public class TaskCreateScreen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_popup);
 
-        saveFile(fileNames, "",true);
-        saveFile(fileFinishedAndUnfinishedTasks, "", true);
-        saveFile(fileTasks,"", true);
+        if (!fileExist(fileNames)){
+            saveFile(fileNames, "",true);
+        }
+        if (!fileExist(fileFinishedAndUnfinishedTasks)){
+            saveFile(fileFinishedAndUnfinishedTasks, "", true);
+        }
+        if (!fileExist(fileTasks)){
+            saveFile(fileTasks,"", true);
+        }
 
         taskName = findViewById(R.id.TaskName);
         taskSpecification = findViewById(R.id.TaskSpecfication);
@@ -62,17 +67,21 @@ public class TaskCreateScreen extends AppCompatActivity {
         getWindow().setAttributes(params);
     }
 
+    public boolean fileExist(String fname){
+        File file = getBaseContext().getFileStreamPath(fname);
+        return file.exists();
+    }
+
     public void saveFile(String  file,String text,Boolean create){
         int id = 0;
-        String textDataNew = "";
-
+        String textDataNew = "dont_delete_important_text\n";
+        text = text.replace(" ","_");
 
         if (!create){
             String fileData = readFile(file);
             String[] DataString = fileData.split("\n");
 
             String[][] DoubleData = new String[DataString.length][];
-
 
             for (int i = 1; i < DataString.length;i++){
                 String[] values = DataString[i].split(" ");
@@ -84,14 +93,13 @@ public class TaskCreateScreen extends AppCompatActivity {
 
                 DoubleData[i]= value;
             }
-            for (int i = 0;i<DoubleData.length;i++){
-                System.out.println(Arrays.toString(DoubleData[i]));
+            for (String[] doubleDatum : DoubleData) {
+                System.out.println(Arrays.toString(doubleDatum));
             }
 
             for (int i=0; i<DataString.length; i++){
                 id = id + 1;
             }
-
             textDataNew = id + " " + text + "\n";
         }
 
