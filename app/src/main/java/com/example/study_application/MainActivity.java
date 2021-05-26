@@ -76,9 +76,9 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void toRegisterScreen(View aView){
-        Intent intent = new Intent(this, RegisterScreen.class);
+        Intent intents = new Intent(this, RegisterScreen.class);
         finish();
-        startActivity(intent);
+        startActivity(intents);
         overridePendingTransition(R.anim.slide_in_bottom, R.anim.slide_out_top);
     }
 }
