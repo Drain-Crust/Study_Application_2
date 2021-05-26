@@ -1,12 +1,11 @@
 package com.example.study_application;
 
 import android.annotation.SuppressLint;
-import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Environment;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,27 +19,46 @@ import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
 import com.google.android.material.navigation.NavigationView;
 
+import java.io.FileInputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+
+import in.goodiebag.carouselpicker.CarouselPicker;
 
 import static com.github.mikephil.charting.utils.ColorTemplate.COLORFUL_COLORS;
 
 public class HomeScreen extends AppCompatActivity {
-    Dialog myDialog;
+    int NotStarted = 0;
+    int Uncompleted = 0;
+    int Completed = 0;
+    ArrayList<String> Names = new ArrayList<>();
+
     private DrawerLayout drawer;
 
     Button task_create;
 
     float[] yData = {36.5f,42.4f,22.3f};
-    String[] xData = {"","",""};
+    String[] xData = {"Not Started","Completed","Uncompleted",};
 
     @SuppressLint("NonConstantResourceId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_screen);
+
+        ReadData("TaskNames.txt");
         Toolbar toolbar = findViewById(R.id.toolBar);
         task_create = findViewById(R.id.task_create);
+        CarouselPicker carouselPicker = findViewById(R.id.carouselPicker);
+
+        List<CarouselPicker.PickerItem> Items = new ArrayList<>();
+        for (int x=0;x< Names.size();x++) {
+            Items.add(new CarouselPicker.TextItem(Names.get(x), 20));
+        }
+        CarouselPicker.CarouselViewAdapter textAdapter = new CarouselPicker.CarouselViewAdapter(this, Items, 0);
+        carouselPicker.setAdapter(textAdapter);
+        carouselPicker.bringToFront();
 
         drawer = findViewById(R.id.navigation_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
@@ -75,9 +93,62 @@ public class HomeScreen extends AppCompatActivity {
         drawer.addDrawerListener(toggle);
         toggle.syncState();
         addDataSet();
-
     }
 
+    public void ReadData(String file){
+        String fileData = readFile(file);
+        String[] DataString = fileData.split("\n");
+
+        String StringArray = Arrays.toString(DataString);
+        String[] StringArrays = StringArray.split(",");
+
+        String[][] DoubleData = new String[StringArrays.length][];
+
+        for (int i = 1; i < DataString.length;i++){
+            String[] values = DataString[i].split(" ");
+
+            String a = values[0];
+            String b = values[1];
+            String c = values[2];
+
+            String[] value = {a, b, c};
+
+            DoubleData[i]= value;
+        }
+
+        for(int i =1; i < DoubleData.length; i++){
+            switch (DoubleData[i][2]) {
+                case "not_started":
+                    NotStarted += 1;
+                    break;
+                case "Uncompleted":
+                    Uncompleted += 1;
+                    break;
+                case "Completed":
+                    Completed += 1;
+                    break;
+            }
+            Names.add(DoubleData[i][1]);
+        }
+        yData = new float[]{NotStarted, Uncompleted, Completed};
+    }
+
+    public String readFile(String file){
+        String text = "";
+        try {
+            FileInputStream fis = openFileInput(file);
+            int size = fis.available();
+            byte[] buffer = new byte[size];
+            fis.read(buffer);
+            fis.close();
+            text = new String(buffer);
+        } catch (Exception e ){
+            e.printStackTrace();
+            Toast.makeText(this,"Error reading file",Toast.LENGTH_SHORT).show();
+        }
+
+        return text;
+    }
 
     public void onClick(View v){
         Intent intent = new Intent(getApplicationContext(), TaskCreateScreen.class);
@@ -110,7 +181,9 @@ public class HomeScreen extends AppCompatActivity {
         PieData pieData = new PieData(pieDataSet);
 
         PieChart pieChart = findViewById(R.id.pieCharts);
-
+        pieChart.getDescription().setEnabled(false);
+        pieChart.getLegend().setEnabled(false);
+        pieChart.setTouchEnabled(false);
         pieChart.setData(pieData);
         pieChart.invalidate();
     }

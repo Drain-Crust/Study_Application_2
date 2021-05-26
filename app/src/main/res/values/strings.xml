@@ -51,5 +51,6 @@
     <string name="TaskSpecification">Specification</string>
     <string name="TaskName">Task Name</string>
     <string name="ReadButton">Read</string>
+    <string name="SymbolForCreate">+</string>
 
 </resources>
