@@ -2,7 +2,6 @@ package com.example.study_application;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.os.Environment;
 import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.WindowManager;
@@ -15,12 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-<<<<<<< HEAD
 import java.util.Arrays;
-=======
-import java.io.FileWriter;
-import java.io.IOException;
->>>>>>> parent of 0d470e5 (made the files to contain the data but ran into a problem where the index number would be wrong for the first number in the file while the next numbers would be fine)
 
 public class TaskCreateScreen extends AppCompatActivity {
     EditText taskSpecification, taskName;
@@ -29,38 +23,29 @@ public class TaskCreateScreen extends AppCompatActivity {
     String fileTasks = "TaskSpecifications.txt";
     String fileNames = "TaskNamesAndType.txt";
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_popup);
 
-<<<<<<< HEAD
         if (!fileExist(fileNames)) {
             saveFile(fileNames, "", "", true);
         }
         if (!fileExist(fileTasks)){
             saveFile(fileTasks,"", "", true);
         }
-=======
->>>>>>> parent of 0d470e5 (made the files to contain the data but ran into a problem where the index number would be wrong for the first number in the file while the next numbers would be fine)
 
         taskName = findViewById(R.id.TaskName);
         taskSpecification = findViewById(R.id.TaskSpecfication);
         createTask = findViewById(R.id.createTask);
         ReadTxt = findViewById(R.id.readTxt);
 
-<<<<<<< HEAD
         createTask.setOnClickListener(v -> saveFile(fileNames, taskName.getText().toString(), taskSpecification.getText().toString(), false));
-=======
-        createTask.setOnClickListener(v -> saveFile(fileTasks, taskName.getText().toString()));
->>>>>>> parent of 0d470e5 (made the files to contain the data but ran into a problem where the index number would be wrong for the first number in the file while the next numbers would be fine)
 
         ReadTxt.setOnClickListener(v -> {
             String txts = readFile(fileTasks);
             Toast.makeText(TaskCreateScreen.this, txts, Toast.LENGTH_SHORT).show();
         });
-
 
         DisplayMetrics displayMetrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
@@ -78,7 +63,6 @@ public class TaskCreateScreen extends AppCompatActivity {
         getWindow().setAttributes(params);
     }
 
-<<<<<<< HEAD
     public boolean fileExist(String fname){
         File file = getBaseContext().getFileStreamPath(fname);
         return file.exists();
@@ -102,34 +86,12 @@ public class TaskCreateScreen extends AppCompatActivity {
 
             for (int i = 1; i < DataString.length;i++){
                 String[] values = DataString[i].split(" ");
-=======
-    public void saveFile(String  file,String text){
-        try {
-            File root = new File(Environment.getExternalStorageDirectory(),"My Folder");
-
-            if(!root.exists()){
-                root.mkdir();
-            }
-
-            File filepath = new File(root, file);
-
-            FileWriter writer = new FileWriter(filepath);
-            writer.append(text);
-            writer.flush();
-            writer.close();
-
-        } catch (IOException e){
-
-
-
->>>>>>> parent of 0d470e5 (made the files to contain the data but ran into a problem where the index number would be wrong for the first number in the file while the next numbers would be fine)
 
                 String a = values[0];
                 String b = values[1];
 
                 String[] value = {a, b};
 
-<<<<<<< HEAD
                 DoubleData[i]= value;
             }
             for (String[] doubleDatum : DoubleData) {
@@ -152,29 +114,14 @@ public class TaskCreateScreen extends AppCompatActivity {
         try {
             FileOutputStream fos = openFileOutput(file, Context.MODE_APPEND);
             fos.write(textData.getBytes());
-=======
-
-        }
-        try {
-            FileOutputStream fos = openFileOutput(file, Context.MODE_PRIVATE);
-            fos.write(text.getBytes());
->>>>>>> parent of 0d470e5 (made the files to contain the data but ran into a problem where the index number would be wrong for the first number in the file while the next numbers would be fine)
             fos.close();
             Toast.makeText(this,"saving file successful",Toast.LENGTH_SHORT).show();
+
         } catch (Exception e){
             e.printStackTrace();
             Toast.makeText(this,"Error saving file",Toast.LENGTH_SHORT).show();
         }
 
-<<<<<<< HEAD
-=======
-
-
-
-
-
-
->>>>>>> parent of 0d470e5 (made the files to contain the data but ran into a problem where the index number would be wrong for the first number in the file while the next numbers would be fine)
     }
 
     public String readFile(String file){
@@ -190,6 +137,7 @@ public class TaskCreateScreen extends AppCompatActivity {
             e.printStackTrace();
             Toast.makeText(this,"Error reading file",Toast.LENGTH_SHORT).show();
         }
+
         return text;
     }
 }
