@@ -8,9 +8,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-
 import androidx.appcompat.app.AppCompatActivity;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -21,7 +19,7 @@ public class TaskCreateScreen extends AppCompatActivity {
     Button createTask, ReadTxt;
 
     String fileTasks = "TaskSpecifications.txt";
-    String fileNames = "TaskNamesAndType.txt";
+    String fileNames = "TaskNames.txt";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +38,7 @@ public class TaskCreateScreen extends AppCompatActivity {
         createTask = findViewById(R.id.createTask);
         ReadTxt = findViewById(R.id.readTxt);
 
-        createTask.setOnClickListener(v -> saveFile(fileNames, taskName.getText().toString(), taskSpecification.getText().toString(), false));
+        createTask.setOnClickListener(v -> saveFile(fileNames, taskName.getText().toString(),taskSpecification.getText().toString(), false));
 
         ReadTxt.setOnClickListener(v -> {
             String txts = readFile(fileTasks);
@@ -52,14 +50,11 @@ public class TaskCreateScreen extends AppCompatActivity {
 
         int width = displayMetrics.widthPixels;
         int height = displayMetrics.heightPixels;
-
         getWindow().setLayout(width, (int)(height*0.7));
-
         WindowManager.LayoutParams params = getWindow().getAttributes();
         params.gravity = Gravity.BOTTOM;
         params.x = 0;
         params.y=-20;
-
         getWindow().setAttributes(params);
     }
 
@@ -68,20 +63,18 @@ public class TaskCreateScreen extends AppCompatActivity {
         return file.exists();
     }
 
-    public void saveFile(String  file,String textName,String textBody,Boolean create){
+    public void saveFile(String  file,String text, String body,Boolean create){
         int id = 0;
-        String textNameData = "dont_delete_important_text\n";
-        String textBodyData = "";
-        textName = textName.replace(" ","_");
-        textBody = textBody.replace(" ","_");
+        String textNameData = "";
+        String textBodyData;
+        String textName = text.replace(" ","_");
+        String textBody = body.replace(" ","_");
         String typeOfCompletion;
         typeOfCompletion = "not_started";
-
 
         if (!create){
             String fileData = readFile(file);
             String[] DataString = fileData.split("\n");
-
             String[][] DoubleData = new String[DataString.length][];
 
             for (int i = 1; i < DataString.length;i++){
@@ -89,8 +82,9 @@ public class TaskCreateScreen extends AppCompatActivity {
 
                 String a = values[0];
                 String b = values[1];
+                String c = values[2];
 
-                String[] value = {a, b};
+                String[] value = {a, b, c};
 
                 DoubleData[i]= value;
             }
@@ -98,7 +92,7 @@ public class TaskCreateScreen extends AppCompatActivity {
                 System.out.println(Arrays.toString(doubleDatum));
             }
 
-            for (int i=0; i<DataString.length; i++){
+            for (int i=0; i<DoubleData.length; i++){
                 id = id + 1;
             }
             textNameData = id + " " + textName + " " + typeOfCompletion + "\n";
@@ -107,7 +101,6 @@ public class TaskCreateScreen extends AppCompatActivity {
             write("TaskSpecifications.txt",textBodyData);
         }
         write(file,textNameData);
-
     }
 
     public void write(String file, String textData){
@@ -126,11 +119,11 @@ public class TaskCreateScreen extends AppCompatActivity {
 
     public String readFile(String file){
         String text = "";
-
         try {
             FileInputStream fis = openFileInput(file);
             int size = fis.available();
             byte[] buffer = new byte[size];
+            fis.read(buffer);
             fis.close();
             text = new String(buffer);
         } catch (Exception e ){
