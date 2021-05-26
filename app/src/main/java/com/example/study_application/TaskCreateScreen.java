@@ -26,10 +26,10 @@ public class TaskCreateScreen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_popup);
 
-        if (!fileExist(fileNames)) {
+        if (fileDosentExist(fileNames)) {
             saveFile(fileNames, "", "", true);
         }
-        if (!fileExist(fileTasks)){
+        if (fileDosentExist(fileTasks)){
             saveFile(fileTasks,"", "", true);
         }
 
@@ -58,9 +58,9 @@ public class TaskCreateScreen extends AppCompatActivity {
         getWindow().setAttributes(params);
     }
 
-    public boolean fileExist(String fname){
+    public boolean fileDosentExist(String fname){
         File file = getBaseContext().getFileStreamPath(fname);
-        return file.exists();
+        return !file.exists();
     }
 
     public void saveFile(String  file,String text, String body,Boolean create){
