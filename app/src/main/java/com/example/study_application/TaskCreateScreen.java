@@ -29,6 +29,7 @@ public class TaskCreateScreen extends AppCompatActivity {
         if (fileDosentExist(fileNames)) {
             saveFile(fileNames, "", "", true);
         }
+
         if (fileDosentExist(fileTasks)){
             saveFile(fileTasks,"", "", true);
         }

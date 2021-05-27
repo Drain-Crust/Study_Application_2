@@ -52,5 +52,6 @@
     <string name="TaskName">Task Name</string>
     <string name="ReadButton">Read</string>
     <string name="SymbolForCreate">+</string>
+    <string name="cardviewStart">Start</string>
 
 </resources>

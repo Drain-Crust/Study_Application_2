@@ -1,5 +1,6 @@
 package com.example.study_application;
 
+
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
@@ -23,8 +24,6 @@ import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
-import in.goodiebag.carouselpicker.CarouselPicker;
 
 import static com.github.mikephil.charting.utils.ColorTemplate.COLORFUL_COLORS;
 
@@ -50,15 +49,6 @@ public class HomeScreen extends AppCompatActivity {
         ReadData("TaskNames.txt");
         Toolbar toolbar = findViewById(R.id.toolBar);
         task_create = findViewById(R.id.task_create);
-        CarouselPicker carouselPicker = findViewById(R.id.carouselPicker);
-
-        List<CarouselPicker.PickerItem> Items = new ArrayList<>();
-        for (int x=0;x< Names.size();x++) {
-            Items.add(new CarouselPicker.TextItem(Names.get(x), 20));
-        }
-        CarouselPicker.CarouselViewAdapter textAdapter = new CarouselPicker.CarouselViewAdapter(this, Items, 0);
-        carouselPicker.setAdapter(textAdapter);
-        carouselPicker.bringToFront();
 
         drawer = findViewById(R.id.navigation_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
@@ -146,7 +136,6 @@ public class HomeScreen extends AppCompatActivity {
             e.printStackTrace();
             Toast.makeText(this,"Error reading file",Toast.LENGTH_SHORT).show();
         }
-
         return text;
     }
 
