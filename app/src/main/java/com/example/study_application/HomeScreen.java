@@ -4,6 +4,7 @@ package com.example.study_application;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -13,6 +14,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.data.PieData;
@@ -28,14 +31,18 @@ import java.util.List;
 import static com.github.mikephil.charting.utils.ColorTemplate.COLORFUL_COLORS;
 
 public class HomeScreen extends AppCompatActivity {
+    private static final String TAG = "MainActivity";
     int NotStarted = 0;
     int Uncompleted = 0;
     int Completed = 0;
-    ArrayList<String> Names = new ArrayList<>();
 
     private DrawerLayout drawer;
 
     Button task_create;
+
+    //vars
+    private ArrayList<String> mNames = new ArrayList<>();
+    private ArrayList<String> mbutton = new ArrayList<>();
 
     float[] yData = {36.5f,42.4f,22.3f};
     String[] xData = {"Not Started","Completed","Uncompleted",};
@@ -52,7 +59,6 @@ public class HomeScreen extends AppCompatActivity {
 
         drawer = findViewById(R.id.navigation_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
-        navigationView.bringToFront();
         navigationView.setNavigationItemSelectedListener(item -> {
             switch (item.getItemId()) {
                 case R.id.nav_message:
@@ -83,6 +89,19 @@ public class HomeScreen extends AppCompatActivity {
         drawer.addDrawerListener(toggle);
         toggle.syncState();
         addDataSet();
+        initRecyclerView();
+        navigationView.bringToFront();
+    }
+    
+    private void initRecyclerView(){
+        Log.d(TAG, "initRecyclerView: init recyclerView");
+
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL, false);
+        RecyclerView recyclerView = findViewById(R.id.recyclerView);
+        recyclerView.bringToFront();
+        recyclerView.setLayoutManager(layoutManager);
+        RecyclerViewAdapter adapter = new RecyclerViewAdapter(HomeScreen.this, mNames, mbutton);
+        recyclerView.setAdapter(adapter);
     }
 
     public void ReadData(String file){
@@ -118,7 +137,7 @@ public class HomeScreen extends AppCompatActivity {
                     Completed += 1;
                     break;
             }
-            Names.add(DoubleData[i][1]);
+            mNames.add(DoubleData[i][1]);
         }
         yData = new float[]{NotStarted, Uncompleted, Completed};
     }
