@@ -1,6 +1,7 @@
 package com.example.study_application;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -46,6 +47,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         holder.carouselButton.setOnClickListener(v -> {
             Log.d(TAG, "onClick: On an a button: " + mNames.get(position));
             Toast.makeText(mContext,mNames.get(position),Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(mContext,TaskScreen.class);
+            mContext.startActivity(intent);
         });
     }
 
