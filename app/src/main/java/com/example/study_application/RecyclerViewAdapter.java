@@ -50,7 +50,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             Log.d(TAG, "onClick: On an a button: " + mNames.get(position));
             Toast.makeText(mContext,mNames.get(position),Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(mContext,ContentPoppupScreen.class);
-            intent.putExtra(EXTRA_NUMBER, position);
+            intent.putExtra(EXTRA_NUMBER, position+1);
             mContext.startActivity(intent);
         });
     }
