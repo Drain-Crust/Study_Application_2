@@ -18,6 +18,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
+    public static final String EXTRA_NUMBER = "package com.example.study_application";
 
     private static final String TAG = "RecyclerViewAdapter";
 
@@ -25,6 +26,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     private ArrayList<String> mNames;
     private ArrayList<String> mbutton;
     private Context mContext;
+
 
     public RecyclerViewAdapter(Context mContext, ArrayList<String> mNames, ArrayList<String> mbutton) {
         this.mNames = mNames;
@@ -47,7 +49,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         holder.carouselButton.setOnClickListener(v -> {
             Log.d(TAG, "onClick: On an a button: " + mNames.get(position));
             Toast.makeText(mContext,mNames.get(position),Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(mContext,TaskScreen.class);
+            Intent intent = new Intent(mContext,ContentPoppupScreen.class);
+            intent.putExtra(EXTRA_NUMBER, position);
             mContext.startActivity(intent);
         });
     }

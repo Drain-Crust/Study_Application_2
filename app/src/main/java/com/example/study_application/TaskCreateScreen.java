@@ -15,11 +15,14 @@ import java.io.FileOutputStream;
 import java.util.Arrays;
 
 public class TaskCreateScreen extends AppCompatActivity {
-    EditText taskSpecification, taskName;
-    Button createTask, ReadTxt;
+    EditText taskSpecification, taskName,taskTime;
+    Button createTask;
 
     String fileTasks = "TaskSpecifications.txt";
     String fileNames = "TaskNames.txt";
+
+    int width;
+    int height;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,35 +30,30 @@ public class TaskCreateScreen extends AppCompatActivity {
         setContentView(R.layout.activity_popup);
 
         if (fileDosentExist(fileNames)) {
-            saveFile(fileNames, "", "", true);
+            saveFile(fileNames, "important", "important", "important", false);
         }
 
         if (fileDosentExist(fileTasks)){
-            saveFile(fileTasks,"", "", true);
+            saveFile(fileTasks,"important", "important", "important", false);
         }
 
+        taskTime = findViewById(R.id.TimeTask);
         taskName = findViewById(R.id.TaskName);
         taskSpecification = findViewById(R.id.TaskSpecfication);
         createTask = findViewById(R.id.createTask);
-        ReadTxt = findViewById(R.id.readTxt);
 
-        createTask.setOnClickListener(v -> saveFile(fileNames, taskName.getText().toString(),taskSpecification.getText().toString(), false));
-
-        ReadTxt.setOnClickListener(v -> {
-            String txts = readFile(fileTasks);
-            Toast.makeText(TaskCreateScreen.this, txts, Toast.LENGTH_SHORT).show();
-        });
+        createTask.setOnClickListener(v -> saveFile(fileNames, taskName.getText().toString(),
+                taskSpecification.getText().toString(), taskTime.getText().toString(), false));
 
         DisplayMetrics displayMetrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
 
-        int width = displayMetrics.widthPixels;
-        int height = displayMetrics.heightPixels;
+        width = displayMetrics.widthPixels;
+        height = displayMetrics.heightPixels;
         getWindow().setLayout(width, (int)(height*0.7));
         WindowManager.LayoutParams params = getWindow().getAttributes();
         params.gravity = Gravity.BOTTOM;
-        params.x = 0;
-        params.y=-20;
+        params.x = 0; params.y=-20;
         getWindow().setAttributes(params);
     }
 
@@ -64,7 +62,7 @@ public class TaskCreateScreen extends AppCompatActivity {
         return !file.exists();
     }
 
-    public void saveFile(String  file,String text, String body,Boolean create){
+    public void saveFile(String  file,String text, String body, String TimeForTask,Boolean create){
         int id = 0;
         String textNameData = "";
         String textBodyData;
@@ -76,27 +74,25 @@ public class TaskCreateScreen extends AppCompatActivity {
         if (!create){
             String fileData = readFile(file);
             String[] DataString = fileData.split("\n");
-            String[][] DoubleData = new String[DataString.length][];
+            String[][] DataForLength = new String[DataString.length][];
 
             for (int i = 1; i < DataString.length;i++){
                 String[] values = DataString[i].split(" ");
 
-                String a = values[0];
-                String b = values[1];
-                String c = values[2];
+                String TaskName = values[0];
+                String TaskSpecification = values[1];
+                String TaskType = values[2];
+                String TimeRequired = values[3];
 
-                String[] value = {a, b, c};
+                String[] value = {TaskName, TaskSpecification, TaskType ,TimeRequired};
 
-                DoubleData[i]= value;
-            }
-            for (String[] doubleDatum : DoubleData) {
-                System.out.println(Arrays.toString(doubleDatum));
+                DataForLength[i]= value;
             }
 
-            for (int i=0; i<DoubleData.length; i++){
+            for (int i=0; i<DataForLength.length; i++){
                 id = id + 1;
             }
-            textNameData = id + " " + textName + " " + typeOfCompletion + "\n";
+            textNameData = id + " " + textName + " " + typeOfCompletion + " " + TimeForTask + "\n";
             textBodyData = id + " " + textBody + "\n";
 
             write("TaskSpecifications.txt",textBodyData);
@@ -131,7 +127,6 @@ public class TaskCreateScreen extends AppCompatActivity {
             e.printStackTrace();
             Toast.makeText(this,"Error reading file",Toast.LENGTH_SHORT).show();
         }
-
         return text;
     }
 }

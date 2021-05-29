@@ -1,7 +1,6 @@
 package com.example.study_application;
 
-import androidx.appcompat.app.AppCompatActivity;
-
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.View;
@@ -9,42 +8,73 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
+
+import java.util.Locale;
+
 public class TaskScreen extends AppCompatActivity {
 
-    Button StartEndTimer;
+    Button startTimerButton, stopTimerButton;
     ProgressBar timerBar;
     TextView timeBarText;
+    private long TimeLeft;
+
+    private CountDownTimer countDownTimer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        TimeLeft = 10 * 1000;
+
         setContentView(R.layout.activity_task_screen);
         timerBar = findViewById(R.id.timerBar);
-        StartEndTimer = findViewById(R.id.StartEndTimer);
+        startTimerButton = findViewById(R.id.StartTimer);
         timeBarText = findViewById(R.id.timeBarText);
+        stopTimerButton = findViewById(R.id.StopTimer);
 
-        StartEndTimer.setOnClickListener(v -> startTimer(60));
+        startTimerButton.setOnClickListener(v -> {
+            startTimerButton.setVisibility(View.GONE);
+            stopTimerButton.setVisibility(View.VISIBLE);
+            startTimer();
+
+        });
+        stopTimerButton.setOnClickListener(v -> {
+            startTimerButton.setVisibility(View.VISIBLE);
+            stopTimerButton.setVisibility(View.GONE);
+            stopTimer();
+
+        });
     }
 
-    public void startTimer(int minuti){
-         Object countDownTimer = new CountDownTimer(60 * minuti * 1000, 500) {
-
+    private void startTimer(){
+        countDownTimer = new CountDownTimer(TimeLeft , 500) {
             @Override
             public void onTick(long leftTimeInMilliseconds) {
-                long seconds = leftTimeInMilliseconds / 1000;
-                timerBar.setProgress((int) seconds);
-                timeBarText.setText(String.format("%02d", seconds / 60) + ":" + String.format("%02d", seconds % 60));
+                TimeLeft = leftTimeInMilliseconds;
+                updateCountDownText();
             }
 
+            @SuppressLint("SetTextI18n")
             @Override
             public void onFinish() {
                 if (timeBarText.getText().equals("00:00")) {
                     timeBarText.setText("STOP");
-                } else {
-                    timeBarText.setText("2:00");
-                    timerBar.setProgress(60 * minuti);
                 }
             }
         }.start();
+
+    }
+
+    private void updateCountDownText() {
+        int minutes = (int) (TimeLeft/1000) / 60;
+        int seconds = (int) (TimeLeft/1000) % 60;
+        String timeLeftFormatted = String.format(Locale.getDefault(), "%02d:%02d", minutes, seconds);
+        timeBarText.setText(timeLeftFormatted);
+    }
+
+    private void stopTimer(){
+        countDownTimer.cancel();
+        //save the time into file
     }
 }

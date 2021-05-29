@@ -4,7 +4,6 @@
 
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -14,10 +13,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Design.NoActionBar">
+        <activity android:name=".ContentPoppupScreen" />
         <activity
             android:name=".TaskCreateScreen"
-            android:theme="@style/Theme.AppCompat.Poppup">
-        </activity>
+            android:theme="@style/Theme.AppCompat.Poppup" />
 
         <meta-data
             android:name="android.max_aspect"

@@ -116,11 +116,12 @@ public class HomeScreen extends AppCompatActivity {
         for (int i = 1; i < DataString.length;i++){
             String[] values = DataString[i].split(" ");
 
-            String a = values[0];
-            String b = values[1];
-            String c = values[2];
+            String ID = values[0];
+            String TaskName = values[1];
+            String TaskCompletion = values[2];
+            String TimeRequired = values[3];
 
-            String[] value = {a, b, c};
+            String[] value = {ID, TaskName, TaskCompletion ,TimeRequired};
 
             DoubleData[i]= value;
         }

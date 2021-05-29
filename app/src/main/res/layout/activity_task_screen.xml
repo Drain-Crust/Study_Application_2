@@ -30,12 +30,23 @@
         app:layout_constraintTop_toTopOf="@+id/timerBar" />
 
     <Button
-        android:id="@+id/StartEndTimer"
+        android:id="@+id/StartTimer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
         android:layout_marginEnd="160dp"
         android:text="Start"
+        app:layout_constraintEnd_toEndOf="@+id/timerBar"
+        app:layout_constraintTop_toBottomOf="@+id/timerBar" />
+
+    <Button
+        android:id="@+id/StopTimer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="160dp"
+        android:text="Stop"
+        android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="@+id/timerBar"
         app:layout_constraintTop_toBottomOf="@+id/timerBar" />
 
