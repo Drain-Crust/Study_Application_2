@@ -33,12 +33,13 @@ public class TaskScreen extends AppCompatActivity {
         intent = getIntent().getExtras();
         taskTimes = intent.getString(ContentPoppupScreen.EXTRA_STRING_TIME);
         taskNames = intent.getString(ContentPoppupScreen.EXTRA_STRING_NAME);
-        taskCompletions = intent.getString(ContentPoppupScreen.EXTRA_STRING_COMPLETION);
         taskSpecification = intent.getString(ContentPoppupScreen.EXTRA_STRING_SPECIFICATIONS);
+        taskCompletions = intent.getString(ContentPoppupScreen.EXTRA_STRING_COMPLETION);
+        System.out.println(taskNames);
 
-        int times = Integer.parseInt(taskTimes);
 
-        TimeLeft = times * 1000;
+
+        TimeLeft = 10 * 1000;
 
 
         timerBar = findViewById(R.id.timerBar);

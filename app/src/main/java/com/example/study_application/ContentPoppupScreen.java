@@ -12,9 +12,9 @@ import java.util.Arrays;
 
 public class ContentPoppupScreen extends AppCompatActivity {
     public static final String EXTRA_STRING_TIME = "package com.example.study_application";
-    public static final String EXTRA_STRING_NAME = "package com.example.study_application";
-    public static final String EXTRA_STRING_COMPLETION = "package com.example.study_application";
-    public static final String EXTRA_STRING_SPECIFICATIONS = "package com.example.study_application";
+    public static final String EXTRA_STRING_NAME = "package com.example.study_application's";
+    public static final String EXTRA_STRING_COMPLETION = "package com.example.study_applications'";
+    public static final String EXTRA_STRING_SPECIFICATIONS = "package com.example.study_applications";
 
     String[][] TextBodyData;
     String[][] TextNameData;
@@ -29,6 +29,10 @@ public class ContentPoppupScreen extends AppCompatActivity {
 
     String textReadFile;
 
+    Intent intent1;
+
+    String Names,Specifications,Completion,Times;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,6 +45,7 @@ public class ContentPoppupScreen extends AppCompatActivity {
         taskSpecification = findViewById(R.id.taskSpecifications);
         taskCompletions = findViewById(R.id.taskCompletion);
         taskTimes = findViewById(R.id.taskTime);
+        intent1 = new Intent(this, TaskScreen.class);
 
         Intent intent = getIntent();
         int number = intent.getIntExtra(RecyclerViewAdapter.EXTRA_NUMBER, 0);
@@ -50,21 +55,22 @@ public class ContentPoppupScreen extends AppCompatActivity {
         taskCompletions.setText(TextNameData[number][2]);
         taskTimes.setText(TextNameData[number][3]);
 
-        String Names = TextNameData[number][1];
-        String Specifications = TextBodyData[number][1];
-        String Completion = TextNameData[number][2];
-        String Times = TextNameData[number][3];
+        Names = TextNameData[number][1];
+        Specifications = TextBodyData[number][1];
+        Completion = TextNameData[number][2];
+        Times = TextNameData[number][3];
 
-        StartTask.setOnClickListener(v -> {
-            Intent intent1 = new Intent(ContentPoppupScreen.this, TaskScreen.class);
-            Bundle extras = new Bundle();
-            extras.putString(EXTRA_STRING_TIME, Times);
-            extras.putString(EXTRA_STRING_NAME, Names);
-            extras.putString(EXTRA_STRING_COMPLETION, Completion);
-            extras.putString(EXTRA_STRING_SPECIFICATIONS, Specifications);
-            intent1.putExtras(extras);
-            startActivity(intent1);
-        });
+        StartTask.setOnClickListener(v -> sendData());
+    }
+
+    public void sendData(){
+        Bundle extras = new Bundle();
+        extras.putString(EXTRA_STRING_SPECIFICATIONS, Specifications);
+        extras.putString(EXTRA_STRING_TIME, Times);
+        extras.putString(EXTRA_STRING_NAME, Names);
+        extras.putString(EXTRA_STRING_COMPLETION, Completion);
+        intent1.putExtras(extras);
+        startActivity(intent1);
     }
 
     public void ReadTaskNameData(String file, Boolean TextOrBody) {
