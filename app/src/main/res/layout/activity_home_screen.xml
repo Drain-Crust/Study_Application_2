@@ -64,7 +64,7 @@
             android:layout_width="67dp"
             android:layout_height="67dp"
             android:background="@drawable/circle_button"
-            android:onClick="onClick"
+            android:onClick="onClickCreateTask"
             android:text="@string/SymbolForCreate"
             android:textColor="#434343"
             android:textSize="34sp"

@@ -24,6 +24,10 @@ public class MainActivity extends AppCompatActivity {
     //firebase variables
     FirebaseAuth mAuth;
 
+    //different intents to go to different pages
+    Intent intent;
+    Intent intents;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,6 +37,9 @@ public class MainActivity extends AppCompatActivity {
         mEmail = findViewById(R.id.emailAddressText);
         mPassword = findViewById(R.id.passwordText);
         mAuth = FirebaseAuth.getInstance();
+
+        intent = new Intent(this, HomeScreen.class);
+        intents = new Intent(this, RegisterScreen.class);
 
     }
 
@@ -61,9 +68,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void loginFirebaseUser(){
-        Intent intent = new Intent(this, HomeScreen.class);
         mAuth.signInWithEmailAndPassword(mEmail_string,mPassword_string).addOnCompleteListener(task -> {
-
             if (!task.isSuccessful()){
                 Log.d("firebase", "User login failed");
             } else {
@@ -74,9 +79,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-
     public void toRegisterScreen(View aView){
-        Intent intents = new Intent(this, RegisterScreen.class);
         finish();
         startActivity(intents);
         overridePendingTransition(R.anim.slide_in_bottom, R.anim.slide_out_top);

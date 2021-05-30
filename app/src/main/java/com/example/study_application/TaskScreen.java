@@ -1,6 +1,7 @@
 package com.example.study_application;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.View;
@@ -18,16 +19,28 @@ public class TaskScreen extends AppCompatActivity {
     ProgressBar timerBar;
     TextView timeBarText;
     private long TimeLeft;
-
     private CountDownTimer countDownTimer;
+
+    Bundle intent;
+
+    String taskNames,taskCompletions,taskSpecification, taskTimes;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        TimeLeft = 10 * 1000;
-
         setContentView(R.layout.activity_task_screen);
+
+        intent = getIntent().getExtras();
+        taskTimes = intent.getString(ContentPoppupScreen.EXTRA_STRING_TIME);
+        taskNames = intent.getString(ContentPoppupScreen.EXTRA_STRING_NAME);
+        taskCompletions = intent.getString(ContentPoppupScreen.EXTRA_STRING_COMPLETION);
+        taskSpecification = intent.getString(ContentPoppupScreen.EXTRA_STRING_SPECIFICATIONS);
+
+        int times = Integer.parseInt(taskTimes);
+
+        TimeLeft = times * 1000;
+
+
         timerBar = findViewById(R.id.timerBar);
         startTimerButton = findViewById(R.id.StartTimer);
         timeBarText = findViewById(R.id.timeBarText);
@@ -37,18 +50,18 @@ public class TaskScreen extends AppCompatActivity {
             startTimerButton.setVisibility(View.GONE);
             stopTimerButton.setVisibility(View.VISIBLE);
             startTimer();
-
         });
+
         stopTimerButton.setOnClickListener(v -> {
             startTimerButton.setVisibility(View.VISIBLE);
             stopTimerButton.setVisibility(View.GONE);
             stopTimer();
-
         });
     }
 
     private void startTimer(){
         countDownTimer = new CountDownTimer(TimeLeft , 500) {
+
             @Override
             public void onTick(long leftTimeInMilliseconds) {
                 TimeLeft = leftTimeInMilliseconds;
@@ -63,7 +76,6 @@ public class TaskScreen extends AppCompatActivity {
                 }
             }
         }.start();
-
     }
 
     private void updateCountDownText() {

@@ -12,7 +12,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.util.Arrays;
 
 public class TaskCreateScreen extends AppCompatActivity {
     EditText taskSpecification, taskName,taskTime;

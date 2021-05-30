@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -19,18 +18,14 @@ import java.util.ArrayList;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
     public static final String EXTRA_NUMBER = "package com.example.study_application";
-
     private static final String TAG = "RecyclerViewAdapter";
 
     //vars
-    private ArrayList<String> mNames;
-    private ArrayList<String> mbutton;
-    private Context mContext;
+    private final ArrayList<String> mNames;
+    private final Context mContext;
 
-
-    public RecyclerViewAdapter(Context mContext, ArrayList<String> mNames, ArrayList<String> mbutton) {
+    public RecyclerViewAdapter(Context mContext, ArrayList<String> mNames) {
         this.mNames = mNames;
-        this.mbutton = mbutton;
         this.mContext = mContext;
     }
 
@@ -48,7 +43,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         holder.carouselText.setText(mNames.get(position));
         holder.carouselButton.setOnClickListener(v -> {
             Log.d(TAG, "onClick: On an a button: " + mNames.get(position));
-            Toast.makeText(mContext,mNames.get(position),Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(mContext,ContentPoppupScreen.class);
             intent.putExtra(EXTRA_NUMBER, position+1);
             mContext.startActivity(intent);
@@ -60,7 +54,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         return mNames.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
+    public static class ViewHolder extends RecyclerView.ViewHolder{
         TextView carouselText;
         Button carouselButton;
 

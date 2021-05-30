@@ -20,6 +20,12 @@ public class RegisterScreen extends AppCompatActivity {
     //firebase instance variables
     private FirebaseAuth mAuth;
 
+    //variables
+    String email,password;
+
+    //the next screen
+    Intent intent;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,6 +35,8 @@ public class RegisterScreen extends AppCompatActivity {
         mPasswordView = findViewById(R.id.registerPassword);
         mConfirmPasswordView = findViewById(R.id.registerConfirmation);
         mAuth = FirebaseAuth.getInstance();
+
+        intent = new Intent(this, MainActivity.class);
 
         // Keyboard sign in action
         mConfirmPasswordView.setOnEditorActionListener((textView, id, keyEvent) -> {
@@ -46,9 +54,6 @@ public class RegisterScreen extends AppCompatActivity {
     }
 
     private void attemptRegistration(){
-        //variables
-        String email,password;
-
         email = mEmailView.getText().toString();
         password = mPasswordView.getText().toString();
 
@@ -74,9 +79,6 @@ public class RegisterScreen extends AppCompatActivity {
     }
 
     private void createFirebaseUser(){
-        Intent intent = new Intent(this, MainActivity.class);
-        String email = mEmailView.getText().toString();
-        String password = mPasswordView.getText().toString();
         mAuth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(this, task -> {
             if (!task.isSuccessful()){
                 Log.d("firebase", "User creation failed");

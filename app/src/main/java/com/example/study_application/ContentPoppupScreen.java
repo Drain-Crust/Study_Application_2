@@ -18,12 +18,16 @@ public class ContentPoppupScreen extends AppCompatActivity {
 
     String[][] TextBodyData;
     String[][] TextNameData;
-    String TaskName, TaskSpecifications, TaskCompletion, TaskTime;
+    String[] valueSpecificationData;
+    String[] valueNameData;
 
-    Button StartTask;
+    String IdName,taskCompletion,timeRequired,taskName;
+    String IdSpecifications,TaskSpecification;
 
     TextView taskNames,taskSpecification,taskCompletions,taskTimes;
+    Button StartTask;
 
+    String textReadFile;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,27 +44,25 @@ public class ContentPoppupScreen extends AppCompatActivity {
 
         Intent intent = getIntent();
         int number = intent.getIntExtra(RecyclerViewAdapter.EXTRA_NUMBER, 0);
-        System.out.print(TextNameData[number][1]);
-        System.out.print(TextBodyData[number][1]);
-        System.out.print(TextNameData[number][2]);
-        System.out.print(TextNameData[number][3]);
 
-        TaskName = TextNameData[number][1];
-        TaskSpecifications = TextBodyData[number][1];
-        TaskCompletion = TextNameData[number][2];
-        TaskTime = TextNameData[number][3];
+        taskNames.setText(TextNameData[number][1]);
+        taskSpecification.setText(TextBodyData[number][1]);
+        taskCompletions.setText(TextNameData[number][2]);
+        taskTimes.setText(TextNameData[number][3]);
 
-        taskNames.setText(TaskName);
-        taskSpecification.setText(TaskSpecifications);
-        taskCompletions.setText(TaskCompletion);
-        taskTimes.setText(TaskTime);
+        String Names = TextNameData[number][1];
+        String Specifications = TextBodyData[number][1];
+        String Completion = TextNameData[number][2];
+        String Times = TextNameData[number][3];
 
         StartTask.setOnClickListener(v -> {
             Intent intent1 = new Intent(ContentPoppupScreen.this, TaskScreen.class);
-            intent1.putExtra(EXTRA_STRING_TIME, TaskTime);
-            intent1.putExtra(EXTRA_STRING_NAME, TaskName);
-            intent1.putExtra(EXTRA_STRING_COMPLETION, TaskCompletion);
-            intent1.putExtra(EXTRA_STRING_SPECIFICATIONS, TaskSpecifications);
+            Bundle extras = new Bundle();
+            extras.putString(EXTRA_STRING_TIME, Times);
+            extras.putString(EXTRA_STRING_NAME, Names);
+            extras.putString(EXTRA_STRING_COMPLETION, Completion);
+            extras.putString(EXTRA_STRING_SPECIFICATIONS, Specifications);
+            intent1.putExtras(extras);
             startActivity(intent1);
         });
     }
@@ -77,42 +79,42 @@ public class ContentPoppupScreen extends AppCompatActivity {
             for (int i = 1; i < DataString.length; i++) {
                 String[] values = DataString[i].split(" ");
 
-                String ID = values[0];
-                String TaskSpecification = values[1];
+                IdSpecifications = values[0];
+                TaskSpecification = values[1];
 
-                String[] value = {ID, TaskSpecification,};
+                valueSpecificationData = new String[]{IdSpecifications, TaskSpecification};
 
-                TextBodyData[i] = value;
+                TextBodyData[i] = valueSpecificationData;
             }
         } else {
             TextNameData = new String[StringArrays.length][];
             for (int i = 1; i < DataString.length; i++) {
                 String[] values = DataString[i].split(" ");
 
-                String ID = values[0];
-                String TaskName = values[1];
-                String TaskCompletion = values[2];
-                String TimeRequired = values[3];
+                IdName = values[0];
+                taskName = values[1];
+                taskCompletion = values[2];
+                timeRequired = values[3];
 
-                String[] value = {ID, TaskName, TaskCompletion ,TimeRequired};
+                valueNameData = new String[]{IdName, taskName, taskCompletion, timeRequired};
 
-                TextNameData[i] = value;
+                TextNameData[i] = valueNameData;
             }
         }
 
     }
     public String readFile(String file){
-        String text = "";
+        textReadFile = "";
         try {
             FileInputStream fis = openFileInput(file);
             int size = fis.available();
             byte[] buffer = new byte[size];
             fis.read(buffer);
             fis.close();
-            text = new String(buffer);
+            textReadFile = new String(buffer);
         } catch (Exception e ){
             e.printStackTrace();
         }
-        return text;
+        return textReadFile;
     }
 }
