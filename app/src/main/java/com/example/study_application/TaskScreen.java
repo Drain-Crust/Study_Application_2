@@ -1,7 +1,6 @@
 package com.example.study_application;
 
 import android.annotation.SuppressLint;
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.View;
@@ -11,6 +10,9 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.io.BufferedReader;
+import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.util.Locale;
 
 public class TaskScreen extends AppCompatActivity {
@@ -23,7 +25,9 @@ public class TaskScreen extends AppCompatActivity {
 
     Bundle intent;
 
-    String taskNames,taskCompletions,taskSpecification, taskTimes;
+    String taskNames,taskCompletions,taskSpecification, taskTimes,taskPosition;
+
+    int Time, originalTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,12 +39,12 @@ public class TaskScreen extends AppCompatActivity {
         taskNames = intent.getString(ContentPoppupScreen.EXTRA_STRING_NAME);
         taskSpecification = intent.getString(ContentPoppupScreen.EXTRA_STRING_SPECIFICATIONS);
         taskCompletions = intent.getString(ContentPoppupScreen.EXTRA_STRING_COMPLETION);
-        System.out.println(taskNames);
+        taskPosition = intent.getString(ContentPoppupScreen.EXTRA_STRING_POSITION);
 
+        Time = Integer.parseInt(taskTimes);
 
-
-        TimeLeft = 10 * 1000;
-
+        TimeLeft = 50 * 1000;
+        originalTime = (int) TimeLeft;
 
         timerBar = findViewById(R.id.timerBar);
         startTimerButton = findViewById(R.id.StartTimer);
@@ -74,6 +78,9 @@ public class TaskScreen extends AppCompatActivity {
             public void onFinish() {
                 if (timeBarText.getText().equals("00:00")) {
                     timeBarText.setText("STOP");
+                    String textNameDataOld = taskPosition + " " + taskNames + " " + taskCompletions + " " + taskTimes + "\n";
+                    String textNameDataNew = taskPosition + " " + taskNames + " " + "Completed" + " " + 0 + "\n";
+                    replaceLines(textNameDataOld,textNameDataNew);
                 }
             }
         }.start();
@@ -89,5 +96,31 @@ public class TaskScreen extends AppCompatActivity {
     private void stopTimer(){
         countDownTimer.cancel();
         //save the time into file
+    }
+
+    private void replaceLines(String oldFileLine, String newFileLine){
+        try {
+            // input the (modified) file content to the StringBuffer "input"
+            BufferedReader file = new BufferedReader(new FileReader("TaskNames.txt"));
+            System.out.println("working");
+            StringBuilder inputBuffer = new StringBuilder();
+            String line;
+
+            while ((line = file.readLine()) != null) {
+                line = line.replace(oldFileLine, newFileLine);
+                inputBuffer.append(line);
+                inputBuffer.append('\n');
+            }
+            file.close();
+
+            // write the new string with the replaced line OVER the same file
+            FileOutputStream fileOut = new FileOutputStream("TaskNames.txt");
+            fileOut.write(inputBuffer.toString().getBytes());
+            fileOut.close();
+
+        } catch (Exception e) {
+            System.out.println("Problem reading file.");
+        }
+
     }
 }

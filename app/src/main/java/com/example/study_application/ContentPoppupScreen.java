@@ -15,6 +15,7 @@ public class ContentPoppupScreen extends AppCompatActivity {
     public static final String EXTRA_STRING_NAME = "package com.example.study_application's";
     public static final String EXTRA_STRING_COMPLETION = "package com.example.study_applications'";
     public static final String EXTRA_STRING_SPECIFICATIONS = "package com.example.study_applications";
+    public static final String EXTRA_STRING_POSITION = "package com.example.study_applications";
 
     String[][] TextBodyData;
     String[][] TextNameData;
@@ -31,7 +32,7 @@ public class ContentPoppupScreen extends AppCompatActivity {
 
     Intent intent1;
 
-    String Names,Specifications,Completion,Times;
+    String Names,Specifications,Completion,Times,numberString;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +60,7 @@ public class ContentPoppupScreen extends AppCompatActivity {
         Specifications = TextBodyData[number][1];
         Completion = TextNameData[number][2];
         Times = TextNameData[number][3];
+        numberString = Integer.toString(number);
 
         StartTask.setOnClickListener(v -> sendData());
     }
@@ -69,6 +71,7 @@ public class ContentPoppupScreen extends AppCompatActivity {
         extras.putString(EXTRA_STRING_TIME, Times);
         extras.putString(EXTRA_STRING_NAME, Names);
         extras.putString(EXTRA_STRING_COMPLETION, Completion);
+        extras.putString(EXTRA_STRING_POSITION, numberString);
         intent1.putExtras(extras);
         startActivity(intent1);
     }
