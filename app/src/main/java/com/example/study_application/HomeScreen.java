@@ -59,7 +59,7 @@ public class HomeScreen extends AppCompatActivity {
 
     //placeholder data
     float[] yData = {36.5f,42.4f,22.3f};
-    String[] xData = {"Not Started","Completed","Uncompleted",};
+    String[] xData = {"Not Started","Uncompleted","Completed"};
 
     @SuppressLint("NonConstantResourceId")
     @Override

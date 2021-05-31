@@ -1,20 +1,28 @@
 package com.example.study_application;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
-import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.FileReader;
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Locale;
 
+@RequiresApi(api = Build.VERSION_CODES.O)
 public class TaskScreen extends AppCompatActivity {
 
     Button startTimerButton, stopTimerButton;
@@ -24,6 +32,8 @@ public class TaskScreen extends AppCompatActivity {
     private CountDownTimer countDownTimer;
 
     Bundle intent;
+    String Data;
+    String[] fileData;
 
     String taskNames,taskCompletions,taskSpecification, taskTimes,taskPosition;
 
@@ -34,6 +44,9 @@ public class TaskScreen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_task_screen);
 
+        Data = readFile("TaskNames.txt");
+        fileData = Data.split("\n");
+
         intent = getIntent().getExtras();
         taskTimes = intent.getString(ContentPoppupScreen.EXTRA_STRING_TIME);
         taskNames = intent.getString(ContentPoppupScreen.EXTRA_STRING_NAME);
@@ -43,7 +56,7 @@ public class TaskScreen extends AppCompatActivity {
 
         Time = Integer.parseInt(taskTimes);
 
-        TimeLeft = 50 * 1000;
+        TimeLeft = Time * 1000;
         originalTime = (int) TimeLeft;
 
         timerBar = findViewById(R.id.timerBar);
@@ -73,13 +86,14 @@ public class TaskScreen extends AppCompatActivity {
                 updateCountDownText();
             }
 
+            @RequiresApi(api = Build.VERSION_CODES.O)
             @SuppressLint("SetTextI18n")
             @Override
             public void onFinish() {
                 if (timeBarText.getText().equals("00:00")) {
                     timeBarText.setText("STOP");
-                    String textNameDataOld = taskPosition + " " + taskNames + " " + taskCompletions + " " + taskTimes + "\n";
-                    String textNameDataNew = taskPosition + " " + taskNames + " " + "Completed" + " " + 0 + "\n";
+                    String textNameDataOld = taskPosition + " " + taskNames + " " + taskCompletions + " " + taskTimes;
+                    String textNameDataNew = taskPosition + " " + taskNames + " " + "Completed" + " " + 0;
                     replaceLines(textNameDataOld,textNameDataNew);
                 }
             }
@@ -98,28 +112,63 @@ public class TaskScreen extends AppCompatActivity {
         //save the time into file
     }
 
-    private void replaceLines(String oldFileLine, String newFileLine){
+
+    private void replaceLines(String oldFileLine, String newFileLine) {
+
         try {
-            // input the (modified) file content to the StringBuffer "input"
-            BufferedReader file = new BufferedReader(new FileReader("TaskNames.txt"));
-            System.out.println("working");
-            StringBuilder inputBuffer = new StringBuilder();
-            String line;
+            FileOutputStream fos = openFileOutput("TaskNames.txt", Context.MODE_PRIVATE);
+            fos.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
-            while ((line = file.readLine()) != null) {
-                line = line.replace(oldFileLine, newFileLine);
-                inputBuffer.append(line);
-                inputBuffer.append('\n');
+        List<String> fileContent = Arrays.asList(fileData);
+
+        for (int i = 0; i < fileContent.size(); i++) {
+            if (fileContent.get(i).equals(oldFileLine)) {
+                System.out.println("works");
+                System.out.println(oldFileLine);
+                fileContent.set(i, newFileLine);
+                break;
             }
-            file.close();
+        }
+        System.out.println(fileContent);
 
-            // write the new string with the replaced line OVER the same file
-            FileOutputStream fileOut = new FileOutputStream("TaskNames.txt");
-            fileOut.write(inputBuffer.toString().getBytes());
-            fileOut.close();
+        for (int i =0; i<fileContent.size(); i++){
+            write("TaskNames.txt", fileContent.get(i));
+            write("TaskNames.txt", "\n");
+        }
 
-        } catch (Exception e) {
-            System.out.println("Problem reading file.");
+        //Files.write(Paths.get("TaskNames.txt"), fileContent, StandardCharsets.UTF_8);
+        //("TaskNames.txt",fileContent);
+    }
+
+    public String readFile(String file){
+        String text = "";
+        try {
+            FileInputStream fis = openFileInput(file);
+            int size = fis.available();
+            byte[] buffer = new byte[size];
+            fis.read(buffer);
+            fis.close();
+            text = new String(buffer);
+        } catch (Exception e ){
+            e.printStackTrace();
+            Toast.makeText(this,"Error reading file",Toast.LENGTH_SHORT).show();
+        }
+        return text;
+    }
+
+    public void write(String file, String textData){
+        try {
+            FileOutputStream fos = openFileOutput(file, Context.MODE_APPEND);
+            fos.write(textData.getBytes());
+            fos.close();
+            Toast.makeText(this,"saving file successful",Toast.LENGTH_SHORT).show();
+
+        } catch (Exception e){
+            e.printStackTrace();
+            Toast.makeText(this,"Error saving file",Toast.LENGTH_SHORT).show();
         }
 
     }
