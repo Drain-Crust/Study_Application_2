@@ -3,6 +3,7 @@ package com.example.study_application;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.text.Layout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -70,7 +71,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     public static class ViewHolder extends RecyclerView.ViewHolder {
         TextView carouselText;
         Button carouselButton;
-        CardView layout;
+        RelativeLayout layout;
 
         public ViewHolder(@NonNull @NotNull View itemView) {
             super(itemView);

@@ -95,7 +95,7 @@ public class HomeScreen extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.nav_message:
                 System.out.println("working 1");
-                Intent intent_1 = new Intent(HomeScreen.this, TaskScreen.class);
+                Intent intent_1 = new Intent(HomeScreen.this, TaskCreateScreen.class);
                 startActivity(intent_1);
                 break;
 
@@ -107,7 +107,7 @@ public class HomeScreen extends AppCompatActivity {
 
             case R.id.nav_tasks:
                 System.out.println("working 3");
-                Intent intent_3 = new Intent(HomeScreen.this, MenuScreen.class);
+                Intent intent_3 = new Intent(HomeScreen.this, GoogleTasksScreen.class);
                 startActivity(intent_3);
                 break;
         }
