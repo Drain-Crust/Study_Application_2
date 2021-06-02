@@ -1,5 +1,6 @@
 package com.example.study_application;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
@@ -7,9 +8,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.app.ActivityOptionsCompat;
+import androidx.core.util.Pair;
+import androidx.core.view.ViewCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import org.jetbrains.annotations.NotNull;
@@ -47,7 +54,11 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             Log.d(TAG, "onClick: On an a button: " + mNames.get(position));
             Intent intent = new Intent(mContext, ContentPoppupScreen.class);
             intent.putExtra(EXTRA_NUMBER, mIds.get(position));
-            mContext.startActivity(intent);
+            Pair mLayout = Pair.create(holder.layout, "shared_container");
+            Pair textName = Pair.create(holder.carouselButton,"transition_button");
+            Pair textBody = Pair.create(holder.carouselText,"transition_text");
+            ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation((Activity) mContext, mLayout,textName,textBody );
+            mContext.startActivity(intent, options.toBundle());
         });
     }
 
@@ -59,11 +70,13 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     public static class ViewHolder extends RecyclerView.ViewHolder {
         TextView carouselText;
         Button carouselButton;
+        CardView layout;
 
         public ViewHolder(@NonNull @NotNull View itemView) {
             super(itemView);
             carouselText = itemView.findViewById(R.id.carouselText);
             carouselButton = itemView.findViewById(R.id.carouselButton);
+            layout = itemView.findViewById(R.id.layout);
         }
     }
 }

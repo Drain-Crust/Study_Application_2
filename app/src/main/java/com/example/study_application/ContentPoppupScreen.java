@@ -7,6 +7,8 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.material.transition.MaterialContainerTransform;
+
 import java.io.FileInputStream;
 import java.util.Arrays;
 
@@ -38,6 +40,8 @@ public class ContentPoppupScreen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_content_poppup_screen);
+
+
         ReadTaskNameData("TaskNames.txt", true);
         ReadTaskNameData("TaskSpecifications.txt", false);
 
