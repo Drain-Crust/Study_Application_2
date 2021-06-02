@@ -4,11 +4,14 @@ import android.content.Context;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.Gravity;
+import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -19,6 +22,7 @@ public class TaskCreateScreen extends AppCompatActivity {
 
     String fileTasks = "TaskSpecifications.txt";
     String fileNames = "TaskNames.txt";
+    String Time,Name,Specification;
 
     int width;
     int height;
@@ -40,9 +44,6 @@ public class TaskCreateScreen extends AppCompatActivity {
         taskName = findViewById(R.id.TaskName);
         taskSpecification = findViewById(R.id.TaskSpecfication);
         createTask = findViewById(R.id.createTask);
-
-        createTask.setOnClickListener(v -> saveFile(fileNames, taskName.getText().toString(),
-                taskSpecification.getText().toString(), taskTime.getText().toString(), false));
 
         DisplayMetrics displayMetrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
@@ -127,5 +128,30 @@ public class TaskCreateScreen extends AppCompatActivity {
             Toast.makeText(this,"Error reading file",Toast.LENGTH_SHORT).show();
         }
         return text;
+    }
+
+    public void CreateTaskButton(View v){
+        attemptCreateTask();
+    }
+
+    private void attemptCreateTask(){
+        Time = taskTime.toString();
+        Name = taskName.toString();
+        Specification = taskSpecification.toString();
+
+        if (Time.equals("") || Name.equals("") || Specification.equals("")){
+            if (Time.equals("")){
+                taskTime.setError("Time is to short try again");
+            }
+            if (Name.equals("")){
+                taskName.setError("Name is to short try again");
+            }
+            if (Specification.equals("")){
+                taskSpecification.setError("Specification is to short try again");
+            }
+        } else {
+            saveFile(fileNames, taskName.getText().toString(),
+                    taskSpecification.getText().toString(), taskTime.getText().toString(), false);
+        }
     }
 }

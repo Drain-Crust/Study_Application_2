@@ -1,8 +1,6 @@
 package com.example.study_application;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.View;
@@ -11,18 +9,15 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
-@RequiresApi(api = Build.VERSION_CODES.O)
 public class TaskScreen extends AppCompatActivity {
 
     Button startTimerButton, stopTimerButton;
@@ -86,8 +81,6 @@ public class TaskScreen extends AppCompatActivity {
                 updateCountDownText();
             }
 
-            @RequiresApi(api = Build.VERSION_CODES.O)
-            @SuppressLint("SetTextI18n")
             @Override
             public void onFinish() {
                 if (timeBarText.getText().equals("00:00")) {

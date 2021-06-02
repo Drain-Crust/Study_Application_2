@@ -183,14 +183,10 @@ public class HomeScreen extends AppCompatActivity {
         return text;
     }
 
-
-
     public void onClickCreateTask(View v){
         Intent intent = new Intent(getApplicationContext(), TaskCreateScreen.class);
         startActivity(intent);
     }
-
-
 
     @Override
     public void onBackPressed(){

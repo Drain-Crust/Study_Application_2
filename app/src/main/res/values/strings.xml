@@ -48,10 +48,17 @@
     <string name="RectangleImage">Rectangle</string>
     <string name="todos">TODO</string>
     <string name="todo">TODO</string>
+
     <string name="TaskSpecification">Specification</string>
     <string name="TaskName">Task Name</string>
     <string name="ReadButton">Read</string>
     <string name="SymbolForCreate">+</string>
     <string name="cardviewStart">Start</string>
+
+    <string name="task_time">Task Time</string>
+    <string name="task_name">Task Name</string>
+    <string name="task_specification">Task Specification</string>
+    <string name="tasks">Tasks</string>
+
 
 </resources>
