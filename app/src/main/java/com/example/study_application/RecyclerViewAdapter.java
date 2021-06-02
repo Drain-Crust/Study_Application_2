@@ -22,10 +22,12 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     //vars
     private final ArrayList<String> mNames;
+    private final ArrayList<String> mIds;
     private final Context mContext;
 
-    public RecyclerViewAdapter(Context mContext, ArrayList<String> mNames) {
+    public RecyclerViewAdapter(Context mContext, ArrayList<String> mNames,ArrayList<String> mIds) {
         this.mNames = mNames;
+        this.mIds = mIds;
         this.mContext = mContext;
     }
 
@@ -44,7 +46,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         holder.carouselButton.setOnClickListener(v -> {
             Log.d(TAG, "onClick: On an a button: " + mNames.get(position));
             Intent intent = new Intent(mContext, ContentPoppupScreen.class);
-            intent.putExtra(EXTRA_NUMBER, position + 1);
+            intent.putExtra(EXTRA_NUMBER, mIds.get(position));
             mContext.startActivity(intent);
         });
     }

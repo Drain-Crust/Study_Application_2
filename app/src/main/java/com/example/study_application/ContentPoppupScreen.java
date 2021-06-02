@@ -49,18 +49,19 @@ public class ContentPoppupScreen extends AppCompatActivity {
         intent1 = new Intent(this, TaskScreen.class);
 
         Intent intent = getIntent();
-        int number = intent.getIntExtra(RecyclerViewAdapter.EXTRA_NUMBER, 0);
+        String number = intent.getStringExtra(RecyclerViewAdapter.EXTRA_NUMBER);
+        int actualNumber = Integer.parseInt(number);
 
-        taskNames.setText(TextNameData[number][1]);
-        taskSpecification.setText(TextBodyData[number][1]);
-        taskCompletions.setText(TextNameData[number][2]);
-        taskTimes.setText(TextNameData[number][3]);
+        taskNames.setText(TextNameData[actualNumber][1]);
+        taskSpecification.setText(TextBodyData[actualNumber][1]);
+        taskCompletions.setText(TextNameData[actualNumber][2]);
+        taskTimes.setText(TextNameData[actualNumber][3]);
 
-        Names = TextNameData[number][1];
-        Specifications = TextBodyData[number][1];
-        Completion = TextNameData[number][2];
-        Times = TextNameData[number][3];
-        numberString = Integer.toString(number);
+        Names = TextNameData[actualNumber][1];
+        Specifications = TextBodyData[actualNumber][1];
+        Completion = TextNameData[actualNumber][2];
+        Times = TextNameData[actualNumber][3];
+        numberString = Integer.toString(actualNumber);
 
         StartTask.setOnClickListener(v -> sendData());
     }

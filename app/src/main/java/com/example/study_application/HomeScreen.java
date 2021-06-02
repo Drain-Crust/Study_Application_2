@@ -55,6 +55,7 @@ public class HomeScreen extends AppCompatActivity {
 
     //vars
     private final ArrayList<String> mNames = new ArrayList<>();
+    private final ArrayList<String> mIds = new ArrayList<>();
     List<PieEntry> pieEntries = new ArrayList<>();
 
     //placeholder data
@@ -66,6 +67,7 @@ public class HomeScreen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_screen);
+
 
         ReadData("TaskNames.txt");
 
@@ -122,7 +124,7 @@ public class HomeScreen extends AppCompatActivity {
 
         recyclerView.bringToFront();
         recyclerView.setLayoutManager(layoutManager);
-        RecyclerViewAdapter adapter = new RecyclerViewAdapter(HomeScreen.this, mNames);
+        RecyclerViewAdapter adapter = new RecyclerViewAdapter(HomeScreen.this, mNames, mIds);
         recyclerView.setAdapter(adapter);
     }
 
@@ -149,15 +151,19 @@ public class HomeScreen extends AppCompatActivity {
             switch (fileDataArray[i][2]) {
                 case "not_started":
                     NotStarted += 1;
+                    mNames.add(fileDataArray[i][1]);
+                    mIds.add(fileDataArray[i][0]);
                     break;
                 case "Uncompleted":
                     Uncompleted += 1;
+                    mNames.add(fileDataArray[i][1]);
+                    mIds.add(fileDataArray[i][0]);
                     break;
                 case "Completed":
                     Completed += 1;
                     break;
             }
-            mNames.add(fileDataArray[i][1]);
+
         }
         yData = new float[]{NotStarted, Uncompleted, Completed};
     }
