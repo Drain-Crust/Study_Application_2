@@ -131,9 +131,6 @@ public class TaskScreen extends AppCompatActivity {
             write("TaskNames.txt", fileContent.get(i));
             write("TaskNames.txt", "\n");
         }
-
-        //Files.write(Paths.get("TaskNames.txt"), fileContent, StandardCharsets.UTF_8);
-        //("TaskNames.txt",fileContent);
     }
 
     public String readFile(String file){

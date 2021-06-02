@@ -16,7 +16,7 @@ public class MainActivity extends AppCompatActivity {
     //text variables
     EditText mEmail;
     EditText mPassword;
-    String mEmail_string,mPassword_string;
+    String mEmail_string, mPassword_string;
 
     //button variables
     Button login_button;
@@ -43,15 +43,15 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void signIn(View v){
+    public void signIn(View v) {
         attemptLogin();
     }
 
-    private void attemptLogin(){
+    private void attemptLogin() {
         mEmail_string = mEmail.getText().toString();
         mPassword_string = mPassword.getText().toString();
 
-        if ((!isEmailValid(mEmail_string) || (!isPasswordValid(mPassword_string)))){
+        if ((!isEmailValid(mEmail_string) || (!isPasswordValid(mPassword_string)))) {
             mPassword.setError("password is to short try again");
             mEmail.requestFocus();
         } else {
@@ -59,17 +59,17 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private boolean isEmailValid(String email){
-        return email.contains("@") && email.length()>3;
+    private boolean isEmailValid(String email) {
+        return email.contains("@") && email.length() > 3;
     }
 
-    private boolean isPasswordValid(String password){
-        return password.length()>6;
+    private boolean isPasswordValid(String password) {
+        return password.length() > 6;
     }
 
-    private void loginFirebaseUser(){
-        mAuth.signInWithEmailAndPassword(mEmail_string,mPassword_string).addOnCompleteListener(task -> {
-            if (!task.isSuccessful()){
+    private void loginFirebaseUser() {
+        mAuth.signInWithEmailAndPassword(mEmail_string, mPassword_string).addOnCompleteListener(task -> {
+            if (!task.isSuccessful()) {
                 Log.d("firebase", "User login failed");
             } else {
                 Log.d("firebase", "User login Complete");
@@ -79,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    public void toRegisterScreen(View aView){
+    public void toRegisterScreen(View aView) {
         finish();
         startActivity(intents);
         overridePendingTransition(R.anim.slide_in_bottom, R.anim.slide_out_top);

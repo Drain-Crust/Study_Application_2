@@ -58,8 +58,8 @@ public class HomeScreen extends AppCompatActivity {
     List<PieEntry> pieEntries = new ArrayList<>();
 
     //placeholder data
-    float[] yData = {36.5f,42.4f,22.3f};
-    String[] xData = {"Not Started","Uncompleted","Completed"};
+    float[] yData = {36.5f, 42.4f, 22.3f};
+    String[] xData = {"Not Started", "Uncompleted", "Completed"};
 
     @SuppressLint("NonConstantResourceId")
     @Override
@@ -78,15 +78,14 @@ public class HomeScreen extends AppCompatActivity {
 
         navigationView.setNavigationItemSelectedListener(this::onNavigationItemSelected);
 
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this,drawer,toolbar,
-                R.string.navigation_drawer_open,R.string.navigation_drawer_close);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar,
+                R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
         addDataSet();
         initRecyclerView();
         navigationView.bringToFront();
     }
-
 
 
     @SuppressLint("NonConstantResourceId")
@@ -116,11 +115,10 @@ public class HomeScreen extends AppCompatActivity {
     }
 
 
-
-    private void initRecyclerView(){
+    private void initRecyclerView() {
         Log.d(TAG, "initRecyclerView: init recyclerView");
 
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL, false);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
 
         recyclerView.bringToFront();
         recyclerView.setLayoutManager(layoutManager);
@@ -129,14 +127,13 @@ public class HomeScreen extends AppCompatActivity {
     }
 
 
-
-    public void ReadData(String file){
+    public void ReadData(String file) {
         String fileData = readFile(file);
         String[] DataString = fileData.split("\n");
         fileDataArray = new String[DataString.length][];
 
 
-        for (int i = 1; i < DataString.length;i++){
+        for (int i = 1; i < DataString.length; i++) {
             String[] values = DataString[i].split(" ");
 
             String ID = values[0];
@@ -145,10 +142,10 @@ public class HomeScreen extends AppCompatActivity {
             String TimeRequired = values[3];
 
             valueNameData = new String[]{ID, TaskName, TaskCompletion, TimeRequired};
-            fileDataArray[i]= valueNameData;
+            fileDataArray[i] = valueNameData;
         }
 
-        for(int i =1; i < fileDataArray.length; i++){
+        for (int i = 1; i < fileDataArray.length; i++) {
             switch (fileDataArray[i][2]) {
                 case "not_started":
                     NotStarted += 1;
@@ -166,8 +163,7 @@ public class HomeScreen extends AppCompatActivity {
     }
 
 
-
-    public String readFile(String file){
+    public String readFile(String file) {
         String text = "";
         try {
             FileInputStream fis = openFileInput(file);
@@ -176,36 +172,35 @@ public class HomeScreen extends AppCompatActivity {
             fis.read(buffer);
             fis.close();
             text = new String(buffer);
-        } catch (Exception e ){
+        } catch (Exception e) {
             e.printStackTrace();
-            Toast.makeText(this,"Error reading file",Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Error reading file", Toast.LENGTH_SHORT).show();
         }
         return text;
     }
 
-    public void onClickCreateTask(View v){
+    public void onClickCreateTask(View v) {
         Intent intent = new Intent(getApplicationContext(), TaskCreateScreen.class);
         startActivity(intent);
     }
 
     @Override
-    public void onBackPressed(){
+    public void onBackPressed() {
         System.out.println("working not");
-        if(drawer.isDrawerOpen(GravityCompat.START)){
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
-        } else{
+        } else {
             super.onBackPressed();
         }
     }
 
 
-
-    private void addDataSet(){
-        for (int i=0; i< yData.length; i++) {
+    private void addDataSet() {
+        for (int i = 0; i < yData.length; i++) {
             pieEntries.add(new PieEntry(yData[i], xData[i]));
         }
 
-        PieDataSet pieDataSet = new PieDataSet(pieEntries,"");
+        PieDataSet pieDataSet = new PieDataSet(pieEntries, "");
         pieDataSet.setColors(COLORFUL_COLORS);
         pieDataSet.setSliceSpace(2);
         pieDataSet.setValueTextSize(12);
@@ -218,7 +213,6 @@ public class HomeScreen extends AppCompatActivity {
         pieChart.setData(pieData);
         pieChart.invalidate();
     }
-
 
 
     @Override

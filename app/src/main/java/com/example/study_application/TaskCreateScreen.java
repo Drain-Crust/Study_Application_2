@@ -17,12 +17,11 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 
 public class TaskCreateScreen extends AppCompatActivity {
-    EditText taskSpecification, taskName,taskTime;
+    EditText taskSpecification, taskName, taskTime;
     Button createTask;
 
     String fileTasks = "TaskSpecifications.txt";
     String fileNames = "TaskNames.txt";
-    String Time,Name,Specification;
 
     int width;
     int height;
@@ -36,8 +35,8 @@ public class TaskCreateScreen extends AppCompatActivity {
             saveFile(fileNames, "important", "important", "important", false);
         }
 
-        if (fileDosentExist(fileTasks)){
-            saveFile(fileTasks,"important", "important", "important", false);
+        if (fileDosentExist(fileTasks)) {
+            saveFile(fileTasks, "important", "important", "important", false);
         }
 
         taskTime = findViewById(R.id.TimeTask);
@@ -50,33 +49,34 @@ public class TaskCreateScreen extends AppCompatActivity {
 
         width = displayMetrics.widthPixels;
         height = displayMetrics.heightPixels;
-        getWindow().setLayout(width, (int)(height*0.7));
+        getWindow().setLayout(width, (int) (height * 0.7));
         WindowManager.LayoutParams params = getWindow().getAttributes();
         params.gravity = Gravity.BOTTOM;
-        params.x = 0; params.y=-20;
+        params.x = 0;
+        params.y = -20;
         getWindow().setAttributes(params);
     }
 
-    public boolean fileDosentExist(String fname){
+    public boolean fileDosentExist(String fname) {
         File file = getBaseContext().getFileStreamPath(fname);
         return !file.exists();
     }
 
-    public void saveFile(String  file,String text, String body, String TimeForTask,Boolean create){
+    public void saveFile(String file, String text, String body, String TimeForTask, Boolean create) {
         int id = 0;
         String textNameData = "";
         String textBodyData;
-        String textName = text.replace(" ","_");
-        String textBody = body.replace(" ","_");
+        String textName = text.replace(" ", "_");
+        String textBody = body.replace(" ", "_");
         String typeOfCompletion;
         typeOfCompletion = "not_started";
 
-        if (!create){
+        if (!create) {
             String fileData = readFile(file);
             String[] DataString = fileData.split("\n");
             String[][] DataForLength = new String[DataString.length][];
 
-            for (int i = 1; i < DataString.length;i++){
+            for (int i = 1; i < DataString.length; i++) {
                 String[] values = DataString[i].split(" ");
 
                 String TaskName = values[0];
@@ -84,37 +84,37 @@ public class TaskCreateScreen extends AppCompatActivity {
                 String TaskType = values[2];
                 String TimeRequired = values[3];
 
-                String[] value = {TaskName, TaskSpecification, TaskType ,TimeRequired};
+                String[] value = {TaskName, TaskSpecification, TaskType, TimeRequired};
 
-                DataForLength[i]= value;
+                DataForLength[i] = value;
             }
 
-            for (int i=0; i<DataForLength.length; i++){
+            for (int i = 0; i < DataForLength.length; i++) {
                 id = id + 1;
             }
             textNameData = id + " " + textName + " " + typeOfCompletion + " " + TimeForTask + "\n";
             textBodyData = id + " " + textBody + "\n";
 
-            write("TaskSpecifications.txt",textBodyData);
+            write("TaskSpecifications.txt", textBodyData);
         }
-        write(file,textNameData);
+        write(file, textNameData);
     }
 
-    public void write(String file, String textData){
+    public void write(String file, String textData) {
         try {
             FileOutputStream fos = openFileOutput(file, Context.MODE_APPEND);
             fos.write(textData.getBytes());
             fos.close();
-            Toast.makeText(this,"saving file successful",Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "saving file successful", Toast.LENGTH_SHORT).show();
 
-        } catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
-            Toast.makeText(this,"Error saving file",Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Error saving file", Toast.LENGTH_SHORT).show();
         }
 
     }
 
-    public String readFile(String file){
+    public String readFile(String file) {
         String text = "";
         try {
             FileInputStream fis = openFileInput(file);
@@ -123,32 +123,36 @@ public class TaskCreateScreen extends AppCompatActivity {
             fis.read(buffer);
             fis.close();
             text = new String(buffer);
-        } catch (Exception e ){
+        } catch (Exception e) {
             e.printStackTrace();
-            Toast.makeText(this,"Error reading file",Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Error reading file", Toast.LENGTH_SHORT).show();
         }
         return text;
     }
 
-    public void CreateTaskButton(View v){
+    public void CreateTaskButton(View v) {
         attemptCreateTask();
     }
 
-    private void attemptCreateTask(){
-        Time = taskTime.toString();
-        Name = taskName.toString();
-        Specification = taskSpecification.toString();
+    private void attemptCreateTask() {
+        View focusView = null;
 
-        if (Time.equals("") || Name.equals("") || Specification.equals("")){
-            if (Time.equals("")){
+        if (taskTime.getText().toString().equals("") || taskName.getText().toString().equals("") || taskSpecification.getText().toString().equals("")) {
+            if (taskTime.getText().toString().equals("")) {
                 taskTime.setError("Time is to short try again");
+                focusView = taskTime;
             }
-            if (Name.equals("")){
-                taskName.setError("Name is to short try again");
-            }
-            if (Specification.equals("")){
+            if (String.valueOf(taskSpecification).equals("")) {
                 taskSpecification.setError("Specification is to short try again");
+                focusView = taskSpecification;
             }
+            if (String.valueOf(taskName).equals("")) {
+                taskName.setError("Name is to short try again");
+                focusView = taskTime;
+
+            }
+            assert focusView != null;
+            focusView.requestFocus();
         } else {
             saveFile(fileNames, taskName.getText().toString(),
                     taskSpecification.getText().toString(), taskTime.getText().toString(), false);

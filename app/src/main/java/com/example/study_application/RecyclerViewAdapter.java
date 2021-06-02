@@ -34,7 +34,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     @Override
     public ViewHolder onCreateViewHolder(@NonNull @NotNull ViewGroup parent, int viewType) {
 
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.contents, parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.contents, parent, false);
         return new ViewHolder(view);
     }
 
@@ -43,8 +43,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         holder.carouselText.setText(mNames.get(position));
         holder.carouselButton.setOnClickListener(v -> {
             Log.d(TAG, "onClick: On an a button: " + mNames.get(position));
-            Intent intent = new Intent(mContext,ContentPoppupScreen.class);
-            intent.putExtra(EXTRA_NUMBER, position+1);
+            Intent intent = new Intent(mContext, ContentPoppupScreen.class);
+            intent.putExtra(EXTRA_NUMBER, position + 1);
             mContext.startActivity(intent);
         });
     }
@@ -54,7 +54,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         return mNames.size();
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder{
+    public static class ViewHolder extends RecyclerView.ViewHolder {
         TextView carouselText;
         Button carouselButton;
 

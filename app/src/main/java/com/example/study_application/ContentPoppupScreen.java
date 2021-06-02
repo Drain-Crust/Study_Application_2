@@ -22,17 +22,17 @@ public class ContentPoppupScreen extends AppCompatActivity {
     String[] valueSpecificationData;
     String[] valueNameData;
 
-    String IdName,taskCompletion,timeRequired,taskName;
-    String IdSpecifications,TaskSpecification;
+    String IdName, taskCompletion, timeRequired, taskName;
+    String IdSpecifications, TaskSpecification;
 
-    TextView taskNames,taskSpecification,taskCompletions,taskTimes;
+    TextView taskNames, taskSpecification, taskCompletions, taskTimes;
     Button StartTask;
 
     String textReadFile;
 
     Intent intent1;
 
-    String Names,Specifications,Completion,Times,numberString;
+    String Names, Specifications, Completion, Times, numberString;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,7 +65,7 @@ public class ContentPoppupScreen extends AppCompatActivity {
         StartTask.setOnClickListener(v -> sendData());
     }
 
-    public void sendData(){
+    public void sendData() {
         Bundle extras = new Bundle();
         extras.putString(EXTRA_STRING_SPECIFICATIONS, Specifications);
         extras.putString(EXTRA_STRING_TIME, Times);
@@ -83,7 +83,7 @@ public class ContentPoppupScreen extends AppCompatActivity {
         String StringArray = Arrays.toString(DataString);
         String[] StringArrays = StringArray.split(",");
 
-        if (!TextOrBody){
+        if (!TextOrBody) {
             TextBodyData = new String[StringArrays.length][];
             for (int i = 1; i < DataString.length; i++) {
                 String[] values = DataString[i].split(" ");
@@ -112,7 +112,8 @@ public class ContentPoppupScreen extends AppCompatActivity {
         }
 
     }
-    public String readFile(String file){
+
+    public String readFile(String file) {
         textReadFile = "";
         try {
             FileInputStream fis = openFileInput(file);
@@ -121,7 +122,7 @@ public class ContentPoppupScreen extends AppCompatActivity {
             fis.read(buffer);
             fis.close();
             textReadFile = new String(buffer);
-        } catch (Exception e ){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return textReadFile;

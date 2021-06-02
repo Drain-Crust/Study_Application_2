@@ -15,13 +15,13 @@ import com.google.firebase.auth.FirebaseAuth;
 public class RegisterScreen extends AppCompatActivity {
 
     //variables
-    private EditText mConfirmPasswordView,mPasswordView,mEmailView;
+    private EditText mConfirmPasswordView, mPasswordView, mEmailView;
 
     //firebase instance variables
     private FirebaseAuth mAuth;
 
     //variables
-    String email,password;
+    String email, password;
 
     //the next screen
     Intent intent;
@@ -53,15 +53,15 @@ public class RegisterScreen extends AppCompatActivity {
         attemptRegistration();
     }
 
-    private void attemptRegistration(){
+    private void attemptRegistration() {
         email = mEmailView.getText().toString();
         password = mPasswordView.getText().toString();
 
-        if (isEmailValid(email) || isPasswordValid(password)){
-            if (isEmailValid(email)){
+        if (isEmailValid(email) || isPasswordValid(password)) {
+            if (isEmailValid(email)) {
                 mEmailView.setError("password is to short try again");
             }
-            if (isPasswordValid(password)){
+            if (isPasswordValid(password)) {
                 mPasswordView.setError("password is to short try again");
             }
         } else {
@@ -69,18 +69,18 @@ public class RegisterScreen extends AppCompatActivity {
         }
     }
 
-    private boolean isEmailValid(String email){
+    private boolean isEmailValid(String email) {
         return !email.contains("@") || email.length() <= 3;
     }
 
-    private boolean isPasswordValid(String password){
+    private boolean isPasswordValid(String password) {
         String confirmPassword = mConfirmPasswordView.getText().toString();
         return !confirmPassword.equals(password) || password.length() <= 6;
     }
 
-    private void createFirebaseUser(){
-        mAuth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(this, task -> {
-            if (!task.isSuccessful()){
+    private void createFirebaseUser() {
+        mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(this, task -> {
+            if (!task.isSuccessful()) {
                 Log.d("firebase", "User creation failed");
                 Toast.makeText(this, "User already registered", Toast.LENGTH_SHORT).show();
             } else {
@@ -90,7 +90,6 @@ public class RegisterScreen extends AppCompatActivity {
             }
         });
     }
-
 
 
 }

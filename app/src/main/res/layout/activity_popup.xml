@@ -17,6 +17,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:onClick="CreateTaskButton"
+
             android:text="@string/create"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -29,7 +30,7 @@
             android:id="@+id/TaskSpecfication"
             android:layout_width="220dp"
             android:layout_height="53dp"
-            android:layout_marginBottom="44dp"
+            android:backgroundTint="@color/black"
             android:ems="10"
             android:hint="@string/TaskSpecification"
             android:importantForAutofill="no"
@@ -40,24 +41,27 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.497"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.773"
             tools:visibility="visible" />
 
         <EditText
             android:id="@+id/TaskName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:backgroundTint="@color/black"
             android:ems="10"
             android:hint="@string/TaskName"
             android:importantForAutofill="no"
             android:inputType="textPersonName"
-            android:textColor="#000000"
+            android:textColor="@color/black"
             android:visibility="visible"
             app:layout_constraintBottom_toTopOf="@+id/TaskSpecfication"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.479"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.831"
+            app:layout_constraintVertical_bias="0.643"
             tools:visibility="visible" />
 
         <Button
@@ -69,30 +73,36 @@
             app:layout_constraintBottom_toTopOf="@+id/createTask"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.498"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1.0" />
 
         <EditText
             android:id="@+id/TimeTask"
             android:layout_width="220dp"
             android:layout_height="53dp"
             android:layout_marginBottom="32dp"
+            android:backgroundTint="@color/black"
             android:digits="0123456789."
             android:ems="10"
             android:hint="@string/TaskSpecification"
             android:importantForAutofill="no"
             android:inputType="numberDecimal"
-            android:textColor="#656565"
+            android:textColor="@color/black"
             android:visibility="visible"
             app:layout_constraintBottom_toTopOf="@+id/readTxt"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.497"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1.0" />
 
         <TextView
             android:id="@+id/textViewTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/task_time"
+            android:textColor="@color/black"
             app:layout_constraintBottom_toTopOf="@+id/TimeTask"
             app:layout_constraintStart_toStartOf="@+id/TimeTask" />
 
@@ -101,6 +111,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/task_specification"
+            android:textColor="@color/black"
             app:layout_constraintBottom_toTopOf="@+id/TaskSpecfication"
             app:layout_constraintStart_toStartOf="@+id/TaskSpecfication" />
 
@@ -109,6 +120,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/task_name"
+            android:textColor="@color/black"
             app:layout_constraintBottom_toTopOf="@+id/TaskName"
             app:layout_constraintStart_toStartOf="@+id/TaskName" />
     </androidx.constraintlayout.widget.ConstraintLayout>
