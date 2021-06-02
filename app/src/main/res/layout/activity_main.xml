@@ -78,6 +78,7 @@
         android:id="@+id/emailAddressText"
         android:layout_width="264dp"
         android:layout_height="49dp"
+        android:backgroundTint="@color/black"
         android:ems="10"
         android:hint="@string/password_and_email_hint"
         android:importantForAutofill="no"
@@ -88,13 +89,13 @@
         app:layout_constraintHorizontal_bias="0.503"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/imageViewRectangle"
-        app:layout_constraintVertical_bias="0.683"
-        android:backgroundTint="@color/black"/>
+        app:layout_constraintVertical_bias="0.683" />
 
     <EditText
         android:id="@+id/passwordText"
         android:layout_width="262dp"
         android:layout_height="54dp"
+        android:backgroundTint="@color/black"
         android:ems="10"
         android:hint="@string/password_and_email_hint"
         android:importantForAutofill="no"
@@ -105,8 +106,7 @@
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/imageViewRectangle"
-        app:layout_constraintVertical_bias="0.922"
-        android:backgroundTint="@color/black"/>
+        app:layout_constraintVertical_bias="0.922" />
 
     <TextView
         android:id="@+id/textView2"

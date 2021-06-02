@@ -14,11 +14,12 @@ public class PlantScreen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_plant_screen);
 
-        Button progress_button = (Button) findViewById(R.id.progress_button);
+        Button progress_button = findViewById(R.id.progress_button);
         progress_button.setTransformationMethod(null);
     }
-    public void toProgressScreen (View aView){
-        Intent intent = new Intent(this,ProgressScreen.class);
+
+    public void toProgressScreen(View aView) {
+        Intent intent = new Intent(this, ProgressScreen.class);
         startActivity(intent);
     }
 }

@@ -11,6 +11,7 @@
         android:layout_width="226dp"
         android:layout_height="50dp"
         android:layout_marginBottom="28dp"
+        android:backgroundTint="@color/white"
         android:ems="10"
         android:hint="@string/registerEmail"
         android:importantForAutofill="no"
@@ -18,14 +19,14 @@
         app:layout_constraintBottom_toTopOf="@+id/placeHolderConfirmation"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.542"
-        app:layout_constraintStart_toStartOf="parent"
-        android:backgroundTint="@color/white"/>
+        app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
         android:id="@+id/registerConfirmation"
         android:layout_width="221dp"
         android:layout_height="49dp"
         android:layout_marginBottom="64dp"
+        android:backgroundTint="@color/white"
         android:ems="10"
         android:hint="@string/registerEmail"
         android:importantForAutofill="no"
@@ -33,8 +34,7 @@
         app:layout_constraintBottom_toTopOf="@+id/button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.542"
-        app:layout_constraintStart_toStartOf="parent"
-        android:backgroundTint="@color/white"/>
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/button"
@@ -79,11 +79,11 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
-        android:backgroundTint="@color/white"
         android:id="@+id/registerEmail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="28dp"
+        android:backgroundTint="@color/white"
         android:ems="10"
         android:hint="@string/registerEmail"
         android:importantForAutofill="no"

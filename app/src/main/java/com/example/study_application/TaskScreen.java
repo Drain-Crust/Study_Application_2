@@ -1,5 +1,6 @@
 package com.example.study_application;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -30,7 +31,7 @@ public class TaskScreen extends AppCompatActivity {
     String Data;
     String[] fileData;
 
-    String taskNames,taskCompletions,taskSpecification, taskTimes,taskPosition;
+    String taskNames, taskCompletions, taskSpecification, taskTimes, taskPosition;
 
     int Time, originalTime;
 
@@ -72,8 +73,8 @@ public class TaskScreen extends AppCompatActivity {
         });
     }
 
-    private void startTimer(){
-        countDownTimer = new CountDownTimer(TimeLeft , 500) {
+    private void startTimer() {
+        countDownTimer = new CountDownTimer(TimeLeft, 500) {
 
             @Override
             public void onTick(long leftTimeInMilliseconds) {
@@ -81,26 +82,27 @@ public class TaskScreen extends AppCompatActivity {
                 updateCountDownText();
             }
 
+            @SuppressLint("SetTextI18n")
             @Override
             public void onFinish() {
                 if (timeBarText.getText().equals("00:00")) {
                     timeBarText.setText("STOP");
                     String textNameDataOld = taskPosition + " " + taskNames + " " + taskCompletions + " " + taskTimes;
                     String textNameDataNew = taskPosition + " " + taskNames + " " + "Completed" + " " + 0;
-                    replaceLines(textNameDataOld,textNameDataNew);
+                    replaceLines(textNameDataOld, textNameDataNew);
                 }
             }
         }.start();
     }
 
     private void updateCountDownText() {
-        int minutes = (int) (TimeLeft/1000) / 60;
-        int seconds = (int) (TimeLeft/1000) % 60;
+        int minutes = (int) (TimeLeft / 1000) / 60;
+        int seconds = (int) (TimeLeft / 1000) % 60;
         String timeLeftFormatted = String.format(Locale.getDefault(), "%02d:%02d", minutes, seconds);
         timeBarText.setText(timeLeftFormatted);
     }
 
-    private void stopTimer(){
+    private void stopTimer() {
         countDownTimer.cancel();
         //save the time into file
     }
@@ -127,13 +129,13 @@ public class TaskScreen extends AppCompatActivity {
         }
         System.out.println(fileContent);
 
-        for (int i =0; i<fileContent.size(); i++){
+        for (int i = 0; i < fileContent.size(); i++) {
             write("TaskNames.txt", fileContent.get(i));
             write("TaskNames.txt", "\n");
         }
     }
 
-    public String readFile(String file){
+    public String readFile(String file) {
         String text = "";
         try {
             FileInputStream fis = openFileInput(file);
@@ -142,23 +144,23 @@ public class TaskScreen extends AppCompatActivity {
             fis.read(buffer);
             fis.close();
             text = new String(buffer);
-        } catch (Exception e ){
+        } catch (Exception e) {
             e.printStackTrace();
-            Toast.makeText(this,"Error reading file",Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Error reading file", Toast.LENGTH_SHORT).show();
         }
         return text;
     }
 
-    public void write(String file, String textData){
+    public void write(String file, String textData) {
         try {
             FileOutputStream fos = openFileOutput(file, Context.MODE_APPEND);
             fos.write(textData.getBytes());
             fos.close();
-            Toast.makeText(this,"saving file successful",Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "saving file successful", Toast.LENGTH_SHORT).show();
 
-        } catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
-            Toast.makeText(this,"Error saving file",Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Error saving file", Toast.LENGTH_SHORT).show();
         }
 
     }
