@@ -26,6 +26,7 @@
             android:value="2.1" />
 
         <activity android:name=".GoogleTasksScreen" />
+        <activity android:name=".MenuScreen" />
         <activity android:name=".PlantScreen" />
         <activity android:name=".ProgressScreen" />
         <activity android:name=".TaskScreen" />

@@ -64,7 +64,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     public static class ViewHolder extends RecyclerView.ViewHolder {
         TextView carouselText;
         Button carouselButton;
-        RelativeLayout layout;
+        CardView layout;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
