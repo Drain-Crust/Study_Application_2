@@ -42,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
         mPassword = findViewById(R.id.passwordText);
 
         intent = new Intent(this, HomeScreen.class);
+        intent = new Intent(this, RegisterScreen.class);
 
         createRequest();
 
