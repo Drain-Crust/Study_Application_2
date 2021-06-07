@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
         mPassword = findViewById(R.id.passwordText);
 
         intent = new Intent(this, HomeScreen.class);
-        intents = new Intent(this, RegisterScreen.class);
+
 
         createRequest();
 
@@ -95,6 +95,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void toRegisterScreen(View aView) {
         finish();
+        intents = new Intent(this, RegisterScreen.class);
         startActivity(intents);
         overridePendingTransition(R.anim.slide_in_bottom, R.anim.slide_out_top);
     }
