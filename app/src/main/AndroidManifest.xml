@@ -25,7 +25,6 @@
             android:name="android.max_aspect"
             android:value="2.1" />
 
-        <activity android:name=".RegisterScreen" />
         <activity android:name=".GoogleTasksScreen" />
         <activity android:name=".PlantScreen" />
         <activity android:name=".ProgressScreen" />

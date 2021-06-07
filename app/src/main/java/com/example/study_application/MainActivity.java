@@ -47,7 +47,6 @@ public class MainActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
 
         intent = new Intent(this, HomeScreen.class);
-        intents = new Intent(this, RegisterScreen.class);
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
