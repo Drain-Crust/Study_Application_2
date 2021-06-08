@@ -9,9 +9,7 @@ import android.widget.EditText;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class MainActivity extends AppCompatActivity {
@@ -42,19 +40,7 @@ public class MainActivity extends AppCompatActivity {
         mPassword = findViewById(R.id.passwordText);
 
         intent = new Intent(this, HomeScreen.class);
-
-
-        createRequest();
-
-
-    }
-
-    private void createRequest() {
-        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestEmail()
-                .build();
-
-        mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
+        intents = new Intent(this, RegisterScreen.class);
     }
 
     public void signIn(View v) {
@@ -95,7 +81,6 @@ public class MainActivity extends AppCompatActivity {
 
     public void toRegisterScreen(View aView) {
         finish();
-        intents = new Intent(this, RegisterScreen.class);
         startActivity(intents);
         overridePendingTransition(R.anim.slide_in_bottom, R.anim.slide_out_top);
     }

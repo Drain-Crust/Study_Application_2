@@ -8,7 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -71,7 +70,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             super(itemView);
             carouselText = itemView.findViewById(R.id.carouselText);
             carouselButton = itemView.findViewById(R.id.carouselButton);
-            layout = itemView.findViewById(R.id.layout);
+            layout = itemView.findViewById(R.id.layouts);
         }
     }
 }
