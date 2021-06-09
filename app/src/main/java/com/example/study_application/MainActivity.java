@@ -26,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
     //button variables
     SignInButton login_button;
     GoogleSignInClient mGoogleSignInClient;
+    GoogleSignInOptions gso;
 
     //firebase variables
     FirebaseAuth mAuth;
@@ -48,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+        gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(this.getResources().getString(R.string.default_web_client_id))
                 .requestEmail().build();
 
@@ -58,19 +59,18 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        mAuth.signOut();
+        mGoogleSignInClient.signOut();
+        updateUI(null);
+    }
+
     public void signIn() {
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();//intent from google client
         startActivityForResult(signInIntent, RC_SIGN_IN);
     }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        // Check if user is signed in (non-null) and update UI accordingly.
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-        updateUI(currentUser);
-    }
-
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -83,7 +83,6 @@ public class MainActivity extends AppCompatActivity {
                 // Google Sign In was successful, authenticate with Firebase
                 GoogleSignInAccount account = task.getResult(ApiException.class);
                 assert account != null;
-                Log.d(TAG, "firebaseAuthWithGoogle:" + account.getId());
                 firebaseAuthWithGoogle(account.getIdToken());
             } catch (ApiException e) {
                 // Google Sign In failed, update UI appropriately
@@ -118,5 +117,4 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(this, "U Didnt signed in", Toast.LENGTH_LONG).show();
         }
     }
-
 }

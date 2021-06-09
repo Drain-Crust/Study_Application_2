@@ -25,6 +25,7 @@ import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -111,6 +112,12 @@ public class HomeScreen extends AppCompatActivity {
                 Intent intent_3 = new Intent(HomeScreen.this, MenuScreen.class);
                 startActivity(intent_3);
                 break;
+
+            case R.id.nav_logout:
+                System.out.println("working 3");
+                Intent intent_4 = new Intent(HomeScreen.this, MainActivity.class);
+                startActivity(intent_4);
+                break;
         }
         System.out.println(item.getItemId());
         drawer.closeDrawer(GravityCompat.START);
@@ -193,9 +200,9 @@ public class HomeScreen extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        System.out.println("working not");
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
+            FirebaseAuth.getInstance().signOut();
         } else {
             super.onBackPressed();
         }
