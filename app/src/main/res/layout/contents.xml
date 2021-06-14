@@ -16,15 +16,16 @@
 
         <TextView
             android:id="@+id/carouselText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
             android:textColor="#000000"
             android:transitionName="transition_text"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.312" />
+            app:layout_constraintVertical_bias="0.312"
+            android:translationZ="90dp"/>
 
         <Button
             android:id="@+id/carouselButton"

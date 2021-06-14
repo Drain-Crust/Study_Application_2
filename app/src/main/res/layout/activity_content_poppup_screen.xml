@@ -28,7 +28,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.25" />
+        app:layout_constraintVertical_bias="0.25"
+        android:translationZ="90dp"/>
 
     <TextView
         android:id="@+id/taskSpecifications"
@@ -38,7 +39,8 @@
         app:layout_constraintBottom_toTopOf="@+id/taskCompletion"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/taskName" />
+        app:layout_constraintTop_toBottomOf="@+id/taskName"
+        android:translationZ="90dp"/>
 
     <TextView
         android:id="@+id/taskCompletion"
@@ -48,7 +50,8 @@
         android:text="TextView"
         app:layout_constraintBottom_toTopOf="@+id/taskTime"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        android:translationZ="90dp"/>
 
     <TextView
         android:id="@+id/taskTime"
@@ -58,7 +61,8 @@
         android:text="TextView"
         app:layout_constraintBottom_toTopOf="@+id/StartTask"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        android:translationZ="90dp"/>
 
     <Button
         android:id="@+id/StartTask"
