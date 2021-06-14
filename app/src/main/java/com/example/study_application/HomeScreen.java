@@ -58,6 +58,7 @@ public class HomeScreen extends AppCompatActivity {
     //vars
     private final ArrayList<String> mNames = new ArrayList<>();
     private final ArrayList<String> mIds = new ArrayList<>();
+
     List<PieEntry> pieEntries = new ArrayList<>();
 
     //placeholder data
