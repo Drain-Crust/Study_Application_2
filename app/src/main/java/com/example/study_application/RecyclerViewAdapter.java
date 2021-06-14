@@ -71,6 +71,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             super(itemView);
             carouselText = itemView.findViewById(R.id.carouselText);
             carouselButton = itemView.findViewById(R.id.carouselButton);
+            carouselButton.bringToFront();
             layout = itemView.findViewById(R.id.layout);
         }
     }

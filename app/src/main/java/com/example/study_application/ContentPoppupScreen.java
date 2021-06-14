@@ -1,13 +1,16 @@
 package com.example.study_application;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
+import android.view.Gravity;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
-
-import com.google.android.material.transition.MaterialContainerTransform;
 
 import java.io.FileInputStream;
 import java.util.Arrays;
@@ -32,9 +35,12 @@ public class ContentPoppupScreen extends AppCompatActivity {
 
     String textReadFile;
 
+    String Names, Specifications, Completion, Times, numberString;
+
     Intent intent1;
 
-    String Names, Specifications, Completion, Times, numberString;
+    float width;
+    float height;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +74,20 @@ public class ContentPoppupScreen extends AppCompatActivity {
         numberString = Integer.toString(actualNumber);
 
         StartTask.setOnClickListener(v -> sendData());
+
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+
+        width = displayMetrics.widthPixels/ displayMetrics.density;
+        height = displayMetrics.heightPixels/ displayMetrics.density;
+
+        WindowManager.LayoutParams params = getWindow().getAttributes();
+        params.gravity = Gravity.CENTER;
+        params.x = 0;
+        params.y = 0;
+        getWindow().setAttributes(params);
+        getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
     }
 
     public void sendData() {

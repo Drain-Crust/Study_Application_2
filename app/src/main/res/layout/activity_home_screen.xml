@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:background="@color/light_blue_primary"
     android:fitsSystemWindows="true"
-    tools:openDrawer="start">
+    tools:openDrawer="end">
 
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/nav_view"
@@ -27,13 +27,14 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
-            android:layout_height="210dp"
+            android:layout_height="230dp"
             android:orientation="horizontal"
+            android:padding="10dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.95" />
+            app:layout_constraintVertical_bias="0.98" />
 
         <ImageView
             android:id="@+id/imageView"
