@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class RecyclerViewTasksAdapter extends RecyclerView.Adapter<RecyclerViewTasksAdapter.ViewHolder>{
@@ -50,6 +51,11 @@ public class RecyclerViewTasksAdapter extends RecyclerView.Adapter<RecyclerViewT
     @Override
     public int getItemCount() {
         return tasksListList.size();
+    }
+
+    public void filterList(ArrayList<TasksList> filteredList){
+        tasksListList = filteredList;
+        notifyDataSetChanged();
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {

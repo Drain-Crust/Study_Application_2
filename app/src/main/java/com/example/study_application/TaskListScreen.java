@@ -5,6 +5,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import java.io.FileInputStream;
@@ -15,6 +18,7 @@ public class TaskListScreen extends AppCompatActivity {
 
 
     RecyclerView recyclerViewTasks;
+    RecyclerViewTasksAdapter taskAdapter;
 
     //vars
     List<TasksList> tasksListList;
@@ -35,10 +39,42 @@ public class TaskListScreen extends AppCompatActivity {
 
         initData();
         initRecyclerView();
+
+        EditText editText = findViewById(R.id.searchTextView);
+
+        editText.addTextChangedListener(new TextWatcher() {
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                filter(s.toString());
+            }
+        });
+    }
+
+    private void filter(String text){
+        ArrayList<TasksList> filteredList = new ArrayList<>();
+
+        for (TasksList item : tasksListList){
+            if(item.getTitle().toLowerCase().contains(text.toLowerCase())){
+                filteredList.add(item);
+            }
+        }
+
+        taskAdapter.filterList(filteredList);
     }
 
     private void initRecyclerView() {
-        RecyclerViewTasksAdapter taskAdapter = new RecyclerViewTasksAdapter(tasksListList);
+        taskAdapter = new RecyclerViewTasksAdapter(tasksListList);
         recyclerViewTasks.setLayoutManager(new LinearLayoutManager(this));
         recyclerViewTasks.setAdapter(taskAdapter);
     }
