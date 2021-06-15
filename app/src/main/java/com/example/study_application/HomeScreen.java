@@ -98,7 +98,7 @@ public class HomeScreen extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.nav_message:
                 System.out.println("working 1");
-                Intent intent_1 = new Intent(HomeScreen.this, TaskScreen.class);
+                Intent intent_1 = new Intent(HomeScreen.this, TaskListScreen.class);
                 startActivity(intent_1);
                 break;
 

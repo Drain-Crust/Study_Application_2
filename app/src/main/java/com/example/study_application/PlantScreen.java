@@ -19,7 +19,7 @@ public class PlantScreen extends AppCompatActivity {
     }
 
     public void toProgressScreen(View aView) {
-        Intent intent = new Intent(this, ProgressScreen.class);
+        Intent intent = new Intent(this, TaskListScreen.class);
         startActivity(intent);
     }
 }

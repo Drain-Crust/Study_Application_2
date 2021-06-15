@@ -42,9 +42,11 @@
             android:layout_height="493dp"
             android:layout_marginTop="396dp"
             android:contentDescription="@string/taskBar"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0"
             app:srcCompat="@drawable/rectangle" />
 
         <TextView
@@ -54,12 +56,12 @@
             android:text="@string/tasks"
             android:textColor="#000000"
             android:textSize="24sp"
-            app:layout_constraintBottom_toTopOf="@+id/recyclerView"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.12"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/imageView"
-            app:layout_constraintVertical_bias="0.6" />
+            app:layout_constraintVertical_bias="0.13999999" />
 
         <Button
             android:id="@+id/task_create"
@@ -75,17 +77,17 @@
             app:layout_constraintHorizontal_bias="0.93"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/imageView"
-            app:layout_constraintVertical_bias="0.07999998" />
+            app:layout_constraintVertical_bias="0.100000024" />
 
         <com.github.mikephil.charting.charts.PieChart
             android:id="@+id/pieCharts"
-            android:layout_width="match_parent"
-            android:layout_height="380dp"
+            android:layout_width="330dp"
+            android:layout_height="330dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0">
+            app:layout_constraintVertical_bias="0.07999998">
 
         </com.github.mikephil.charting.charts.PieChart>
     </androidx.constraintlayout.widget.ConstraintLayout>

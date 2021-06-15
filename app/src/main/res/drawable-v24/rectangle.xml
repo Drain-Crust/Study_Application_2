@@ -9,8 +9,8 @@
         android:width="100dp"/>
     <corners
         android:radius="0dp"
-        android:topLeftRadius="15dp"
-        android:topRightRadius="15dp"
+        android:topLeftRadius="12dp"
+        android:topRightRadius="12dp"
 
     />
 

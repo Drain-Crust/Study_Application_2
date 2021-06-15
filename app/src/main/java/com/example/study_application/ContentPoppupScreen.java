@@ -1,11 +1,7 @@
 package com.example.study_application;
 
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.util.DisplayMetrics;
-import android.view.Gravity;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
@@ -30,17 +26,14 @@ public class ContentPoppupScreen extends AppCompatActivity {
     String IdName, taskCompletion, timeRequired, taskName;
     String IdSpecifications, TaskSpecification;
 
-    TextView taskNames, taskSpecification, taskCompletions, taskTimes;
-    Button StartTask;
-
     String textReadFile;
 
     String Names, Specifications, Completion, Times, numberString;
 
-    Intent intent1;
+    TextView taskNames, taskSpecification, taskCompletions, taskTimes;
+    Button StartTask;
 
-    float width;
-    float height;
+    Intent intent1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,18 +68,8 @@ public class ContentPoppupScreen extends AppCompatActivity {
 
         StartTask.setOnClickListener(v -> sendData());
 
-        DisplayMetrics displayMetrics = new DisplayMetrics();
-        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
 
-        width = displayMetrics.widthPixels/ displayMetrics.density;
-        height = displayMetrics.heightPixels/ displayMetrics.density;
-
-        WindowManager.LayoutParams params = getWindow().getAttributes();
-        params.gravity = Gravity.CENTER;
-        params.x = 0;
-        params.y = 0;
-        getWindow().setAttributes(params);
-        getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
     }
 
