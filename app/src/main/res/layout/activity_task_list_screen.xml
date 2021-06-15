@@ -4,12 +4,23 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@color/white">
 
-    <EditText
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/searchTextView"/>
+        android:text="SEARCH"
+        android:textColor="@color/black"
+        android:paddingTop="8dp"
+        android:paddingHorizontal="8dp"/>
+
+    <EditText
+        android:paddingHorizontal="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/searchTextView"
+        android:textColor="@color/black"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewTasks"
@@ -20,6 +31,7 @@
         android:layout_marginBottom="1dp"
         android:foregroundGravity="center"
         android:padding="10dp"
+        android:textColor="@color/black"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
