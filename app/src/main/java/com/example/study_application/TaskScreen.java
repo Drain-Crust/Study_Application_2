@@ -2,6 +2,7 @@ package com.example.study_application;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.View;
@@ -27,7 +28,16 @@ public class TaskScreen extends AppCompatActivity {
     private long TimeLeft;
     private CountDownTimer countDownTimer;
 
-    Bundle intent;
+
+    String[][] TextBodyData;
+    String[][] TextNameData;
+    String[] valueSpecificationData;
+    String[] valueNameData;
+
+    String IdName, taskCompletion, timeRequired, taskName;
+    String IdSpecifications, TaskSpecification;
+
+    Intent intent;
     String Data;
     String[] fileData;
 
@@ -43,12 +53,18 @@ public class TaskScreen extends AppCompatActivity {
         Data = readFile("TaskNames.txt");
         fileData = Data.split("\n");
 
-        intent = getIntent().getExtras();
-        taskTimes = intent.getString(ContentPoppupScreen.EXTRA_STRING_TIME);
-        taskNames = intent.getString(ContentPoppupScreen.EXTRA_STRING_NAME);
-        taskSpecification = intent.getString(ContentPoppupScreen.EXTRA_STRING_SPECIFICATIONS);
-        taskCompletions = intent.getString(ContentPoppupScreen.EXTRA_STRING_COMPLETION);
-        taskPosition = intent.getString(ContentPoppupScreen.EXTRA_STRING_POSITION);
+        ReadTaskNameData("TaskNames.txt", true);
+        ReadTaskNameData("TaskSpecifications.txt", false);
+
+        intent = getIntent();
+        String number = intent.getStringExtra(ContentPoppupScreen.EXTRA_STRING_ID);
+        int actualNumber = Integer.parseInt(number);
+
+        taskTimes = TextNameData[actualNumber][3];
+        taskNames = TextNameData[actualNumber][1];
+        taskSpecification = TextBodyData[actualNumber][1];
+        taskCompletions = TextNameData[actualNumber][2];
+        taskPosition = Integer.toString(actualNumber);
 
         Time = Integer.parseInt(taskTimes);
 
@@ -163,5 +179,41 @@ public class TaskScreen extends AppCompatActivity {
             Toast.makeText(this, "Error saving file", Toast.LENGTH_SHORT).show();
         }
 
+    }
+
+    public void ReadTaskNameData(String file, Boolean TextOrBody) {
+        String fileData = readFile(file);
+        String[] DataString = fileData.split("\n");
+
+        String StringArray = Arrays.toString(DataString);
+        String[] StringArrays = StringArray.split(",");
+
+        if (!TextOrBody) {
+            TextBodyData = new String[StringArrays.length][];
+            for (int i = 1; i < DataString.length; i++) {
+                String[] values = DataString[i].split(" ");
+
+                IdSpecifications = values[0];
+                TaskSpecification = values[1];
+
+                valueSpecificationData = new String[]{IdSpecifications, TaskSpecification};
+
+                TextBodyData[i] = valueSpecificationData;
+            }
+        } else {
+            TextNameData = new String[StringArrays.length][];
+            for (int i = 1; i < DataString.length; i++) {
+                String[] values = DataString[i].split(" ");
+
+                IdName = values[0];
+                taskName = values[1];
+                taskCompletion = values[2];
+                timeRequired = values[3];
+
+                valueNameData = new String[]{IdName, taskName, taskCompletion, timeRequired};
+
+                TextNameData[i] = valueNameData;
+            }
+        }
     }
 }

@@ -12,11 +12,7 @@ import java.io.FileInputStream;
 import java.util.Arrays;
 
 public class ContentPoppupScreen extends AppCompatActivity {
-    public static final String EXTRA_STRING_TIME = "package com.example.study_application";
-    public static final String EXTRA_STRING_NAME = "package com.example.study_application's";
-    public static final String EXTRA_STRING_COMPLETION = "package com.example.study_applications'";
-    public static final String EXTRA_STRING_SPECIFICATIONS = "package com.example.study_applications";
-    public static final String EXTRA_STRING_POSITION = "package com.example.study_applications";
+    public static final String EXTRA_STRING_ID = "package com.example.study_application";
 
     String[][] TextBodyData;
     String[][] TextNameData;
@@ -34,6 +30,7 @@ public class ContentPoppupScreen extends AppCompatActivity {
     Button StartTask;
 
     Intent intent1;
+    Intent intent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +48,7 @@ public class ContentPoppupScreen extends AppCompatActivity {
         taskTimes = findViewById(R.id.taskTime);
         intent1 = new Intent(this, TaskScreen.class);
 
-        Intent intent = getIntent();
+        intent = getIntent();
         String number = intent.getStringExtra(RecyclerViewAdapter.EXTRA_NUMBER);
         int actualNumber = Integer.parseInt(number);
 
@@ -72,13 +69,7 @@ public class ContentPoppupScreen extends AppCompatActivity {
     }
 
     public void sendData() {
-        Bundle extras = new Bundle();
-        extras.putString(EXTRA_STRING_SPECIFICATIONS, Specifications);
-        extras.putString(EXTRA_STRING_TIME, Times);
-        extras.putString(EXTRA_STRING_NAME, Names);
-        extras.putString(EXTRA_STRING_COMPLETION, Completion);
-        extras.putString(EXTRA_STRING_POSITION, numberString);
-        intent1.putExtras(extras);
+        intent1.putExtra(EXTRA_STRING_ID, intent.getStringExtra(RecyclerViewAdapter.EXTRA_NUMBER));
         startActivity(intent1);
     }
 

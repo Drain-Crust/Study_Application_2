@@ -3,15 +3,25 @@ package com.example.study_application;
 public class TasksList {
 
     private String title;
+    private String IDs;
     private String status;
     private String Specifications;
     private boolean expanded;
 
-    public TasksList(String title, String status, String Specifications) {
+    public TasksList(String IDs, String title, String status, String Specifications) {
+        this.IDs = IDs;
         this.title = title;
         this.status = status;
         this.Specifications = Specifications;
         this.expanded = false;
+    }
+
+    public String getIDs(){
+        return IDs;
+    }
+
+    public void setIDs(String IDs){
+        this.IDs =IDs;
     }
 
     public String getTitle() {
@@ -49,6 +59,7 @@ public class TasksList {
     @Override
     public String toString() {
         return "TasksList{" +
+                "" + IDs + '\'' +
                 "title='" + title + '\'' +
                 ", status='" + status + '\'' +
                 ", Specifications='" + Specifications + '\'' +

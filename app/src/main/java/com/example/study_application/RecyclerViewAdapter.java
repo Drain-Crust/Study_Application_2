@@ -22,11 +22,6 @@ import java.util.ArrayList;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
     public static final String EXTRA_NUMBER = "package com.example.study_application";
-    public static final String EXTRA_STRING_SPECIFICATIONS = "package com.example.study_application";
-    public static final String EXTRA_STRING_TIME = "package com.example.study_application";
-    public static final String EXTRA_STRING_NAME = "package com.example.study_application";
-    public static final String EXTRA_STRING_COMPLETION = "package com.example.study_application";
-    public static final String EXTRA_STRING_POSITION = "package com.example.study_application";
     private static final String TAG = "RecyclerViewAdapter";
 
     //vars

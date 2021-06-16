@@ -1,9 +1,11 @@
 package com.example.study_application;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -16,19 +18,19 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RecyclerViewTasksAdapter extends RecyclerView.Adapter<RecyclerViewTasksAdapter.ViewHolder>{
-
+public class RecyclerViewTasksAdapter extends RecyclerView.Adapter<RecyclerViewTasksAdapter.ViewHolder> {
+    public static final String EXTRA_NUMBER = "package com.example.study_application";
 
     List<TasksList> tasksListList;
 
-    private Context mContext;
+    private final Context mContext;
 
-    public RecyclerViewTasksAdapter(List<TasksList> tasksListList) {
+    public RecyclerViewTasksAdapter(List<TasksList> tasksListList, Context mContext) {
         this.tasksListList = tasksListList;
+        this.mContext = mContext;
     }
 
-    @NonNull
-    @NotNull
+
     @Override
     public ViewHolder onCreateViewHolder(@NonNull @NotNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.task_items, parent, false);
@@ -43,10 +45,16 @@ public class RecyclerViewTasksAdapter extends RecyclerView.Adapter<RecyclerViewT
         holder.taskStatusTextView.setText(TasksList.getStatus());
         holder.specificationTextTextView.setText(TasksList.getSpecifications());
 
-
         boolean isExpanded = tasksListList.get(position).isExpanded();
         holder.expandableLayout.setVisibility(isExpanded ? View.VISIBLE : View.GONE);
         arrowAnimation.toggleArrow(holder.arrowButton, tasksListList.get(position).isExpanded());
+
+        holder.StartTask.setOnClickListener(v -> {
+            TasksList TasksLists = tasksListList.get(position);
+            Intent intent1 = new Intent(mContext, TaskScreen.class);
+            intent1.putExtra(EXTRA_NUMBER, TasksLists.getIDs());
+            mContext.startActivity(intent1);
+        });
 
     }
 
@@ -55,7 +63,7 @@ public class RecyclerViewTasksAdapter extends RecyclerView.Adapter<RecyclerViewT
         return tasksListList.size();
     }
 
-    public void filterList(ArrayList<TasksList> filteredList){
+    public void filterList(ArrayList<TasksList> filteredList) {
         tasksListList = filteredList;
         notifyDataSetChanged();
     }
@@ -65,6 +73,8 @@ public class RecyclerViewTasksAdapter extends RecyclerView.Adapter<RecyclerViewT
         TextView TasktitleTextView, taskStatusTextView, specificationTextTextView;
         ImageView arrowButton;
 
+        Button StartTask;
+
         public ViewHolder(@NonNull @NotNull View itemView) {
             super(itemView);
             TasktitleTextView = itemView.findViewById(R.id.taskTitleTextView);
@@ -72,6 +82,7 @@ public class RecyclerViewTasksAdapter extends RecyclerView.Adapter<RecyclerViewT
             specificationTextTextView = itemView.findViewById(R.id.specificationTextTextView);
             expandableLayout = itemView.findViewById(R.id.expandableLayout);
             arrowButton = itemView.findViewById(R.id.viewMoreBtn);
+            StartTask = itemView.findViewById(R.id.StartTask);
 
             TasktitleTextView.setOnClickListener(view -> {
 

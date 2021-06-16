@@ -16,7 +16,6 @@ import java.util.List;
 
 public class TaskListScreen extends AppCompatActivity {
 
-
     RecyclerView recyclerViewTasks;
     RecyclerViewTasksAdapter taskAdapter;
 
@@ -61,11 +60,11 @@ public class TaskListScreen extends AppCompatActivity {
         });
     }
 
-    private void filter(String text){
+    private void filter(String text) {
         ArrayList<TasksList> filteredList = new ArrayList<>();
 
-        for (TasksList item : tasksListList){
-            if(item.getTitle().toLowerCase().contains(text.toLowerCase())){
+        for (TasksList item : tasksListList) {
+            if (item.getTitle().toLowerCase().contains(text.toLowerCase())) {
                 filteredList.add(item);
             }
         }
@@ -74,12 +73,12 @@ public class TaskListScreen extends AppCompatActivity {
     }
 
     private void initRecyclerView() {
-        taskAdapter = new RecyclerViewTasksAdapter(tasksListList);
+        taskAdapter = new RecyclerViewTasksAdapter(tasksListList,this);
         recyclerViewTasks.setLayoutManager(new LinearLayoutManager(this));
         recyclerViewTasks.setAdapter(taskAdapter);
     }
 
-    private void initData(){
+    private void initData() {
         tasksListList = new ArrayList<>();
         ReadData("TaskNames.txt");
         Specfications = readFile("TaskSpecifications.txt");
@@ -88,7 +87,7 @@ public class TaskListScreen extends AppCompatActivity {
 
         for (int i = 1; i < DataStringSpecfications.length; i++) {
             String[] valuesSpecifications = DataStringSpecfications[i].split(" ");
-            tasksListList.add(new TasksList(fileDataArray[i][1],fileDataArray[i][2],valuesSpecifications[1]));
+            tasksListList.add(new TasksList(fileDataArray[i][0],fileDataArray[i][1], fileDataArray[i][2], valuesSpecifications[1]));
         }
     }
 
