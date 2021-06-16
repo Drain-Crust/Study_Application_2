@@ -59,6 +59,7 @@
     <string name="task_name">Task Name</string>
     <string name="task_specification">Task Specification</string>
     <string name="tasks">Tasks</string>
+    <string name="search">Search</string>
 
 
 </resources>

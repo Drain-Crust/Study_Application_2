@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -45,6 +46,7 @@ public class RecyclerViewTasksAdapter extends RecyclerView.Adapter<RecyclerViewT
 
         boolean isExpanded = tasksListList.get(position).isExpanded();
         holder.expandableLayout.setVisibility(isExpanded ? View.VISIBLE : View.GONE);
+        arrowAnimation.toggleArrow(holder.arrowButton, tasksListList.get(position).isExpanded());
 
     }
 
@@ -61,6 +63,7 @@ public class RecyclerViewTasksAdapter extends RecyclerView.Adapter<RecyclerViewT
     class ViewHolder extends RecyclerView.ViewHolder {
         ConstraintLayout expandableLayout;
         TextView TasktitleTextView, taskStatusTextView, specificationTextTextView;
+        ImageView arrowButton;
 
         public ViewHolder(@NonNull @NotNull View itemView) {
             super(itemView);
@@ -68,11 +71,12 @@ public class RecyclerViewTasksAdapter extends RecyclerView.Adapter<RecyclerViewT
             taskStatusTextView = itemView.findViewById(R.id.status);
             specificationTextTextView = itemView.findViewById(R.id.specificationTextTextView);
             expandableLayout = itemView.findViewById(R.id.expandableLayout);
+            arrowButton = itemView.findViewById(R.id.viewMoreBtn);
 
             TasktitleTextView.setOnClickListener(view -> {
 
-                TasksList movie = tasksListList.get(getAdapterPosition());
-                movie.setExpanded(!movie.isExpanded());
+                TasksList TaskList = tasksListList.get(getAdapterPosition());
+                TaskList.setExpanded(!TaskList.isExpanded());
                 notifyItemChanged(getAdapterPosition());
 
             });
