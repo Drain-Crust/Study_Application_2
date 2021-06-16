@@ -3,6 +3,7 @@ package com.example.study_application;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,6 +22,11 @@ import java.util.ArrayList;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
     public static final String EXTRA_NUMBER = "package com.example.study_application";
+    public static final String EXTRA_STRING_SPECIFICATIONS = "package com.example.study_application";
+    public static final String EXTRA_STRING_TIME = "package com.example.study_application";
+    public static final String EXTRA_STRING_NAME = "package com.example.study_application";
+    public static final String EXTRA_STRING_COMPLETION = "package com.example.study_application";
+    public static final String EXTRA_STRING_POSITION = "package com.example.study_application";
     private static final String TAG = "RecyclerViewAdapter";
 
     //vars
@@ -45,7 +51,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     @Override
     public void onBindViewHolder(@NonNull RecyclerViewAdapter.ViewHolder holder, int position) {
         holder.carouselText.setText(mNames.get(position));
-        holder.carouselButton.setOnClickListener(v -> {
+        holder.layout.setOnClickListener(v -> {
             Log.d(TAG, "onClick: On an a button: " + mNames.get(position));
             Intent intent = new Intent(mContext, ContentPoppupScreen.class);
             intent.putExtra(EXTRA_NUMBER, mIds.get(position));
@@ -54,6 +60,11 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             Pair textBody = Pair.create(holder.carouselText, "transition_text");
             ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation((Activity) mContext, mLayout, textName, textBody);
             mContext.startActivity(intent, options.toBundle());
+        });
+        holder.carouselButton.setOnClickListener(v -> {
+            Intent intent1 = new Intent(mContext, TaskScreen.class);
+            intent1.putExtra(EXTRA_NUMBER, mIds.get(position));
+            mContext.startActivity(intent1);
         });
     }
 

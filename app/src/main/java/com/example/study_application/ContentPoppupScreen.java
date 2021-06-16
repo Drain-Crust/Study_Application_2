@@ -69,8 +69,6 @@ public class ContentPoppupScreen extends AppCompatActivity {
         StartTask.setOnClickListener(v -> sendData());
 
         getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
-
-
     }
 
     public void sendData() {
