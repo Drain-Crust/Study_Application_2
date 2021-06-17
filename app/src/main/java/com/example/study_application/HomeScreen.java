@@ -103,19 +103,16 @@ public class HomeScreen extends AppCompatActivity {
                 break;
 
             case R.id.nav_progress:
-                System.out.println("working 2");
                 Intent intent_2 = new Intent(HomeScreen.this, PlantScreen.class);
                 startActivity(intent_2);
                 break;
 
             case R.id.nav_tasks:
-                System.out.println("working 3");
                 Intent intent_3 = new Intent(HomeScreen.this, MenuScreen.class);
                 startActivity(intent_3);
                 break;
 
             case R.id.nav_logout:
-                System.out.println("working 3");
                 Intent intent_4 = new Intent(HomeScreen.this, MainActivity.class);
                 startActivity(intent_4);
                 break;
