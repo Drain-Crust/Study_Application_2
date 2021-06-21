@@ -1,6 +1,7 @@
 package com.example.study_application;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.Gravity;
@@ -26,6 +27,8 @@ public class TaskCreateScreen extends AppCompatActivity {
     int width;
     int height;
 
+    Intent intent;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,6 +41,8 @@ public class TaskCreateScreen extends AppCompatActivity {
         if (fileDosentExist(fileTasks)) {
             saveFile(fileTasks, "important", "important", "important", false);
         }
+
+        intent = new Intent(this, HomeScreen.class);
 
         taskTime = findViewById(R.id.TimeTask);
         taskName = findViewById(R.id.TaskName);
@@ -149,7 +154,6 @@ public class TaskCreateScreen extends AppCompatActivity {
             if (String.valueOf(taskName).equals("")) {
                 taskName.setError("Name is to short try again");
                 focusView = taskTime;
-
             }
             assert focusView != null;
             focusView.requestFocus();

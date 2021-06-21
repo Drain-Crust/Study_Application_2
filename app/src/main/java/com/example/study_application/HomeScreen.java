@@ -54,6 +54,8 @@ public class HomeScreen extends AppCompatActivity {
     //the arrays used to get file information and store it
     String[] valueNameData;
     String[][] fileDataArray;
+    String[] DataString;
+    String[] values;
 
     //vars
     private final ArrayList<String> mNames = new ArrayList<>();
@@ -63,14 +65,12 @@ public class HomeScreen extends AppCompatActivity {
 
     //placeholder data
     float[] yData = {36.5f, 42.4f, 22.3f};
-    String[] xData = {"Not Started", "Uncompleted", "Completed"};
+    String[] xData =new String[]{"Not Started", "Uncompleted", "Completed"};
 
-    @SuppressLint("NonConstantResourceId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_screen);
-
 
         ReadData("TaskNames.txt");
 
@@ -87,7 +87,6 @@ public class HomeScreen extends AppCompatActivity {
                 R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
-        addDataSet();
         initRecyclerView();
         navigationView.bringToFront();
     }
@@ -101,17 +100,6 @@ public class HomeScreen extends AppCompatActivity {
                 Intent intent_1 = new Intent(HomeScreen.this, TaskListScreen.class);
                 startActivity(intent_1);
                 break;
-
-            case R.id.nav_progress:
-                Intent intent_2 = new Intent(HomeScreen.this, PlantScreen.class);
-                startActivity(intent_2);
-                break;
-
-            case R.id.nav_tasks:
-                Intent intent_3 = new Intent(HomeScreen.this, MenuScreen.class);
-                startActivity(intent_3);
-                break;
-
             case R.id.nav_logout:
                 Intent intent_4 = new Intent(HomeScreen.this, MainActivity.class);
                 startActivity(intent_4);
@@ -137,12 +125,12 @@ public class HomeScreen extends AppCompatActivity {
 
     public void ReadData(String file) {
         String fileData = readFile(file);
-        String[] DataString = fileData.split("\n");
+        DataString = fileData.split("\n");
         fileDataArray = new String[DataString.length][];
 
 
         for (int i = 1; i < DataString.length; i++) {
-            String[] values = DataString[i].split(" ");
+            values = DataString[i].split(" ");
 
             String ID = values[0];
             String TaskName = values[1];
@@ -206,7 +194,6 @@ public class HomeScreen extends AppCompatActivity {
         }
     }
 
-
     private void addDataSet() {
         for (int i = 0; i < yData.length; i++) {
             pieEntries.add(new PieEntry(yData[i], xData[i]));
@@ -231,5 +218,21 @@ public class HomeScreen extends AppCompatActivity {
     public void finish() {
         super.finish();
         overridePendingTransition(R.anim.slide_in_top, R.anim.slide_out_bottom);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        valueNameData =new String[0];
+        fileDataArray = new String[0][0];
+        yData = new float[0];
+        DataString = new String[0];
+        values = new String[0];
+
+        ReadData("TaskNames.txt");
+        addDataSet();
+        initRecyclerView();
+        navigationView.bringToFront();
     }
 }

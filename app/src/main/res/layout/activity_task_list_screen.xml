@@ -24,13 +24,14 @@
 
         <Button
             android:id="@+id/createTaskTaskList"
+            style="?android:attr/borderlessButtonStyle"
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:layout_gravity="center"
             android:layout_marginStart="150dp"
-            android:text="+"
-            style="?android:attr/borderlessButtonStyle"
             android:background="@color/white"
+            android:onClick="createButton"
+            android:text="+"
             android:textAlignment="center"
             android:textColor="@color/black"
             android:textSize="30sp" />

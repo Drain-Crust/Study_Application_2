@@ -60,6 +60,9 @@
     <string name="task_specification">Task Specification</string>
     <string name="tasks">Tasks</string>
     <string name="search">Search</string>
+    <string name="main_page">Main Page</string>
+    <string name="account">Account</string>
+    <string name="logout">Logout</string>
 
 
 </resources>

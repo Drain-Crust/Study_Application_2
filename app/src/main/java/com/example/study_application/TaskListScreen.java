@@ -4,9 +4,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -59,6 +61,12 @@ public class TaskListScreen extends AppCompatActivity {
             }
         });
     }
+
+    public void createButton(View v){
+        Intent intent = new Intent(this, TaskCreateScreen.class);
+        startActivity(intent);
+    }
+
 
     private void filter(String text) {
         ArrayList<TasksList> filteredList = new ArrayList<>();
