@@ -56,21 +56,22 @@ public class HomeScreen extends AppCompatActivity {
     String[][] fileDataArray;
     String[] DataString;
     String[] values;
+    PieDataSet pieDataSet;
 
     //vars
-    private final ArrayList<String> mNames = new ArrayList<>();
-    private final ArrayList<String> mIds = new ArrayList<>();
-
-    List<PieEntry> pieEntries = new ArrayList<>();
+    private ArrayList<String> mNames = new ArrayList<>();
+    private ArrayList<String> mIds = new ArrayList<>();
 
     //placeholder data
     float[] yData = {36.5f, 42.4f, 22.3f};
-    String[] xData =new String[]{"Not Started", "Uncompleted", "Completed"};
+    String[] xData = new String[]{"Not Started", "Uncompleted", "Completed"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_screen);
+
+        getIntent().setAction("Already created");
 
         ReadData("TaskNames.txt");
 
@@ -87,6 +88,7 @@ public class HomeScreen extends AppCompatActivity {
                 R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
+        addDataSet();
         initRecyclerView();
         navigationView.bringToFront();
     }
@@ -180,6 +182,7 @@ public class HomeScreen extends AppCompatActivity {
     }
 
     public void onClickCreateTask(View v) {
+        task_create.setEnabled(false);
         Intent intent = new Intent(getApplicationContext(), TaskCreateScreen.class);
         startActivity(intent);
     }
@@ -194,12 +197,13 @@ public class HomeScreen extends AppCompatActivity {
         }
     }
 
-    private void addDataSet() {
+    public void addDataSet() {
+        List<PieEntry> pieEntries = new ArrayList<>();
         for (int i = 0; i < yData.length; i++) {
             pieEntries.add(new PieEntry(yData[i], xData[i]));
         }
 
-        PieDataSet pieDataSet = new PieDataSet(pieEntries, "");
+        pieDataSet = new PieDataSet(pieEntries, "");
         pieDataSet.setColors(COLORFUL_COLORS);
         pieDataSet.setSliceSpace(2);
         pieDataSet.setValueTextSize(12);
@@ -223,10 +227,15 @@ public class HomeScreen extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-
-        valueNameData =new String[0];
-        fileDataArray = new String[0][0];
+        NotStarted = 0;
+        Uncompleted = 0;
+        Completed = 0;
         yData = new float[0];
+        mIds = new ArrayList<>();
+        mNames = new ArrayList<>();
+        task_create.setEnabled(true);
+        valueNameData = new String[0];
+        fileDataArray = new String[0][0];
         DataString = new String[0];
         values = new String[0];
 

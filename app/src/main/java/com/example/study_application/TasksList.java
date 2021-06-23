@@ -1,11 +1,13 @@
 package com.example.study_application;
 
+import org.jetbrains.annotations.NotNull;
+
 public class TasksList {
 
-    private String title;
-    private String IDs;
-    private String status;
-    private String Specifications;
+    private final String title;
+    private final String IDs;
+    private final String status;
+    private final String Specifications;
     private boolean expanded;
 
     public TasksList(String IDs, String title, String status, String Specifications) {
@@ -16,36 +18,20 @@ public class TasksList {
         this.expanded = false;
     }
 
-    public String getIDs(){
+    public String getIDs() {
         return IDs;
-    }
-
-    public void setIDs(String IDs){
-        this.IDs =IDs;
     }
 
     public String getTitle() {
         return title;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
     public String getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
     public String getSpecifications() {
         return Specifications;
-    }
-
-    public void setSpecifications(String Specifications) {
-        this.Specifications = Specifications;
     }
 
     public boolean isExpanded() {
@@ -57,7 +43,7 @@ public class TasksList {
     }
 
     @Override
-    public String toString() {
+    public @NotNull String toString() {
         return "TasksList{" +
                 "" + IDs + '\'' +
                 "title='" + title + '\'' +
