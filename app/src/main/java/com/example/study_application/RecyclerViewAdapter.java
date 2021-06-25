@@ -3,13 +3,11 @@ package com.example.study_application;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -25,8 +23,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     private static final String TAG = "RecyclerViewAdapter";
 
     //vars
-    private  ArrayList<String> mNames;
-    private  ArrayList<String> mIds;
+    private final ArrayList<String> mNames;
+    private final ArrayList<String> mIds;
     private final Context mContext;
 
     public RecyclerViewAdapter(Context mContext, ArrayList<String> mNames, ArrayList<String> mIds) {

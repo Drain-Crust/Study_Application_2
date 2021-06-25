@@ -17,17 +17,18 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Design.NoActionBar">
-        <activity android:name=".ContentPoppupScreen"
+        <activity
+            android:name=".ContentPoppupScreen"
             android:theme="@style/Theme.AppCompat.Poppup" />
         <activity
             android:name=".TaskCreateScreen"
             android:theme="@style/Theme.AppCompat.Poppup" />
 
-        <meta-data android:name="android.max_aspect" android:value="5.0"/>
+        <meta-data
+            android:name="android.max_aspect"
+            android:value="5.0" />
 
         <activity android:name=".GoogleTasksScreen" />
-        <activity android:name=".MenuScreen" />
-        <activity android:name=".PlantScreen" />
         <activity android:name=".TaskListScreen" />
         <activity android:name=".TaskScreen" />
         <activity android:name=".HomeScreen" />

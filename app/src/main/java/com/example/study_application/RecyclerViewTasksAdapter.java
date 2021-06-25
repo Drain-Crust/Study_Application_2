@@ -45,7 +45,7 @@ public class RecyclerViewTasksAdapter extends RecyclerView.Adapter<RecyclerViewT
         holder.taskStatusTextView.setText(TasksList.getStatus());
         holder.specificationTextTextView.setText(TasksList.getSpecifications());
 
-        boolean isExpanded = tasksListList.get(position).isExpanded();
+        boolean isExpanded = TasksList.isExpanded();
         holder.expandableLayout.setVisibility(isExpanded ? View.VISIBLE : View.GONE);
         arrowAnimation.toggleArrow(holder.arrowButton, tasksListList.get(position).isExpanded());
 
@@ -89,7 +89,6 @@ public class RecyclerViewTasksAdapter extends RecyclerView.Adapter<RecyclerViewT
                 TasksList TaskList = tasksListList.get(getAdapterPosition());
                 TaskList.setExpanded(!TaskList.isExpanded());
                 notifyItemChanged(getAdapterPosition());
-
             });
         }
     }

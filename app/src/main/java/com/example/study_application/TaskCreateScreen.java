@@ -160,6 +160,7 @@ public class TaskCreateScreen extends AppCompatActivity {
         } else {
             saveFile(fileNames, taskName.getText().toString(),
                     taskSpecification.getText().toString(), taskTime.getText().toString(), false);
+            finish();
         }
     }
 }
