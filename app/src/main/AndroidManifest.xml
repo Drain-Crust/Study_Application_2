@@ -18,7 +18,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Design.NoActionBar">
         <activity
-            android:name=".ContentPoppupScreen"
+            android:name=".ContentPopupScreen"
             android:theme="@style/Theme.AppCompat.Poppup" />
         <activity
             android:name=".TaskCreateScreen"

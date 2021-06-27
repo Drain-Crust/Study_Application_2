@@ -54,7 +54,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/tasks"
-            android:textColor="#000000"
+            android:textColor="@color/primary_text"
             android:textSize="24sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -68,9 +68,12 @@
             android:layout_width="67dp"
             android:layout_height="67dp"
             android:background="@drawable/circle_button"
+            android:backgroundTint="@color/accent"
+            android:elevation="10dp"
             android:onClick="onClickCreateTask"
+            android:stateListAnimator="@null"
             android:text="@string/SymbolForCreate"
-            android:textColor="#434343"
+            android:textColor="@color/icons"
             android:textSize="34sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -81,8 +84,8 @@
 
         <com.github.mikephil.charting.charts.PieChart
             android:id="@+id/pieCharts"
-            android:layout_width="330dp"
-            android:layout_height="330dp"
+            android:layout_width="357dp"
+            android:layout_height="351dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -96,6 +99,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
+        android:padding="6dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -103,12 +107,14 @@
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolBar"
-            android:layout_width="60dp"
+            android:layout_width="55dp"
             android:layout_height="?actionBarSize"
-            android:background="@color/dark_blue_primary"
-            android:elevation="4dp"
+            android:background="@drawable/circle_button"
+            android:backgroundTint="@color/dark_blue_primary"
+            android:elevation="6dp"
             android:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            app:titleTextColor="@color/primary_light" />
 
         <FrameLayout
             android:id="@+id/fragment_container"

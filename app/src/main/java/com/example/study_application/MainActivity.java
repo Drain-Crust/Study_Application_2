@@ -21,7 +21,7 @@ import com.google.firebase.auth.GoogleAuthProvider;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "good";
-    int RC_SIGN_IN = 69; //declear variable
+    int RC_SIGN_IN = 69; //declare variable
 
     //button variables
     SignInButton login_button;
@@ -38,17 +38,22 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //links the objects in screen
         login_button = findViewById(R.id.login_button);
         mAuth = FirebaseAuth.getInstance();
 
+        //link to next screen
         intent = new Intent(this, HomeScreen.class);
 
+        //listens if the login button is clicked
         login_button.setOnClickListener(v -> {
             if (v.getId() == R.id.login_button) {
                 signIn();
             }
         });
 
+        // Configure Google Sign In
         gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(this.getResources().getString(R.string.default_web_client_id))
                 .requestEmail().build();
@@ -110,11 +115,11 @@ public class MainActivity extends AppCompatActivity {
 
     private void updateUI(FirebaseUser account) {
         if (account != null) {
-            Toast.makeText(this, "U Signed In successfully", Toast.LENGTH_LONG).show();
-            startActivity(intent);
+            Toast.makeText(this, "Signed In successfully", Toast.LENGTH_LONG).show();
+            startActivity(intent); //tales user to next screen
 
         } else {
-            Toast.makeText(this, "U Didnt signed in", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Failed To Sign In", Toast.LENGTH_LONG).show();
         }
     }
 }

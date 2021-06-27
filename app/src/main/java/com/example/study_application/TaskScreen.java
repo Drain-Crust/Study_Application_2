@@ -28,7 +28,6 @@ public class TaskScreen extends AppCompatActivity {
     private long TimeLeft;
     private CountDownTimer countDownTimer;
 
-
     String[][] TextBodyData;
     String[][] TextNameData;
     String[] valueSpecificationData;
@@ -44,12 +43,14 @@ public class TaskScreen extends AppCompatActivity {
     String taskNames, taskCompletions, taskSpecification, taskTimes, taskPosition;
 
     int Time, originalTime;
+    Intent HomeScreen;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_task_screen);
 
+        //most parts of code already explained in other java classes
         Data = readFile("TaskNames.txt");
         fileData = Data.split("\n");
 
@@ -57,7 +58,7 @@ public class TaskScreen extends AppCompatActivity {
         ReadTaskNameData("TaskSpecifications.txt", false);
 
         intent = getIntent();
-        String number = intent.getStringExtra(ContentPoppupScreen.EXTRA_STRING_ID);
+        String number = intent.getStringExtra(ContentPopupScreen.EXTRA_STRING_ID);
         int actualNumber = Integer.parseInt(number);
 
         taskTimes = TextNameData[actualNumber][3];
@@ -67,7 +68,7 @@ public class TaskScreen extends AppCompatActivity {
         taskPosition = Integer.toString(actualNumber);
 
         Time = Integer.parseInt(taskTimes);
-
+        // time multiplied by 1000 as without it you cant get the specific minutes
         TimeLeft = Time * 1000;
         originalTime = (int) TimeLeft;
 
@@ -76,20 +77,25 @@ public class TaskScreen extends AppCompatActivity {
         timeBarText = findViewById(R.id.timeBarText);
         stopTimerButton = findViewById(R.id.StopTimer);
 
+        //starts timer if pressed and makes it disappear
         startTimerButton.setOnClickListener(v -> {
             startTimerButton.setVisibility(View.GONE);
             stopTimerButton.setVisibility(View.VISIBLE);
             startTimer();
         });
 
+        //appears after startTimerButton has been pressed
         stopTimerButton.setOnClickListener(v -> {
             startTimerButton.setVisibility(View.VISIBLE);
             stopTimerButton.setVisibility(View.GONE);
             stopTimer();
         });
+        HomeScreen = new Intent(this, HomeScreen.class);
     }
 
+
     private void startTimer() {
+        //creates new count down timer
         countDownTimer = new CountDownTimer(TimeLeft, 500) {
 
             @Override
@@ -103,13 +109,17 @@ public class TaskScreen extends AppCompatActivity {
             public void onFinish() {
                 if (timeBarText.getText().equals("00:00")) {
                     timeBarText.setText("STOP");
+                    //saves the new task data to the file
                     String textNameDataOld = taskPosition + " " + taskNames + " " + taskCompletions + " " + taskTimes;
                     String textNameDataNew = taskPosition + " " + taskNames + " " + "Completed" + " " + 0;
                     replaceLines(textNameDataOld, textNameDataNew);
+                    //starts next screen
+                    startActivity(HomeScreen);
                 }
             }
         }.start();
     }
+
 
     private void updateCountDownText() {
         int minutes = (int) (TimeLeft / 1000) / 60;
@@ -118,14 +128,14 @@ public class TaskScreen extends AppCompatActivity {
         timeBarText.setText(timeLeftFormatted);
     }
 
+
     private void stopTimer() {
         countDownTimer.cancel();
         //save the time into file
     }
 
-
+    //used to find
     private void replaceLines(String oldFileLine, String newFileLine) {
-
         try {
             FileOutputStream fos = openFileOutput("TaskNames.txt", Context.MODE_PRIVATE);
             fos.close();
@@ -134,16 +144,14 @@ public class TaskScreen extends AppCompatActivity {
         }
 
         List<String> fileContent = Arrays.asList(fileData);
-
+        //finds specific line inside txt file then replaces the file and puts back
+        // into the list which then the list is pasted back inside the txt file
         for (int i = 0; i < fileContent.size(); i++) {
             if (fileContent.get(i).equals(oldFileLine)) {
-                System.out.println("works");
-                System.out.println(oldFileLine);
                 fileContent.set(i, newFileLine);
                 break;
             }
         }
-        System.out.println(fileContent);
 
         for (int i = 0; i < fileContent.size(); i++) {
             write("TaskNames.txt", fileContent.get(i));
@@ -151,6 +159,7 @@ public class TaskScreen extends AppCompatActivity {
         }
     }
 
+    //code already explained
     public String readFile(String file) {
         String text = "";
         try {
@@ -167,6 +176,7 @@ public class TaskScreen extends AppCompatActivity {
         return text;
     }
 
+    //code already explained
     public void write(String file, String textData) {
         try {
             FileOutputStream fos = openFileOutput(file, Context.MODE_APPEND);
@@ -178,9 +188,9 @@ public class TaskScreen extends AppCompatActivity {
             e.printStackTrace();
             Toast.makeText(this, "Error saving file", Toast.LENGTH_SHORT).show();
         }
-
     }
 
+    //code already explained
     public void ReadTaskNameData(String file, Boolean TextOrBody) {
         String fileData = readFile(file);
         String[] DataString = fileData.split("\n");

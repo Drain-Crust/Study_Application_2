@@ -28,6 +28,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     private final Context mContext;
 
     public RecyclerViewAdapter(Context mContext, ArrayList<String> mNames, ArrayList<String> mIds) {
+        //used get the information from the homeScreen so i don't have to
+        // make the method of reading and writing a file inside the recyclerview
         this.mNames = mNames;
         this.mIds = mIds;
         this.mContext = mContext;
@@ -36,36 +38,47 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-
+        // is used to set the amount of items allowed on the screen
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.contents, parent, false);
         return new ViewHolder(view);
     }
 
+    // this is what updates the recycler view
     @Override
     public void onBindViewHolder(@NonNull RecyclerViewAdapter.ViewHolder holder, int position) {
         holder.carouselText.setText(mNames.get(position));
         holder.layout.setOnClickListener(v -> {
             Log.d(TAG, "onClick: On an a button: " + mNames.get(position));
-            Intent intent = new Intent(mContext, ContentPoppupScreen.class);
+            Intent intent = new Intent(mContext, ContentPopupScreen.class);
             intent.putExtra(EXTRA_NUMBER, mIds.get(position));
+
+            // this code is used for the transition between the cardview to another layout
             Pair mLayout = Pair.create(holder.layout, "shared_container");
             Pair textName = Pair.create(holder.carouselButton, "transition_button");
             Pair textBody = Pair.create(holder.carouselText, "transition_text");
             ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation((Activity) mContext, mLayout, textName, textBody);
+
+            //goes to the next scren
             mContext.startActivity(intent, options.toBundle());
         });
+
+        //checks if the button inside the layout is clicked instead
         holder.carouselButton.setOnClickListener(v -> {
             Intent intent1 = new Intent(mContext, TaskScreen.class);
             intent1.putExtra(EXTRA_NUMBER, mIds.get(position));
+            //sends user straight to the task start screen
             mContext.startActivity(intent1);
         });
     }
 
+    //finds the amount of items for the recyclerview
     @Override
     public int getItemCount() {
         return mNames.size();
     }
 
+    //this code makes it so that i can call these names to
+    // change there object attached in places like on viewBindHolder
     public static class ViewHolder extends RecyclerView.ViewHolder {
         TextView carouselText;
         Button carouselButton;

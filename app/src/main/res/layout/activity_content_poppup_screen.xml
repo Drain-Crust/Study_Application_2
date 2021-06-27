@@ -5,7 +5,7 @@
     android:layout_width="325dp"
     android:layout_height="450dp"
     android:layout_gravity="center"
-    tools:context=".ContentPoppupScreen">
+    tools:context=".ContentPopupScreen">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView"
@@ -28,7 +28,7 @@
         android:id="@+id/taskName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
+        android:text="@string/TaskName"
         android:textColor="@color/black"
         android:transitionName="transition_text"
         android:translationZ="90dp"
@@ -42,7 +42,7 @@
         android:id="@+id/taskSpecifications"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
+        android:text="@string/TaskSpecification"
         android:textColor="@color/black"
         android:translationZ="90dp"
         app:layout_constraintBottom_toBottomOf="@+id/cardView"
@@ -55,7 +55,7 @@
         android:id="@+id/taskCompletion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
+        android:text="@string/TaskCompletion"
         android:textColor="@color/black"
         android:translationZ="90dp"
         app:layout_constraintBottom_toBottomOf="@+id/cardView"
@@ -69,7 +69,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="40dp"
-        android:text="TextView"
+        android:text="@string/TaskTime"
         android:textColor="@color/black"
         android:translationZ="90dp"
         app:layout_constraintBottom_toTopOf="@+id/StartTask"
@@ -80,14 +80,16 @@
 
     <Button
         android:id="@+id/StartTask"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Start"
+        android:layout_width="182dp"
+        android:layout_height="36dp"
+        android:background="@drawable/rectangle_button"
+        android:backgroundTint="@color/accent"
+        android:text="@string/ButtonTaskStart"
         android:transitionName="transition_button"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.617" />
+        app:layout_constraintVertical_bias="0.74" />
 </androidx.constraintlayout.widget.ConstraintLayout>

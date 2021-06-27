@@ -32,6 +32,7 @@
                 android:layout_width="44dp"
                 android:layout_height="43dp"
                 android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="@string/ArrowAnimationImageView"
                 android:paddingTop="8dp"
                 android:src="@drawable/ic_message"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -49,8 +50,9 @@
                 android:background="?attr/selectableItemBackground"
                 android:padding="16dp"
                 android:paddingStart="40dp"
-                android:text="TaskName"
-                android:textColor="@color/black"
+                android:paddingEnd="40dp"
+                android:text="@string/TaskName"
+                android:textColor="@color/primary_text"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="parent"
@@ -73,9 +75,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="40dp"
                     android:layout_marginTop="4dp"
-                    android:text="Specifications"
+                    android:text="@string/TextViewSpecifications"
                     android:textAppearance="@style/TextAppearance.AppCompat.Small"
-                    android:textColor="@color/black"
+                    android:textColor="@color/primary_text"
                     android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -86,9 +88,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
                     android:layout_marginEnd="16dp"
-                    android:text="Completed"
+                    android:text="@string/TextViewCompleted"
                     android:textAppearance="@style/TextAppearance.AppCompat.Small"
-                    android:textColor="@color/black"
+                    android:textColor="@color/secondary_text"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -98,9 +100,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
                     android:layout_marginEnd="16dp"
-                    android:text="Status: "
+                    android:text="@string/TextViewStatus"
                     android:textAppearance="@style/TextAppearance.AppCompat.Small"
-                    android:textColor="@color/black"
+                    android:textColor="@color/primary_text"
                     android:textStyle="bold"
                     app:layout_constraintEnd_toStartOf="@+id/status"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -111,8 +113,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="40dp"
                     android:layout_marginTop="8dp"
-                    android:text="TextView"
-                    android:textColor="@color/black"
+                    android:text="@string/PlaceHolderSpecifications"
+                    android:textColor="@color/secondary_text"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/taskCompletionTextView" />
 
@@ -123,8 +125,8 @@
                     android:layout_marginVertical="16dp"
                     android:layout_marginEnd="16dp"
                     android:background="@drawable/rectangle_button"
-                    android:text="Start"
-                    android:textColor="@color/dark_blue_primary"
+                    android:text="@string/ButtonTaskStart"
+                    android:textColor="@color/accent"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="1.0"
@@ -132,12 +134,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/status"
                     app:layout_constraintVertical_bias="0.515" />
 
-
             </androidx.constraintlayout.widget.ConstraintLayout>
-
         </androidx.constraintlayout.widget.ConstraintLayout>
-
     </androidx.cardview.widget.CardView>
-
-
 </LinearLayout>

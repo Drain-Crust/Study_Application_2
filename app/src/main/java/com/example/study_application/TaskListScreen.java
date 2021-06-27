@@ -41,9 +41,11 @@ public class TaskListScreen extends AppCompatActivity {
         createTaskTaskList = findViewById(R.id.createTaskTaskList);
         EditText editText = findViewById(R.id.searchTextView);
 
+        //gets data from file and displays it in the recyclerview
         initData();
         initRecyclerView();
 
+        //used to check if the EditText area has changed.
         editText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -60,22 +62,25 @@ public class TaskListScreen extends AppCompatActivity {
         });
     }
 
-
     public void createButton(View v) {
         createTaskTaskList.setEnabled(false);
         Intent intent = new Intent(this, TaskCreateScreen.class);
         startActivity(intent);
     }
 
-
+    //this filter creates a new arraylist using the original
+    // arraylist by filtering out the items through the text view
     private void filter(String text) {
         ArrayList<TasksList> filteredList = new ArrayList<>();
+        //for loop to check through all the items inside the original arraylist
         for (TasksList item : tasksListList) {
 
+            //adds the item to the new arraylist
             if (item.getTitle().toLowerCase().contains(text.toLowerCase())) {
                 filteredList.add(item);
             }
         }
+        //applies the new filtered list to the adapter.
         taskAdapter.filterList(filteredList);
     }
 
@@ -135,6 +140,7 @@ public class TaskListScreen extends AppCompatActivity {
         return text;
     }
 
+    //updates the recyclerview
     protected void onResume() {
         createTaskTaskList.setEnabled(true);
         valueNameData = new String[0];

@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@color/white">
-
+    android:background="@color/white"
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -18,7 +16,7 @@
             android:layout_height="wrap_content"
             android:paddingHorizontal="25dp"
             android:paddingVertical="15dp"
-            android:text="Task List"
+            android:text="@string/TaskListNameTextView"
             android:textColor="@color/black"
             android:textSize="30sp" />
 
@@ -27,26 +25,27 @@
             style="?android:attr/borderlessButtonStyle"
             android:layout_width="48dp"
             android:layout_height="48dp"
+            android:backgroundTint="@color/accent"
             android:layout_gravity="center"
             android:layout_marginStart="150dp"
-            android:background="@color/white"
+            android:background="@drawable/circle_button"
             android:onClick="createButton"
-            android:text="+"
+            android:text="@string/TextViewCreateButton"
             android:textAlignment="center"
-            android:textColor="@color/black"
+            android:textColor="@color/icons"
             android:textSize="30sp" />
     </LinearLayout>
-
 
     <EditText
         android:id="@+id/searchTextView"
         android:layout_width="371dp"
         android:layout_height="33dp"
         android:layout_gravity="center"
-        android:background="@drawable/rectangle_button_tasksearch"
+        android:autofillHints="no"
+        android:background="@drawable/rectangle_button_task_search"
         android:backgroundTint="#E1E1E1"
-
         android:hint="@string/search"
+        android:inputType="textFilter"
         android:paddingHorizontal="8dp"
         android:textAlignment="center"
         android:textColor="@color/black"
@@ -69,6 +68,4 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/searchTextView"
         app:layout_constraintVertical_bias="1.0" />
-
-
 </LinearLayout>

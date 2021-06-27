@@ -18,6 +18,8 @@ public class TasksList {
         this.expanded = false;
     }
 
+    //used private variables so to use them i have to call get but because
+    // I don't set anything other than expanded i deleted the set methods
     public String getIDs() {
         return IDs;
     }
@@ -42,14 +44,14 @@ public class TasksList {
         this.expanded = expanded;
     }
 
+    // the layout to put data inside listArray
     @Override
     public @NotNull String toString() {
         return "TasksList{" +
-                "" + IDs + '\'' +
-                "title='" + title + '\'' +
+                "IDs='" + IDs + '\'' +
+                ", title='" + title + '\'' +
                 ", status='" + status + '\'' +
                 ", Specifications='" + Specifications + '\'' +
-                ", expanded=" + expanded +
-                '}';
+                ", expanded=" + expanded + '}';
     }
 }
