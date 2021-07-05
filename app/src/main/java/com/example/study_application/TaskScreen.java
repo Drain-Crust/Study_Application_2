@@ -36,41 +36,31 @@ public class TaskScreen extends AppCompatActivity {
     String IdName, taskCompletion, timeRequired, taskName;
     String IdSpecifications, TaskSpecification;
 
-    Intent intent;
+    Intent lastPageInformation;
     String Data;
     String[] fileData;
 
     String taskNames, taskCompletions, taskSpecification, taskTimes, taskPosition;
 
-    int Time, originalTime;
+    int Time;
     Intent HomeScreen;
+
+    int actualNumber;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_task_screen);
 
-        //most parts of code already explained in other java classes
-        Data = readFile("TaskNames.txt");
-        fileData = Data.split("\n");
+        lastPageInformation = getIntent();
+        String number = lastPageInformation.getStringExtra(ContentPopupScreen.EXTRA_STRING_ID);
+        actualNumber = Integer.parseInt(number);
 
-        ReadTaskNameData("TaskNames.txt", true);
-        ReadTaskNameData("TaskSpecifications.txt", false);
-
-        intent = getIntent();
-        String number = intent.getStringExtra(ContentPopupScreen.EXTRA_STRING_ID);
-        int actualNumber = Integer.parseInt(number);
-
-        taskTimes = TextNameData[actualNumber][3];
-        taskNames = TextNameData[actualNumber][1];
-        taskSpecification = TextBodyData[actualNumber][1];
-        taskCompletions = TextNameData[actualNumber][2];
-        taskPosition = Integer.toString(actualNumber);
+        fileDataInformation();
 
         Time = Integer.parseInt(taskTimes);
         // time multiplied by 1000 as without it you cant get the specific minutes
         TimeLeft = Time * 1000;
-        originalTime = (int) TimeLeft;
 
         timerBar = findViewById(R.id.timerBar);
         startTimerButton = findViewById(R.id.StartTimer);
@@ -109,6 +99,8 @@ public class TaskScreen extends AppCompatActivity {
             public void onFinish() {
                 if (timeBarText.getText().equals("00:00")) {
                     timeBarText.setText("STOP");
+                    fileDataInformation();
+
                     //saves the new task data to the file
                     String textNameDataOld = taskPosition + " " + taskNames + " " + taskCompletions + " " + taskTimes;
                     String textNameDataNew = taskPosition + " " + taskNames + " " + "Completed" + " " + 0;
@@ -130,8 +122,28 @@ public class TaskScreen extends AppCompatActivity {
 
 
     private void stopTimer() {
+        fileDataInformation();
+
+        String textNameDataOld = taskPosition + " " + taskNames + " " + taskCompletions + " " + taskTimes;
+        String textNameDataNew = taskPosition + " " + taskNames + " " + "Uncompleted" + " " + (TimeLeft/1000);
+        replaceLines(textNameDataOld, textNameDataNew);
         countDownTimer.cancel();
         //save the time into file
+    }
+
+    private void fileDataInformation(){
+        Data = "";
+        fileData = new String[0];
+        Data = readFile("TaskNames.txt");
+        fileData = Data.split("\n");
+
+        ReadTaskNameData("TaskNames.txt", true);
+        ReadTaskNameData("TaskSpecifications.txt", false);
+        taskTimes = TextNameData[actualNumber][3];
+        taskNames = TextNameData[actualNumber][1];
+        taskSpecification = TextBodyData[actualNumber][1];
+        taskCompletions = TextNameData[actualNumber][2];
+        taskPosition = Integer.toString(actualNumber);
     }
 
     //used to find
