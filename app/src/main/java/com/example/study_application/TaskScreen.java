@@ -52,6 +52,7 @@ public class TaskScreen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_task_screen);
 
+        HomeScreen = new Intent(this, HomeScreen.class);
         lastPageInformation = getIntent();
         String number = lastPageInformation.getStringExtra(ContentPopupScreen.EXTRA_STRING_ID);
         actualNumber = Integer.parseInt(number);
@@ -80,7 +81,6 @@ public class TaskScreen extends AppCompatActivity {
             stopTimerButton.setVisibility(View.GONE);
             stopTimer();
         });
-        HomeScreen = new Intent(this, HomeScreen.class);
     }
 
 
@@ -237,5 +237,12 @@ public class TaskScreen extends AppCompatActivity {
                 TextNameData[i] = valueNameData;
             }
         }
+    }
+
+    public void onBackPressed(){
+        startTimerButton.setVisibility(View.VISIBLE);
+        stopTimerButton.setVisibility(View.GONE);
+        stopTimer();
+        super.onBackPressed();
     }
 }
