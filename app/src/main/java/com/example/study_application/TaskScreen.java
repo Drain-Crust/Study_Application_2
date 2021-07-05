@@ -25,8 +25,6 @@ public class TaskScreen extends AppCompatActivity {
     Button startTimerButton, stopTimerButton;
     ProgressBar timerBar;
     TextView timeBarText;
-    private long TimeLeft;
-    private CountDownTimer countDownTimer;
 
     String[][] TextBodyData;
     String[][] TextNameData;
@@ -42,10 +40,14 @@ public class TaskScreen extends AppCompatActivity {
 
     String taskNames, taskCompletions, taskSpecification, taskTimes, taskPosition;
 
+    private long TimeLeft;
+    private CountDownTimer countDownTimer;
+    private CountDownTimer countBreakTimer;
     int Time;
-    Intent HomeScreen;
-
     int actualNumber;
+    long BreakTimeLeft;
+
+    Intent HomeScreen;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,6 +74,9 @@ public class TaskScreen extends AppCompatActivity {
         startTimerButton.setOnClickListener(v -> {
             startTimerButton.setVisibility(View.GONE);
             stopTimerButton.setVisibility(View.VISIBLE);
+            if (TimeLeft > 1500000) {
+                startBreakTimer();
+            }
             startTimer();
         });
 
@@ -94,11 +99,9 @@ public class TaskScreen extends AppCompatActivity {
                 updateCountDownText();
             }
 
-            @SuppressLint("SetTextI18n")
             @Override
             public void onFinish() {
                 if (timeBarText.getText().equals("00:00")) {
-                    timeBarText.setText("STOP");
                     fileDataInformation();
 
                     //saves the new task data to the file
@@ -125,13 +128,13 @@ public class TaskScreen extends AppCompatActivity {
         fileDataInformation();
 
         String textNameDataOld = taskPosition + " " + taskNames + " " + taskCompletions + " " + taskTimes;
-        String textNameDataNew = taskPosition + " " + taskNames + " " + "Uncompleted" + " " + (TimeLeft/1000);
+        String textNameDataNew = taskPosition + " " + taskNames + " " + "Uncompleted" + " " + (TimeLeft / 1000);
         replaceLines(textNameDataOld, textNameDataNew);
         countDownTimer.cancel();
         //save the time into file
     }
 
-    private void fileDataInformation(){
+    private void fileDataInformation() {
         Data = "";
         fileData = new String[0];
         Data = readFile("TaskNames.txt");
@@ -239,10 +242,35 @@ public class TaskScreen extends AppCompatActivity {
         }
     }
 
-    public void onBackPressed(){
+    public void onBackPressed() {
         startTimerButton.setVisibility(View.VISIBLE);
         stopTimerButton.setVisibility(View.GONE);
         stopTimer();
         super.onBackPressed();
+    }
+
+    private void startBreakTimer() {
+        BreakTimeLeft = 1500000;
+        //creates new count down timer
+        countBreakTimer = new CountDownTimer(1500000, 500) {
+
+            @Override
+            public void onTick(long leftTimeInMilliseconds) {
+                BreakTimeLeft = leftTimeInMilliseconds;
+            }
+
+            @Override
+            public void onFinish() {
+                countBreakTimer.cancel();
+                Intent BreakTimerScreen = new Intent(TaskScreen.this, BreakTimerScreen.class);
+
+                fileDataInformation();
+                String textNameDataOld = taskPosition + " " + taskNames + " " + taskCompletions + " " + taskTimes;
+                String textNameDataNew = taskPosition + " " + taskNames + " " + "Uncompleted" + " " + (TimeLeft / 1000);
+                replaceLines(textNameDataOld, textNameDataNew);
+                //starts next screen
+                startActivity(BreakTimerScreen);
+            }
+        }.start();
     }
 }
