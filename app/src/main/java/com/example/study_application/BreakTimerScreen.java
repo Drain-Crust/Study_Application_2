@@ -42,10 +42,10 @@ public class BreakTimerScreen extends AppCompatActivity {
     }
 
     private void startBreakTimer() {
-        // as we are using milliseconds i have to increase it by multiplying it by 1000 the 1500 originally is the 25 minute mark.
-        BreakTimeLeft = 1500000;
+        // as we are using milliseconds i have to increase it by multiplying it by 1000 the 300 originally is the 5 minute mark.
+        BreakTimeLeft = 300000;
         //creates new count down timer
-        countBreakTimer = new CountDownTimer(1500000, 500) {
+        countBreakTimer = new CountDownTimer(300000, 500) {
 
             @Override
             public void onTick(long leftTimeInMilliseconds) {
@@ -56,10 +56,10 @@ public class BreakTimerScreen extends AppCompatActivity {
             @Override
             public void onFinish() {
                 countBreakTimer.cancel();
-                progressBreakBar.setText("Break Has Ended");
+                progressBreakBar.setText(R.string.breakEnd);
                 cancelButton.setVisibility(View.GONE);
                 stopButton.setVisibility(View.VISIBLE);
-                stopButton.setOnClickListener(v -> startActivity(TaskScreen));
+                stopButton.setOnClickListener(v -> finish());
             }
         }.start();
     }
