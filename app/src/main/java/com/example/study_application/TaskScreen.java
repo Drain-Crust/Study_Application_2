@@ -30,9 +30,6 @@ public class TaskScreen extends AppCompatActivity {
     String[] valueSpecificationData;
     String[] valueNameData;
 
-    String IdName, taskCompletion, timeRequired, taskName;
-    String IdSpecifications, TaskSpecification;
-
     Intent lastPageInformation;
     String Data;
     String[] fileData;
@@ -53,6 +50,11 @@ public class TaskScreen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_task_screen);
 
+        timerBar = findViewById(R.id.timerBar); // haven't finished time bar
+        startTimerButton = findViewById(R.id.StartTimer);
+        timeBarText = findViewById(R.id.timeBarText);
+        stopTimerButton = findViewById(R.id.StopTimer);
+
         HomeScreen = new Intent(this, HomeScreen.class);
         lastPageInformation = getIntent();
         String number = lastPageInformation.getStringExtra(ContentPopupScreen.EXTRA_STRING_ID);
@@ -64,14 +66,11 @@ public class TaskScreen extends AppCompatActivity {
         // time multiplied by 1000 as without it you cant get the specific minutes
         TimeLeft = Time * 1000;
 
-        timerBar = findViewById(R.id.timerBar);
-        startTimerButton = findViewById(R.id.StartTimer);
-        timeBarText = findViewById(R.id.timeBarText);
-        stopTimerButton = findViewById(R.id.StopTimer);
+        updateCountDownText();
 
         //starts timer if pressed and makes it disappear
         startTimerButton.setOnClickListener(v -> {
-            startTimerButton.setVisibility(View.GONE);
+            startTimerButton.setVisibility(View.INVISIBLE);
             stopTimerButton.setVisibility(View.VISIBLE);
             if (TimeLeft > 1500000) {
                 startBreakTimer();
@@ -80,11 +79,7 @@ public class TaskScreen extends AppCompatActivity {
         });
 
         //appears after startTimerButton has been pressed
-        stopTimerButton.setOnClickListener(v -> {
-            startTimerButton.setVisibility(View.VISIBLE);
-            stopTimerButton.setVisibility(View.GONE);
-            stopTimer();
-        });
+        stopTimerButton.setOnClickListener(v -> stopTimer());
     }
 
 
@@ -124,6 +119,8 @@ public class TaskScreen extends AppCompatActivity {
 
 
     private void stopTimer() {
+        startTimerButton.setVisibility(View.VISIBLE);
+        stopTimerButton.setVisibility(View.INVISIBLE);
         fileDataInformation();
 
         String textNameDataOld = taskPosition + " " + taskNames + " " + taskCompletions + " " + taskTimes;
@@ -146,6 +143,11 @@ public class TaskScreen extends AppCompatActivity {
         taskSpecification = TextBodyData[actualNumber][1];
         taskCompletions = TextNameData[actualNumber][2];
         taskPosition = Integer.toString(actualNumber);
+
+
+        if (taskCompletions.equals("Uncompleted")){
+            startTimerButton.setText("Resume");
+        }
     }
 
     //used to find
@@ -217,8 +219,8 @@ public class TaskScreen extends AppCompatActivity {
             for (int i = 1; i < DataString.length; i++) {
                 String[] values = DataString[i].split(" ");
 
-                IdSpecifications = values[0];
-                TaskSpecification = values[1];
+                String IdSpecifications = values[0];
+                String TaskSpecification = values[1];
 
                 valueSpecificationData = new String[]{IdSpecifications, TaskSpecification};
 
@@ -229,10 +231,10 @@ public class TaskScreen extends AppCompatActivity {
             for (int i = 1; i < DataString.length; i++) {
                 String[] values = DataString[i].split(" ");
 
-                IdName = values[0];
-                taskName = values[1];
-                taskCompletion = values[2];
-                timeRequired = values[3];
+                String IdName = values[0];
+                String taskName = values[1];
+                String taskCompletion = values[2];
+                String timeRequired = values[3];
 
                 valueNameData = new String[]{IdName, taskName, taskCompletion, timeRequired};
 
@@ -250,9 +252,9 @@ public class TaskScreen extends AppCompatActivity {
 
     private void startBreakTimer() {
         // as we are using milliseconds i have to increase it by multiplying it by 1000 the 1500 originally is the 25 minute mark.
-        BreakTimeLeft = 1500000;
+        BreakTimeLeft = 15000;
         //creates new count down timer
-        countBreakTimer = new CountDownTimer(1500000, 500) {
+        countBreakTimer = new CountDownTimer(15000, 500) {
 
             @Override
             public void onTick(long leftTimeInMilliseconds) {
@@ -264,10 +266,7 @@ public class TaskScreen extends AppCompatActivity {
                 countBreakTimer.cancel();
                 Intent BreakTimerScreen = new Intent(TaskScreen.this, BreakTimerScreen.class);
 
-                fileDataInformation();
-                String textNameDataOld = taskPosition + " " + taskNames + " " + taskCompletions + " " + taskTimes;
-                String textNameDataNew = taskPosition + " " + taskNames + " " + "Uncompleted" + " " + (TimeLeft / 1000);
-                replaceLines(textNameDataOld, textNameDataNew);
+                stopTimer();
                 //starts next screen
                 startActivity(BreakTimerScreen);
             }

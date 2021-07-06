@@ -17,7 +17,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Design.NoActionBar">
-        <activity android:name=".BreakTimerScreen" />
+        <activity android:name=".BreakTimerScreen"
+            android:theme="@style/Theme.AppCompat.Poppup"/>
         <activity
             android:name=".ContentPopupScreen"
             android:theme="@style/Theme.AppCompat.Poppup" />

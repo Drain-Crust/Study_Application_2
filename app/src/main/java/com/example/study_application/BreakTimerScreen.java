@@ -29,6 +29,7 @@ public class BreakTimerScreen extends AppCompatActivity {
         stopButton = findViewById(R.id.stopButton);
         startButton = findViewById(R.id.startButton);
         cancelButton = findViewById(R.id.cancelButton);
+        progressBreakBar = findViewById(R.id.progressBreakBar);
 
         getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
         stopButton.setVisibility(View.INVISIBLE);
@@ -38,7 +39,7 @@ public class BreakTimerScreen extends AppCompatActivity {
             startBreakTimer();
         });
 
-        cancelButton.setOnClickListener(v -> startActivity(TaskScreen));
+        cancelButton.setOnClickListener(v -> finish());
     }
 
     private void startBreakTimer() {
@@ -55,11 +56,14 @@ public class BreakTimerScreen extends AppCompatActivity {
 
             @Override
             public void onFinish() {
-                countBreakTimer.cancel();
-                progressBreakBar.setText(R.string.breakEnd);
-                cancelButton.setVisibility(View.GONE);
-                stopButton.setVisibility(View.VISIBLE);
-                stopButton.setOnClickListener(v -> finish());
+                if (BreakTimeLeft < 600){
+                    countBreakTimer.cancel();
+                    progressBreakBar.setText(R.string.breakEnd);
+                    cancelButton.setVisibility(View.INVISIBLE);
+                    stopButton.setVisibility(View.VISIBLE);
+                    stopButton.setOnClickListener(v -> finish());
+                }
+
             }
         }.start();
     }
