@@ -1,5 +1,6 @@
 package com.example.study_application;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -131,6 +132,7 @@ public class TaskScreen extends AppCompatActivity {
         //save the time into file
     }
 
+    @SuppressLint("SetTextI18n")
     private void fileDataInformation() {
         Data = "";
         fileData = new String[0];
@@ -146,7 +148,7 @@ public class TaskScreen extends AppCompatActivity {
         taskPosition = Integer.toString(actualNumber);
 
 
-        if (taskCompletions.equals("Uncompleted")){
+        if (taskCompletions.equals("Uncompleted")) {
             startTimerButton.setText("Resume");
         }
     }

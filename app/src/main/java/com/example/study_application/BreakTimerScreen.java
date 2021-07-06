@@ -31,6 +31,11 @@ public class BreakTimerScreen extends AppCompatActivity {
         cancelButton = findViewById(R.id.cancelButton);
         progressBreakBar = findViewById(R.id.progressBreakBar);
 
+        // as we are using milliseconds i have to increase it by multiplying it by 1000 the 300 originally is the 5 minute mark.
+        BreakTimeLeft = 300000;
+
+        updateCountDownText();
+
         getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
         stopButton.setVisibility(View.INVISIBLE);
 
@@ -43,8 +48,7 @@ public class BreakTimerScreen extends AppCompatActivity {
     }
 
     private void startBreakTimer() {
-        // as we are using milliseconds i have to increase it by multiplying it by 1000 the 300 originally is the 5 minute mark.
-        BreakTimeLeft = 300000;
+
         //creates new count down timer
         countBreakTimer = new CountDownTimer(300000, 500) {
 
@@ -56,7 +60,7 @@ public class BreakTimerScreen extends AppCompatActivity {
 
             @Override
             public void onFinish() {
-                if (BreakTimeLeft < 600){
+                if (BreakTimeLeft < 600) {
                     countBreakTimer.cancel();
                     progressBreakBar.setText(R.string.breakEnd);
                     cancelButton.setVisibility(View.INVISIBLE);
