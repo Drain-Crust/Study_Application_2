@@ -127,6 +127,7 @@ public class TaskScreen extends AppCompatActivity {
         String textNameDataNew = taskPosition + " " + taskNames + " " + "Uncompleted" + " " + (TimeLeft / 1000);
         replaceLines(textNameDataOld, textNameDataNew);
         countDownTimer.cancel();
+        countBreakTimer.cancel();
         //save the time into file
     }
 
@@ -263,7 +264,6 @@ public class TaskScreen extends AppCompatActivity {
 
             @Override
             public void onFinish() {
-                countBreakTimer.cancel();
                 Intent BreakTimerScreen = new Intent(TaskScreen.this, BreakTimerScreen.class);
 
                 stopTimer();
