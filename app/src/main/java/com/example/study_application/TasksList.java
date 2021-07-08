@@ -8,6 +8,7 @@ public class TasksList {
     private final String IDs;
     private final String status;
     private final String Specifications;
+    private boolean selected;
     private boolean expanded;
 
     public TasksList(String IDs, String title, String status, String Specifications) {
@@ -16,6 +17,7 @@ public class TasksList {
         this.status = status;
         this.Specifications = Specifications;
         this.expanded = false;
+        this.selected = false;
     }
 
     //used private variables so to use them i have to call get but because
@@ -44,6 +46,14 @@ public class TasksList {
         this.expanded = expanded;
     }
 
+    public  boolean isSelected(){
+        return selected;
+    }
+
+    public void setSelected(boolean selected) {
+        this.selected = selected;
+    }
+
     // the layout to put data inside listArray
     @Override
     public @NotNull String toString() {
@@ -52,6 +62,7 @@ public class TasksList {
                 ", title='" + title + '\'' +
                 ", status='" + status + '\'' +
                 ", Specifications='" + Specifications + '\'' +
-                ", expanded=" + expanded + '}';
+                ", expanded=" + expanded + '}' +
+                ", selected='" + selected + '}';
     }
 }

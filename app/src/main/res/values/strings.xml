@@ -84,6 +84,7 @@
     <string name="textViewBreakTimeOptionNo">NO</string>
     <string name="textViewBreakTimeOptionContinue">Continue</string>
     <string name="textViewBreakTimeText">Take A Break</string>
+    <string name="confirmDeletion">Confirm</string>
 
 
 </resources>

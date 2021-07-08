@@ -21,4 +21,5 @@
 
     <color name="lighter_blue">#51C4D3</color>
     <color name="grey">#30000000</color>
+    <color name="red">#FF0000</color>
 </resources>

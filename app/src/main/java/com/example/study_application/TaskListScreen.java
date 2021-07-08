@@ -22,6 +22,9 @@ public class TaskListScreen extends AppCompatActivity {
     RecyclerView recyclerViewTasks;
     RecyclerViewTasksAdapter taskAdapter;
     Button createTaskTaskList;
+    Button deleteTaskTaskList;
+    Button confirmationDeletionTaskList;
+    Button cancelDeletionTaskList;
 
     //vars
     List<TasksList> tasksListList;
@@ -39,6 +42,9 @@ public class TaskListScreen extends AppCompatActivity {
 
         recyclerViewTasks = findViewById(R.id.recyclerViewTasks);
         createTaskTaskList = findViewById(R.id.createTaskTaskList);
+        deleteTaskTaskList = findViewById(R.id.deleteButton);
+        confirmationDeletionTaskList = findViewById(R.id.confirmDeletionButton);
+        cancelDeletionTaskList = findViewById(R.id.cancelButton);
         EditText editText = findViewById(R.id.searchTextView);
 
         //gets data from file and displays it in the recyclerview
@@ -66,6 +72,37 @@ public class TaskListScreen extends AppCompatActivity {
         createTaskTaskList.setEnabled(false);
         Intent intent = new Intent(this, TaskCreateScreen.class);
         startActivity(intent);
+    }
+
+    public void deleteButton(View v){
+        createTaskTaskList.setEnabled(false);
+        createTaskTaskList.setVisibility(View.INVISIBLE);
+        deleteTaskTaskList.setEnabled(false);
+        deleteTaskTaskList.setVisibility(View.INVISIBLE);
+        confirmationDeletionTaskList.setVisibility(View.VISIBLE);
+        cancelDeletionTaskList.setVisibility(View.VISIBLE);
+
+        RecyclerViewTasksAdapter.deletingTasks(true);
+        taskAdapter.notifyDataSetChanged();
+
+        confirmationDeletionTaskList.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        cancelDeletionTaskList.setOnClickListener(v1 -> {
+            createTaskTaskList.setEnabled(true);
+            createTaskTaskList.setVisibility(View.VISIBLE);
+            deleteTaskTaskList.setEnabled(true);
+            deleteTaskTaskList.setVisibility(View.VISIBLE);
+            confirmationDeletionTaskList.setVisibility(View.INVISIBLE);
+            cancelDeletionTaskList.setVisibility(View.INVISIBLE);
+
+            RecyclerViewTasksAdapter.deletingTasks(false);
+            taskAdapter.notifyDataSetChanged();
+        });
     }
 
     //this filter creates a new arraylist using the original

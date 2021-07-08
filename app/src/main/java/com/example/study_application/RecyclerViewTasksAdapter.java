@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -19,15 +20,22 @@ import java.util.List;
 
 public class RecyclerViewTasksAdapter extends RecyclerView.Adapter<RecyclerViewTasksAdapter.ViewHolder> {
     public static final String EXTRA_NUMBER = "package com.example.study_application";
+    private static boolean deletingTask = false;
+
 
     List<TasksList> tasksListList;
 
     private final Context mContext;
+    ArrayList<TasksList> selectedItems = new ArrayList<>();
 
     //already explain in other java file
     public RecyclerViewTasksAdapter(List<TasksList> tasksListList, Context mContext) {
         this.tasksListList = tasksListList;
         this.mContext = mContext;
+    }
+
+    public static void deletingTasks(boolean b) {
+        deletingTask = b;
     }
 
     //already explain in other java file
@@ -40,11 +48,26 @@ public class RecyclerViewTasksAdapter extends RecyclerView.Adapter<RecyclerViewT
 
     //already explain in other java file
     @Override
-    public void onBindViewHolder(RecyclerViewTasksAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(RecyclerViewTasksAdapter.@NotNull ViewHolder holder, int position) {
         TasksList TasksList = tasksListList.get(position);
+
+        if (deletingTask){
+            holder.arrowButton.setVisibility(View.INVISIBLE);
+            holder.checkBox.setVisibility(View.VISIBLE);
+
+        } else{
+            holder.arrowButton.setVisibility(View.VISIBLE);
+            holder.checkBox.setVisibility(View.INVISIBLE);
+        }
+
 
         holder.TaskTitleTextView.setOnClickListener(view -> {
             TasksList.setExpanded(!TasksList.isExpanded());
+            notifyItemChanged(position);
+        });
+
+        holder.checkBox.setOnClickListener(v -> {
+            TasksList.setSelected(!TasksList.isSelected());
             notifyItemChanged(position);
         });
 
@@ -52,8 +75,15 @@ public class RecyclerViewTasksAdapter extends RecyclerView.Adapter<RecyclerViewT
         holder.taskStatusTextView.setText(TasksList.getStatus());
         holder.specificationTextTextView.setText(TasksList.getSpecifications());
 
-        //if task list isExpanded is equal to true it will expand to show more information
-        // this is due to the onClickListener above.
+        holder.checkBox.setChecked(TasksList.isSelected());
+        if (holder.checkBox.isChecked()){
+            if (!selectedItems.contains(tasksListList.get(position))){
+                selectedItems.add(tasksListList.get(position));
+            }
+        } else {
+            selectedItems.remove(tasksListList.get(position));
+            System.out.println("the check box unTicked" + selectedItems);
+        }
         boolean isExpanded = TasksList.isExpanded();
         holder.expandableLayout.setVisibility(isExpanded ? View.VISIBLE : View.GONE);
         ArrowAnimation.toggleArrow(holder.arrowButton, TasksList.isExpanded());
@@ -84,6 +114,7 @@ public class RecyclerViewTasksAdapter extends RecyclerView.Adapter<RecyclerViewT
         TextView TaskTitleTextView, taskStatusTextView, specificationTextTextView;
         ImageView arrowButton;
         Button StartTask;
+        CheckBox checkBox;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -93,6 +124,8 @@ public class RecyclerViewTasksAdapter extends RecyclerView.Adapter<RecyclerViewT
             specificationTextTextView = itemView.findViewById(R.id.specificationTextTextView);
             arrowButton = itemView.findViewById(R.id.viewMoreBtn);
             StartTask = itemView.findViewById(R.id.StartTask);
+            checkBox = itemView.findViewById(R.id.checkBox);
+            checkBox.bringToFront();
         }
     }
 }
