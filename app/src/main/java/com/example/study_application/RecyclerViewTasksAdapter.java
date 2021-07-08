@@ -22,11 +22,10 @@ public class RecyclerViewTasksAdapter extends RecyclerView.Adapter<RecyclerViewT
     public static final String EXTRA_NUMBER = "package com.example.study_application";
     private static boolean deletingTask = false;
 
-
     List<TasksList> tasksListList;
 
     private final Context mContext;
-    ArrayList<TasksList> selectedItems = new ArrayList<>();
+    public ArrayList<TasksList> selectedItems = new ArrayList<>();
 
     //already explain in other java file
     public RecyclerViewTasksAdapter(List<TasksList> tasksListList, Context mContext) {
@@ -60,7 +59,6 @@ public class RecyclerViewTasksAdapter extends RecyclerView.Adapter<RecyclerViewT
             holder.checkBox.setVisibility(View.INVISIBLE);
         }
 
-
         holder.TaskTitleTextView.setOnClickListener(view -> {
             TasksList.setExpanded(!TasksList.isExpanded());
             notifyItemChanged(position);
@@ -82,8 +80,8 @@ public class RecyclerViewTasksAdapter extends RecyclerView.Adapter<RecyclerViewT
             }
         } else {
             selectedItems.remove(tasksListList.get(position));
-            System.out.println("the check box unTicked" + selectedItems);
         }
+
         boolean isExpanded = TasksList.isExpanded();
         holder.expandableLayout.setVisibility(isExpanded ? View.VISIBLE : View.GONE);
         ArrowAnimation.toggleArrow(holder.arrowButton, TasksList.isExpanded());
@@ -93,7 +91,6 @@ public class RecyclerViewTasksAdapter extends RecyclerView.Adapter<RecyclerViewT
             intent1.putExtra(EXTRA_NUMBER, TasksList.getIDs());
             mContext.startActivity(intent1);
         });
-
     }
 
     //already explain in other java file
@@ -127,5 +124,11 @@ public class RecyclerViewTasksAdapter extends RecyclerView.Adapter<RecyclerViewT
             checkBox = itemView.findViewById(R.id.checkBox);
             checkBox.bringToFront();
         }
+    }
+
+    public List<TasksList> getSelectedItems(){
+        ArrayList<TasksList> selectedItemsList;
+        selectedItemsList = selectedItems;
+        return selectedItemsList;
     }
 }

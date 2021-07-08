@@ -28,6 +28,7 @@ public class TaskListScreen extends AppCompatActivity {
 
     //vars
     List<TasksList> tasksListList;
+    List<TasksList> selectedItems;
 
     String[] valueNameData;
     String[][] fileDataArray;
@@ -85,11 +86,10 @@ public class TaskListScreen extends AppCompatActivity {
         RecyclerViewTasksAdapter.deletingTasks(true);
         taskAdapter.notifyDataSetChanged();
 
-        confirmationDeletionTaskList.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
+        confirmationDeletionTaskList.setOnClickListener(v12 -> {
+            selectedItems = taskAdapter.getSelectedItems();
+            System.out.println(selectedItems);
+            taskAdapter.notifyDataSetChanged();
         });
 
         cancelDeletionTaskList.setOnClickListener(v1 -> {
