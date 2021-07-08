@@ -62,7 +62,7 @@ public class TasksList {
                 ", title='" + title + '\'' +
                 ", status='" + status + '\'' +
                 ", Specifications='" + Specifications + '\'' +
-                ", expanded=" + expanded + '}' +
+                ", expanded=" + expanded + '\'' +
                 ", selected='" + selected + '}';
     }
 }

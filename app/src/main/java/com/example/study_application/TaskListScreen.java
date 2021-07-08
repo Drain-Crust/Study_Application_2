@@ -1,5 +1,6 @@
 package com.example.study_application;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
@@ -14,7 +15,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class TaskListScreen extends AppCompatActivity {
@@ -27,10 +31,11 @@ public class TaskListScreen extends AppCompatActivity {
     Button cancelDeletionTaskList;
 
     //vars
-    List<TasksList> tasksListList;
-    List<TasksList> selectedItems;
+    List<TasksList> tasksListList = new ArrayList<>();
+    List<TasksList> selectedItems = new ArrayList<>();
 
     String[] valueNameData;
+    String[] DataString;
     String[][] fileDataArray;
     String[][] SpecificationsDataArray;
 
@@ -75,7 +80,7 @@ public class TaskListScreen extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void deleteButton(View v){
+    public void deleteButton(View v) {
         createTaskTaskList.setEnabled(false);
         createTaskTaskList.setVisibility(View.INVISIBLE);
         deleteTaskTaskList.setEnabled(false);
@@ -88,7 +93,13 @@ public class TaskListScreen extends AppCompatActivity {
 
         confirmationDeletionTaskList.setOnClickListener(v12 -> {
             selectedItems = taskAdapter.getSelectedItems();
-            System.out.println(selectedItems);
+            String ID = selectedItems.get(0).getIDs();
+            ReadData("TaskNames.txt");
+            for (int i = 1; i < fileDataArray.length; i++) {
+                if (ID.equals(fileDataArray[i][0])){
+                    System.out.println("nice");
+                }
+            }
             taskAdapter.notifyDataSetChanged();
         });
 
@@ -143,7 +154,7 @@ public class TaskListScreen extends AppCompatActivity {
 
     public void ReadData(String file) {
         String fileData = readFile(file);
-        String[] DataString = fileData.split("\n");
+        DataString = fileData.split("\n");
         fileDataArray = new String[DataString.length][];
         for (int i = 1; i < DataString.length; i++) {
 
@@ -187,5 +198,42 @@ public class TaskListScreen extends AppCompatActivity {
         initData();
         initRecyclerView();
         super.onResume();
+    }
+
+    private void replaceLines(String oldFileLine, String newFileLine, String[] fileData) {
+        try {
+            FileOutputStream fos = openFileOutput("TaskNames.txt", Context.MODE_PRIVATE);
+            fos.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        List<String> fileContent = Arrays.asList(fileData);
+        //finds specific line inside txt file then replaces the file and puts back
+        // into the list which then the list is pasted back inside the txt file
+        for (int i = 0; i < fileContent.size(); i++) {
+            if (fileContent.get(i).equals(oldFileLine)) {
+                fileContent.set(i, newFileLine);
+                break;
+            }
+        }
+
+        for (int i = 0; i < fileContent.size(); i++) {
+            write("TaskNames.txt", fileContent.get(i));
+            write("TaskNames.txt", "\n");
+        }
+    }
+
+    public void write(String file, String textData) {
+        try {
+            FileOutputStream fos = openFileOutput(file, Context.MODE_APPEND);
+            fos.write(textData.getBytes());
+            fos.close();
+            Toast.makeText(this, "saving file successful", Toast.LENGTH_SHORT).show();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            Toast.makeText(this, "Error saving file", Toast.LENGTH_SHORT).show();
+        }
     }
 }
