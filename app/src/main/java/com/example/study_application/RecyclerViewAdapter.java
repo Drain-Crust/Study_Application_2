@@ -46,7 +46,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     // this is what updates the recycler view
     @Override
     public void onBindViewHolder(@NonNull RecyclerViewAdapter.ViewHolder holder, int position) {
-        holder.carouselText.setText(mNames.get(position));
+        holder.carouselText.setText(mNames.get(position).replace("_"," "));
         holder.layout.setOnClickListener(v -> {
             Log.d(TAG, "onClick: On an a button: " + mNames.get(position));
             Intent intent = new Intent(mContext, ContentPopupScreen.class);

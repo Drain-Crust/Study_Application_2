@@ -28,11 +28,15 @@ public class TaskCreateScreen extends AppCompatActivity {
     int height;
 
     Intent intent;
+    ReadAndWrite readAndWrite;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_popup);
+
+        readAndWrite = new ReadAndWrite(TaskCreateScreen.this);
 
         //checks if file exists if not then it will create
         // a file with the first values as placeholders
@@ -83,23 +87,8 @@ public class TaskCreateScreen extends AppCompatActivity {
 
         //checks if im creating a new file or adding to a file
         if (!create) {
-            //most code explained before
-            String fileData = readFile(file);
-            String[] DataString = fileData.split("\n");
-            String[][] DataForLength = new String[DataString.length][];
-
-            for (int i = 1; i < DataString.length; i++) {
-                String[] values = DataString[i].split(" ");
-
-                String TaskName = values[0];
-                String TaskSpecification = values[1];
-                String TaskType = values[2];
-                String TimeRequired = values[3];
-
-                String[] value = {TaskName, TaskSpecification, TaskType, TimeRequired};
-
-                DataForLength[i] = value;
-            }
+            String[][] DataForLength;
+            DataForLength = readAndWrite.ReadTaskNameData(file, true);
 
             for (int i = 0; i < DataForLength.length; i++) {
                 id = id + 1;
@@ -108,40 +97,9 @@ public class TaskCreateScreen extends AppCompatActivity {
             textNameData = id + " " + textName + " " + typeOfCompletion + " " + TimeForTask + "\n";
             textBodyData = id + " " + textBody + "\n";
 
-            write("TaskSpecifications.txt", textBodyData);
+            readAndWrite.write("TaskSpecifications.txt", textBodyData);
         }
-        write(file, textNameData);
-    }
-
-    public void write(String file, String textData) {
-        try {
-            FileOutputStream fos = openFileOutput(file, Context.MODE_APPEND);
-            fos.write(textData.getBytes());
-            fos.close();
-            Toast.makeText(this, "saving file successful", Toast.LENGTH_SHORT).show();
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            Toast.makeText(this, "Error saving file", Toast.LENGTH_SHORT).show();
-        }
-
-    }
-
-    //explained before
-    public String readFile(String file) {
-        String text = "";
-        try {
-            FileInputStream fis = openFileInput(file);
-            int size = fis.available();
-            byte[] buffer = new byte[size];
-            fis.read(buffer);
-            fis.close();
-            text = new String(buffer);
-        } catch (Exception e) {
-            e.printStackTrace();
-            Toast.makeText(this, "Error reading file", Toast.LENGTH_SHORT).show();
-        }
-        return text;
+        readAndWrite.write(file, textNameData);
     }
 
     public void CreateTaskButton(View v) {

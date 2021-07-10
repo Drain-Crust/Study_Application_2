@@ -13,7 +13,6 @@
             android:id="@+id/nav_main_page"
             android:icon="@drawable/ic_main_page"
             android:title="@string/main_page" />
-
     </group>
 
     <item android:title="@string/account">
@@ -24,5 +23,4 @@
                 android:title="@string/logout" />
         </menu>
     </item>
-
 </menu>

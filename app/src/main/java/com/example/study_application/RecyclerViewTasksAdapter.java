@@ -69,9 +69,9 @@ public class RecyclerViewTasksAdapter extends RecyclerView.Adapter<RecyclerViewT
             notifyItemChanged(position);
         });
 
-        holder.TaskTitleTextView.setText(TasksList.getTitle());
-        holder.taskStatusTextView.setText(TasksList.getStatus());
-        holder.specificationTextTextView.setText(TasksList.getSpecifications());
+        holder.TaskTitleTextView.setText(TasksList.getTitle().replace("_"," "));
+        holder.taskStatusTextView.setText(TasksList.getStatus().replace("_"," "));
+        holder.specificationTextTextView.setText(TasksList.getSpecifications().replace("_"," "));
 
         holder.checkBox.setChecked(TasksList.isSelected());
         if (holder.checkBox.isChecked()){

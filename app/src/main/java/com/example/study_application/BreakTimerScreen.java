@@ -36,7 +36,7 @@ public class BreakTimerScreen extends AppCompatActivity {
 
         updateCountDownText();
 
-        getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
+        getWindow().setLayout(WindowManager.LayoutParams.WRAP_CONTENT, WindowManager.LayoutParams.WRAP_CONTENT);
         stopButton.setVisibility(View.INVISIBLE);
 
         startButton.setOnClickListener(v -> {

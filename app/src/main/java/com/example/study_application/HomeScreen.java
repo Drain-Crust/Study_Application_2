@@ -10,7 +10,6 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -31,7 +30,6 @@ import com.google.firebase.auth.FirebaseAuth;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -54,11 +52,9 @@ public class HomeScreen extends AppCompatActivity {
     PieChart pieChart;
 
     //the arrays used to get file information and store it
-    String[] valueNameData;
     String[][] fileDataArray;
-    String[] DataString;
-    String[] values;
     PieDataSet pieDataSet;
+    ReadAndWrite readAndWrite;
 
     //vars
     private ArrayList<String> mNames = new ArrayList<>();
@@ -72,6 +68,8 @@ public class HomeScreen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_screen);
+
+        readAndWrite = new ReadAndWrite(HomeScreen.this);
 
         //reads file data
         ReadData("TaskNames.txt");
@@ -138,23 +136,7 @@ public class HomeScreen extends AppCompatActivity {
 
 
     public void ReadData(String file) {
-        //code already explained
-        String fileData = readFile(file);
-        DataString = fileData.split("\n");
-        fileDataArray = new String[DataString.length][];
-
-
-        for (int i = 1; i < DataString.length; i++) {
-            values = DataString[i].split(" ");
-
-            String ID = values[0];
-            String TaskName = values[1];
-            String TaskCompletion = values[2];
-            String TimeRequired = values[3];
-
-            valueNameData = new String[]{ID, TaskName, TaskCompletion, TimeRequired};
-            fileDataArray[i] = valueNameData;
-        }
+        fileDataArray = readAndWrite.ReadTaskNameData(file, true);
 
         //this for loop separates the different levels of completeness of task
         // this data is used to form the pie graph
@@ -179,23 +161,6 @@ public class HomeScreen extends AppCompatActivity {
         // yData is the data shown on the pie graph
         // while xData is the data shown beneath the pie graph such as the names
         yData = new float[]{NotStarted, Uncompleted, Completed};
-    }
-
-    //code already explained in another java class
-    public String readFile(String file) {
-        String text = "";
-        try {
-            FileInputStream fis = openFileInput(file);
-            int size = fis.available();
-            byte[] buffer = new byte[size];
-            fis.read(buffer);
-            fis.close();
-            text = new String(buffer);
-        } catch (Exception e) {
-            e.printStackTrace();
-            Toast.makeText(this, "Error reading file", Toast.LENGTH_SHORT).show();
-        }
-        return text;
     }
 
     public void onClickCreateTask(View v) {
@@ -273,10 +238,7 @@ public class HomeScreen extends AppCompatActivity {
         mIds = new ArrayList<>();
         mNames = new ArrayList<>();
         task_create.setEnabled(true);
-        valueNameData = new String[0];
         fileDataArray = new String[0][0];
-        DataString = new String[0];
-        values = new String[0];
 
         ReadData("TaskNames.txt");
         addDataSet();
