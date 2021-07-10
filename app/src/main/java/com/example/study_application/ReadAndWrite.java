@@ -15,7 +15,6 @@ import java.util.List;
 public class ReadAndWrite extends AppCompatActivity {
 
     private ContextWrapper contextWrapper;
-
     private final Context context;
 
     public ReadAndWrite(Context context) {
@@ -78,7 +77,7 @@ public class ReadAndWrite extends AppCompatActivity {
         return text;
     }
 
-    //code already explained
+    //
     public void write(String file, String textData) {
         contextWrapper = new ContextWrapper(context);
         try {
@@ -108,7 +107,11 @@ public class ReadAndWrite extends AppCompatActivity {
         //finds specific line inside txt file then replaces the file and puts back
         // into the list which then the list is pasted back inside the txt file
         for (int i = 0; i < fileContent.size(); i++) {
-            if (fileContent.get(i).equals(oldFileLine)) {
+            fileContent.set(i, fileContent.get(i)+"\n");
+        }
+
+        for (int i = 0; i < fileContent.size(); i++) {
+            if (fileContent.get(i).equals(oldFileLine+"\n")) {
                 fileContent.set(i, newFileLine);
                 break;
             }
@@ -116,9 +119,7 @@ public class ReadAndWrite extends AppCompatActivity {
 
         for (int i = 0; i < fileContent.size(); i++) {
             write(fileName, fileContent.get(i));
-            if (!(newFileLine.equals(""))){
-                write(fileName, "\n");
-            }
         }
+
     }
 }
