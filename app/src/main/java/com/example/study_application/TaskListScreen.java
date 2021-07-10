@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -91,7 +92,16 @@ public class TaskListScreen extends AppCompatActivity {
         taskAdapter.notifyDataSetChanged();
 
         confirmDeletion.setOnClickListener(v12 -> {
+            createTask.setEnabled(true); createTask.setVisibility(View.VISIBLE);
+            deleteTask.setEnabled(true); deleteTask.setVisibility(View.VISIBLE);
+
+            confirmDeletion.setVisibility(View.INVISIBLE);
+            cancelDeletion.setVisibility(View.INVISIBLE);
+
+            RecyclerViewTasksAdapter.deletingTasks(false);
+
             selectedItems = taskAdapter.getSelectedItems();
+            System.out.println(selectedItems);
 
             fileDataArray = readAndWrite.readTaskNameData("TaskNames.txt", true);
             DataStringSpecifications = readAndWrite.readTaskNameData("TaskSpecifications.txt", false);
@@ -99,9 +109,9 @@ public class TaskListScreen extends AppCompatActivity {
             for (TasksList i : selectedItems){
                 for (int e = 1; e < fileDataArray.length; e++) {
                     if (i.getIDs().equals(fileDataArray[e][0])){
-                    String new_line_Name = "".replaceAll("\\r|\\n", ""), new_line_Body = "".replaceAll("\\r|\\n", "");;
-                    String old_line_Name = fileDataArray[e][0] + " " + fileDataArray[e][1] + " " + fileDataArray[e][2] + " " + fileDataArray[e][3];
-                    String old_line_Body = fileDataArray[e][0] + " " + DataStringSpecifications[e][1];
+                    String new_line_Name = "", new_line_Body = "";
+                    String old_line_Name = i.getIDs() + " " + i.getTitle() + " " + i.getStatus() + " " + fileDataArray[e][3];
+                    String old_line_Body = i.getIDs() + " " + i.getSpecifications();
                     readAndWrite.replaceLines(old_line_Name, new_line_Name, "TaskNames.txt");
                     readAndWrite.replaceLines(old_line_Body, new_line_Body, "TaskSpecifications.txt");
                     }
@@ -109,6 +119,7 @@ public class TaskListScreen extends AppCompatActivity {
             }
 
             taskAdapter.notifyDataSetChanged();
+            onResume();
         });
 
         cancelDeletion.setOnClickListener(v1 -> {
@@ -150,7 +161,7 @@ public class TaskListScreen extends AppCompatActivity {
         fileDataArray = readAndWrite.readTaskNameData("TaskNames.txt", true);
         DataStringSpecifications = readAndWrite.readTaskNameData("TaskSpecifications.txt", false);
 
-        for (int i = 1; i < DataStringSpecifications.length; i++) {
+        for (int i = 1; i < fileDataArray.length; i++) {
             tasksListList.add(new TasksList(fileDataArray[i][0], fileDataArray[i][1], fileDataArray[i][2], DataStringSpecifications[i][1]));
         }
     }

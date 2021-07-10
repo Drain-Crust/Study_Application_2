@@ -112,7 +112,11 @@ public class ReadAndWrite extends AppCompatActivity {
 
         for (int i = 0; i < fileContent.size(); i++) {
             if (fileContent.get(i).equals(oldFileLine+"\n")) {
-                fileContent.set(i, newFileLine);
+                if (newFileLine.equals("")){
+                    fileContent.set(i, newFileLine);
+                } else {
+                    fileContent.set(i, newFileLine+"\n");
+                }
                 break;
             }
         }

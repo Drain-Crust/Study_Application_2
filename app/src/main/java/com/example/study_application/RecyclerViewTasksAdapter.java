@@ -87,9 +87,9 @@ public class RecyclerViewTasksAdapter extends RecyclerView.Adapter<RecyclerViewT
         ArrowAnimation.toggleArrow(holder.arrowButton, TasksList.isExpanded());
 
         holder.startTask.setOnClickListener(v -> {
-            Intent intent1 = new Intent(context, TaskScreen.class);
-            intent1.putExtra(EXTRA_NUMBER, TasksList.getIDs());
-            context.startActivity(intent1);
+            Intent toTaskScreen = new Intent(context, TaskScreen.class);
+            toTaskScreen.putExtra(EXTRA_NUMBER, TasksList.getIDs());
+            context.startActivity(toTaskScreen);
         });
     }
 
