@@ -20,8 +20,7 @@ public class TasksList {
         this.selected = false;
     }
 
-    //used private variables so to use them i have to call get but because
-    // I don't set anything other than expanded i deleted the set methods
+    //used private variables so to use them i have to call the variables through methods set and get
     public String getIDs() {
         return IDs;
     }

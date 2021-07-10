@@ -18,19 +18,19 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RecyclerViewTasksAdapter extends RecyclerView.Adapter<RecyclerViewTasksAdapter.ViewHolder> {
+public class RecyclerViewTasksAdapter extends RecyclerView.Adapter<RecyclerViewTasksAdapter.viewHolder> {
     public static final String EXTRA_NUMBER = "package com.example.study_application";
     private static boolean deletingTask = false;
 
     List<TasksList> tasksListList;
 
-    private final Context mContext;
+    private final Context context;
     public ArrayList<TasksList> selectedItems = new ArrayList<>();
 
     //already explain in other java file
-    public RecyclerViewTasksAdapter(List<TasksList> tasksListList, Context mContext) {
+    public RecyclerViewTasksAdapter(List<TasksList> tasksListList, Context Context) {
         this.tasksListList = tasksListList;
-        this.mContext = mContext;
+        this.context = Context;
     }
 
     public static void deletingTasks(boolean b) {
@@ -40,14 +40,14 @@ public class RecyclerViewTasksAdapter extends RecyclerView.Adapter<RecyclerViewT
     //already explain in other java file
     @Override
     @NotNull
-    public  ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public RecyclerViewTasksAdapter.viewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.task_items, parent, false);
-        return new ViewHolder(view);
+        return new viewHolder(view);
     }
 
     //already explain in other java file
     @Override
-    public void onBindViewHolder(RecyclerViewTasksAdapter.@NotNull ViewHolder holder, int position) {
+    public void onBindViewHolder(@NotNull viewHolder holder, int position) {
         TasksList TasksList = tasksListList.get(position);
 
         if (deletingTask){
@@ -59,7 +59,7 @@ public class RecyclerViewTasksAdapter extends RecyclerView.Adapter<RecyclerViewT
             holder.checkBox.setVisibility(View.INVISIBLE);
         }
 
-        holder.TaskTitleTextView.setOnClickListener(view -> {
+        holder.taskTitleTextView.setOnClickListener(view -> {
             TasksList.setExpanded(!TasksList.isExpanded());
             notifyItemChanged(position);
         });
@@ -69,7 +69,7 @@ public class RecyclerViewTasksAdapter extends RecyclerView.Adapter<RecyclerViewT
             notifyItemChanged(position);
         });
 
-        holder.TaskTitleTextView.setText(TasksList.getTitle().replace("_"," "));
+        holder.taskTitleTextView.setText(TasksList.getTitle().replace("_"," "));
         holder.taskStatusTextView.setText(TasksList.getStatus().replace("_"," "));
         holder.specificationTextTextView.setText(TasksList.getSpecifications().replace("_"," "));
 
@@ -86,10 +86,10 @@ public class RecyclerViewTasksAdapter extends RecyclerView.Adapter<RecyclerViewT
         holder.expandableLayout.setVisibility(isExpanded ? View.VISIBLE : View.GONE);
         ArrowAnimation.toggleArrow(holder.arrowButton, TasksList.isExpanded());
 
-        holder.StartTask.setOnClickListener(v -> {
-            Intent intent1 = new Intent(mContext, TaskScreen.class);
+        holder.startTask.setOnClickListener(v -> {
+            Intent intent1 = new Intent(context, TaskScreen.class);
             intent1.putExtra(EXTRA_NUMBER, TasksList.getIDs());
-            mContext.startActivity(intent1);
+            context.startActivity(intent1);
         });
     }
 
@@ -106,21 +106,21 @@ public class RecyclerViewTasksAdapter extends RecyclerView.Adapter<RecyclerViewT
     }
 
     //already explain in other java file
-    static class ViewHolder extends RecyclerView.ViewHolder {
+    static class viewHolder extends RecyclerView.ViewHolder {
         ConstraintLayout expandableLayout;
-        TextView TaskTitleTextView, taskStatusTextView, specificationTextTextView;
+        TextView taskTitleTextView, taskStatusTextView, specificationTextTextView;
         ImageView arrowButton;
-        Button StartTask;
+        Button startTask;
         CheckBox checkBox;
 
-        public ViewHolder(View itemView) {
+        public viewHolder(View itemView) {
             super(itemView);
             expandableLayout = itemView.findViewById(R.id.expandableLayout);
-            TaskTitleTextView = itemView.findViewById(R.id.taskTitleTextView);
+            taskTitleTextView = itemView.findViewById(R.id.taskTitleTextView);
             taskStatusTextView = itemView.findViewById(R.id.status);
             specificationTextTextView = itemView.findViewById(R.id.specificationTextTextView);
             arrowButton = itemView.findViewById(R.id.viewMoreBtn);
-            StartTask = itemView.findViewById(R.id.StartTask);
+            startTask = itemView.findViewById(R.id.StartTask);
             checkBox = itemView.findViewById(R.id.checkBox);
             checkBox.bringToFront();
         }

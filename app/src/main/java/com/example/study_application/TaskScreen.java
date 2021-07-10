@@ -15,25 +15,23 @@ import java.util.Locale;
 
 public class TaskScreen extends AppCompatActivity {
 
-    Button startTimerButton, stopTimerButton;
-    ProgressBar timerBar;
-    TextView timeBarText;
+    private Button startTimerButton, stopTimerButton;
+    private ProgressBar timerBar;
+    private TextView timeBarText;
 
-    String[][] TextBodyData;
-    String[][] TextNameData;
+    private Boolean BreakTimerRunning = false;
+    private Boolean countdownTimeRunning = false;
 
-    Intent lastPageInformation;
-    Boolean BreakTimerRunning = false;
-    Boolean countdownTimeRunning = false;
-
-    String taskNames, taskCompletions, taskSpecification, taskTimes, taskPosition;
+    private String taskNames;
+    private String taskCompletions;
+    private String taskTimes;
+    private String taskPosition;
 
     private long TimeLeft;
     private CountDownTimer countDownTimer;
     private CountDownTimer countBreakTimer;
-    int Time;
-    int actualNumber;
-    long BreakTimeLeft;
+    private int actualNumber;
+    private long BreakTimeLeft;
 
     Intent HomeScreen;
     ReadAndWrite readAndWrite;
@@ -51,15 +49,15 @@ public class TaskScreen extends AppCompatActivity {
         stopTimerButton = findViewById(R.id.StopTimer);
 
         HomeScreen = new Intent(this, HomeScreen.class);
-        lastPageInformation = getIntent();
+        Intent lastPageInformation = getIntent();
         String number = lastPageInformation.getStringExtra(ContentPopupScreen.EXTRA_STRING_ID);
         actualNumber = Integer.parseInt(number);
 
         fileDataInformation();
 
-        Time = Integer.parseInt(taskTimes);
+        int time = Integer.parseInt(taskTimes);
         // time multiplied by 1000 as without it you cant get the specific minutes
-        TimeLeft = Time * 1000;
+        TimeLeft = time * 1000;
 
         updateCountDownText();
 
@@ -133,14 +131,11 @@ public class TaskScreen extends AppCompatActivity {
 
     @SuppressLint("SetTextI18n")
     private void fileDataInformation() {
-        TextNameData = readAndWrite.ReadTaskNameData("TaskNames.txt", true);
-        TextBodyData = readAndWrite.ReadTaskNameData("TaskSpecifications.txt", false);
+        String[][] textNameData = readAndWrite.readTaskNameData("TaskNames.txt", true);
 
-
-        taskTimes = TextNameData[actualNumber][3];
-        taskNames = TextNameData[actualNumber][1];
-        taskSpecification = TextBodyData[actualNumber][1];
-        taskCompletions = TextNameData[actualNumber][2];
+        taskTimes = textNameData[actualNumber][3];
+        taskNames = textNameData[actualNumber][1];
+        taskCompletions = textNameData[actualNumber][2];
         taskPosition = Integer.toString(actualNumber);
 
 

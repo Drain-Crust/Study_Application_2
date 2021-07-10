@@ -1,6 +1,5 @@
 package com.example.study_application;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.View;
@@ -14,25 +13,23 @@ import java.util.Locale;
 
 public class BreakTimerScreen extends AppCompatActivity {
 
-    long BreakTimeLeft;
+    private long breakTimeLeft;
     private CountDownTimer countBreakTimer;
-    TextView progressBreakBar;
-    Intent TaskScreen;
-    Button stopButton, startButton, cancelButton;
+    private TextView progressBreakBar;
+    private Button stopButton, startButton, cancelButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_break_timer_screen);
-        TaskScreen = new Intent(this, TaskScreen.class);
         stopButton = findViewById(R.id.stopButton);
         startButton = findViewById(R.id.startButton);
         cancelButton = findViewById(R.id.cancelButton);
         progressBreakBar = findViewById(R.id.progressBreakBar);
 
         // as we are using milliseconds i have to increase it by multiplying it by 1000 the 300 originally is the 5 minute mark.
-        BreakTimeLeft = 300000;
+        breakTimeLeft = 300000;
 
         updateCountDownText();
 
@@ -54,13 +51,13 @@ public class BreakTimerScreen extends AppCompatActivity {
 
             @Override
             public void onTick(long leftTimeInMilliseconds) {
-                BreakTimeLeft = leftTimeInMilliseconds;
+                breakTimeLeft = leftTimeInMilliseconds;
                 updateCountDownText();
             }
 
             @Override
             public void onFinish() {
-                if (BreakTimeLeft < 600) {
+                if (breakTimeLeft < 600) {
                     countBreakTimer.cancel();
                     progressBreakBar.setText(R.string.breakEnd);
                     cancelButton.setVisibility(View.INVISIBLE);
@@ -73,8 +70,8 @@ public class BreakTimerScreen extends AppCompatActivity {
     }
 
     private void updateCountDownText() {
-        int minutes = (int) (BreakTimeLeft / 1000) / 60;
-        int seconds = (int) (BreakTimeLeft / 1000) % 60;
+        int minutes = (int) (breakTimeLeft / 1000) / 60;
+        int seconds = (int) (breakTimeLeft / 1000) % 60;
         String timeLeftFormatted = String.format(Locale.getDefault(), "%02d:%02d", minutes, seconds);
         progressBreakBar.setText(timeLeftFormatted);
     }

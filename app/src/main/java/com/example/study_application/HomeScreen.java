@@ -39,26 +39,24 @@ public class HomeScreen extends AppCompatActivity {
     private static final String TAG = "MainActivity";
 
     //values used to determine the ratio of the pie chart
-    int NotStarted = 0;
-    int Uncompleted = 0;
-    int Completed = 0;
+    private int notStarted = 0;
+    private int uncompleted = 0;
+    private int completed = 0;
 
     //the different widgets used
     private DrawerLayout drawer;
-    Button task_create;
-    Toolbar toolbar;
-    NavigationView navigationView;
-    RecyclerView recyclerView;
-    PieChart pieChart;
+    private Button taskCreate;
+    private NavigationView navigationView;
+    private RecyclerView recyclerView;
+    private PieChart pieChart;
 
     //the arrays used to get file information and store it
-    String[][] fileDataArray;
-    PieDataSet pieDataSet;
-    ReadAndWrite readAndWrite;
+    private String[][] fileDataArray;
+    private ReadAndWrite readAndWrite;
 
     //vars
-    private ArrayList<String> mNames = new ArrayList<>();
-    private ArrayList<String> mIds = new ArrayList<>();
+    private ArrayList<String> Names = new ArrayList<>();
+    private ArrayList<String> Ids = new ArrayList<>();
 
     //placeholder data
     float[] yData = {36.5f, 42.4f, 22.3f};
@@ -72,11 +70,11 @@ public class HomeScreen extends AppCompatActivity {
         readAndWrite = new ReadAndWrite(HomeScreen.this);
 
         //reads file data
-        ReadData("TaskNames.txt");
+        readData();
 
         //links the objects on screen
-        toolbar = findViewById(R.id.toolBar);
-        task_create = findViewById(R.id.task_create);
+        Toolbar toolBar = findViewById(R.id.toolBar);
+        taskCreate = findViewById(R.id.task_create);
         drawer = findViewById(R.id.navigation_layout);
         navigationView = findViewById(R.id.nav_view);
         recyclerView = findViewById(R.id.recyclerView);
@@ -86,7 +84,7 @@ public class HomeScreen extends AppCompatActivity {
         navigationView.setNavigationItemSelectedListener(this::onNavigationItemSelected);
 
         //checks if the drawer button has been clicked
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar,
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolBar,
                 R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
@@ -102,7 +100,7 @@ public class HomeScreen extends AppCompatActivity {
 
     // the different options of the navigation view when an item is clicked
     @SuppressLint("NonConstantResourceId")
-    public boolean onNavigationItemSelected(@NonNull @NotNull MenuItem item) {
+    private boolean onNavigationItemSelected(@NonNull @NotNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.nav_message:
                 System.out.println("working 1");
@@ -129,45 +127,49 @@ public class HomeScreen extends AppCompatActivity {
         recyclerView.bringToFront();
         recyclerView.setLayoutManager(layoutManager);
         // makes the different items of the recyclerview and orders it
-        RecyclerViewAdapter adapter = new RecyclerViewAdapter(HomeScreen.this, mNames, mIds);
+        RecyclerViewAdapter adapter = new RecyclerViewAdapter(HomeScreen.this, Names, Ids);
         //calls upon the adapter that's been created (shows the recycler view)
         recyclerView.setAdapter(adapter);
     }
 
 
-    public void ReadData(String file) {
-        fileDataArray = readAndWrite.ReadTaskNameData(file, true);
+    private void readData() {
+        fileDataArray = readAndWrite.readTaskNameData("TaskNames.txt", true);
 
         //this for loop separates the different levels of completeness of task
         // this data is used to form the pie graph
         for (int i = 1; i < fileDataArray.length; i++) {
             switch (fileDataArray[i][2]) {
                 case "not_started":
-                    NotStarted += 1;
-                    mNames.add(fileDataArray[i][1]);
-                    mIds.add(fileDataArray[i][0]);
+                    notStarted += 1;
+                    Names.add(fileDataArray[i][1]);
+                    Ids.add(fileDataArray[i][0]);
                     break;
                 case "Uncompleted":
-                    Uncompleted += 1;
-                    mNames.add(fileDataArray[i][1]);
-                    mIds.add(fileDataArray[i][0]);
+                    uncompleted += 1;
+                    Names.add(fileDataArray[i][1]);
+                    Ids.add(fileDataArray[i][0]);
                     break;
                 case "Completed":
-                    Completed += 1;
+                    completed += 1;
                     break;
             }
 
         }
         // yData is the data shown on the pie graph
         // while xData is the data shown beneath the pie graph such as the names
-        yData = new float[]{NotStarted, Uncompleted, Completed};
+        yData = new float[]{notStarted, uncompleted, completed};
     }
 
-    public void onClickCreateTask(View v) {
+    public void onClickCreateTask(View v){
+        onClickCreateTask();
+    }
+
+    private void onClickCreateTask() {
         // the .setEnabled makes it so that the task create button cant be opened more than once
-        task_create.setEnabled(false);
-        Intent intent = new Intent(getApplicationContext(), TaskCreateScreen.class);
-        startActivity(intent);
+        taskCreate.setEnabled(false);
+        Intent toTaskCreateScreen = new Intent(getApplicationContext(), TaskCreateScreen.class);
+        startActivity(toTaskCreateScreen);
     }
 
     // closes the drawer instead of going to last screen if the drawer is open
@@ -181,7 +183,7 @@ public class HomeScreen extends AppCompatActivity {
         }
     }
 
-    public void addDataSet() {
+    private void addDataSet() {
         //puts the y and x data inside a ArrayList
         List<PieEntry> pieEntries = new ArrayList<>();
         for (int i = 0; i < yData.length; i++) {
@@ -189,7 +191,7 @@ public class HomeScreen extends AppCompatActivity {
         }
 
         //creates another Arraylist using the values of pie entries as one of the inputs
-        pieDataSet = new PieDataSet(pieEntries, "");
+        PieDataSet pieDataSet = new PieDataSet(pieEntries, "");
         pieDataSet.setColors(COLORFUL_COLORS);
         pieDataSet.setSliceSpace(0);
         pieDataSet.setValueTextSize(0);
@@ -231,16 +233,16 @@ public class HomeScreen extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         //resets all the values to original
-        NotStarted = 0;
-        Uncompleted = 0;
-        Completed = 0;
+        notStarted = 0;
+        uncompleted = 0;
+        completed = 0;
         yData = new float[0];
-        mIds = new ArrayList<>();
-        mNames = new ArrayList<>();
-        task_create.setEnabled(true);
+        Ids = new ArrayList<>();
+        Names = new ArrayList<>();
+        taskCreate.setEnabled(true);
         fileDataArray = new String[0][0];
 
-        ReadData("TaskNames.txt");
+        readData();
         addDataSet();
         initRecyclerView();
         navigationView.bringToFront();

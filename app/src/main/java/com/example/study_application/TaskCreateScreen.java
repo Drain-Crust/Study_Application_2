@@ -1,35 +1,22 @@
 package com.example.study_application;
 
-import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 
 public class TaskCreateScreen extends AppCompatActivity {
-    EditText taskSpecification, taskName, taskTime;
-    Button createTask;
+    private EditText taskSpecification, taskName, taskTime;
 
-    String fileTasks = "TaskSpecifications.txt";
-    String fileNames = "TaskNames.txt";
+    private final String FILE_NAME = "TaskNames.txt";
 
-    int width;
-    int height;
-
-    Intent intent;
-    ReadAndWrite readAndWrite;
-
+    private ReadAndWrite readAndWrite;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,27 +27,26 @@ public class TaskCreateScreen extends AppCompatActivity {
 
         //checks if file exists if not then it will create
         // a file with the first values as placeholders
-        if (fileDoesNotExist(fileNames)) {
-            saveFile(fileNames, "important", "important", "important", false);
+        if (fileDoesNotExist(FILE_NAME)) {
+            saveFile(FILE_NAME, "important", "important", "important");
         }
 
+        String fileTasks = "TaskSpecifications.txt";
         if (fileDoesNotExist(fileTasks)) {
-            saveFile(fileTasks, "important", "important", "important", false);
+            saveFile(fileTasks, "important", "important", "important");
         }
 
         //link to next or last page
-        intent = new Intent(this, HomeScreen.class);
 
         taskTime = findViewById(R.id.TimeTask);
         taskName = findViewById(R.id.TaskName);
         taskSpecification = findViewById(R.id.TaskSpecification);
-        createTask = findViewById(R.id.createTask);
 
         //this code changes the size of the Activity Screen
         DisplayMetrics displayMetrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-        width = displayMetrics.widthPixels;
-        height = displayMetrics.heightPixels;
+        int width = displayMetrics.widthPixels;
+        int height = displayMetrics.heightPixels;
         getWindow().setLayout(width, (int) (height * 0.7));
         WindowManager.LayoutParams params = getWindow().getAttributes();
         params.gravity = Gravity.BOTTOM;
@@ -69,14 +55,14 @@ public class TaskCreateScreen extends AppCompatActivity {
         getWindow().setAttributes(params);
     }
 
-    public boolean fileDoesNotExist(String name) {
+    private boolean fileDoesNotExist(String name) {
         File file = getBaseContext().getFileStreamPath(name);
         return !file.exists();
     }
 
-    public void saveFile(String file, String text, String body, String TimeForTask, Boolean create) {
+    private void saveFile(String file, String text, String body, String TimeForTask) {
         int id = 0;
-        String textNameData = "";
+        String textNameData;
         String textBodyData;
         //used so that no errors will occur with different spacing as i am using
         // the space to differentiate between the different attributes of a task.
@@ -86,19 +72,16 @@ public class TaskCreateScreen extends AppCompatActivity {
         typeOfCompletion = "not_started";
 
         //checks if im creating a new file or adding to a file
-        if (!create) {
-            String[][] DataForLength;
-            DataForLength = readAndWrite.ReadTaskNameData(file, true);
-
-            for (int i = 0; i < DataForLength.length; i++) {
-                id = id + 1;
-            }
-            // this is the layout of how its going to be saved inside the text file.
-            textNameData = id + " " + textName + " " + typeOfCompletion + " " + TimeForTask + "\n";
-            textBodyData = id + " " + textBody + "\n";
-
-            readAndWrite.write("TaskSpecifications.txt", textBodyData);
+        String[][] dataForLength = readAndWrite.readTaskNameData(file, true);
+        for (int i = 0; i < dataForLength.length; i++) {
+            id = id + 1;
         }
+
+        // this is the layout of how its going to be saved inside the text file.
+        textNameData = id + " " + textName + " " + typeOfCompletion + " " + TimeForTask + "\n";
+        textBodyData = id + " " + textBody + "\n";
+
+        readAndWrite.write("TaskSpecifications.txt", textBodyData);
         readAndWrite.write(file, textNameData);
     }
 
@@ -115,11 +98,11 @@ public class TaskCreateScreen extends AppCompatActivity {
                 taskTime.setError("Time is to short try again");
                 focusView = taskTime;
             }
-            if (String.valueOf(taskSpecification).equals("")) {
+            if (taskSpecification.getText().toString().equals("")) {
                 taskSpecification.setError("Specification is to short try again");
                 focusView = taskSpecification;
             }
-            if (String.valueOf(taskName).equals("")) {
+            if (taskName.getText().toString().equals("")) {
                 taskName.setError("Name is to short try again");
                 focusView = taskTime;
             }
@@ -127,8 +110,8 @@ public class TaskCreateScreen extends AppCompatActivity {
             assert focusView != null;
             focusView.requestFocus();
         } else {
-            saveFile(fileNames, taskName.getText().toString(),
-                    taskSpecification.getText().toString(), taskTime.getText().toString(), false);
+            saveFile(FILE_NAME, taskName.getText().toString(),
+                    taskSpecification.getText().toString(), taskTime.getText().toString());
             //brings user to last page
             finish();
         }
