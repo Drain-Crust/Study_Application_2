@@ -113,15 +113,15 @@ public class ReadAndWrite extends AppCompatActivity {
         //finds specific line inside txt file then replaces the file and puts back
         // into the list which then the list is pasted back inside the txt file
         for (int i = 0; i < fileContent.size(); i++) {
-            fileContent.set(i, fileContent.get(i)+"\n");
+            fileContent.set(i, fileContent.get(i) + "\n");
         }
 
         for (int i = 0; i < fileContent.size(); i++) {
-            if (fileContent.get(i).equals(oldFileLine+"\n")) {
-                if (newFileLine.equals("")){
+            if (fileContent.get(i).equals(oldFileLine + "\n")) {
+                if (newFileLine.equals("")) {
                     fileContent.set(i, newFileLine);
                 } else {
-                    fileContent.set(i, newFileLine+"\n");
+                    fileContent.set(i, newFileLine + "\n");
                 }
                 break;
             }
@@ -133,19 +133,19 @@ public class ReadAndWrite extends AppCompatActivity {
 
     }
 
-    public String findBiggestId(){
+    public String findBiggestId() {
         String biggestId;
         readTaskNameData("TaskNames.txt", true);
         ids = new Integer[textNameData.length - 1];
 
-        for (int i = 1; i < DataString.length; i++){
+        for (int i = 1; i < DataString.length; i++) {
             int value = Integer.parseInt(textNameData[i][0]);
             ids[i - 1] = value;
         }
 
         Arrays.sort(ids, Collections.reverseOrder());
         int errorCheck = textNameData.length - 1;
-        if (errorCheck == 0){
+        if (errorCheck == 0) {
             biggestId = "1";
         } else {
             biggestId = String.valueOf(ids[0] + 1);

@@ -50,11 +50,11 @@ public class RecyclerViewTasksAdapter extends RecyclerView.Adapter<RecyclerViewT
     public void onBindViewHolder(@NotNull viewHolder holder, int position) {
         TasksList TasksList = tasksListList.get(position);
 
-        if (deletingTask){
+        if (deletingTask) {
             holder.arrowButton.setVisibility(View.INVISIBLE);
             holder.checkBox.setVisibility(View.VISIBLE);
 
-        } else{
+        } else {
             holder.arrowButton.setVisibility(View.VISIBLE);
             holder.checkBox.setVisibility(View.INVISIBLE);
         }
@@ -69,13 +69,13 @@ public class RecyclerViewTasksAdapter extends RecyclerView.Adapter<RecyclerViewT
             notifyItemChanged(position);
         });
 
-        holder.taskTitleTextView.setText(TasksList.getTitle().replace("_"," "));
-        holder.taskStatusTextView.setText(TasksList.getStatus().replace("_"," "));
-        holder.specificationTextTextView.setText(TasksList.getSpecifications().replace("_"," "));
+        holder.taskTitleTextView.setText(TasksList.getTitle().replace("_", " "));
+        holder.taskStatusTextView.setText(TasksList.getStatus().replace("_", " "));
+        holder.specificationTextTextView.setText(TasksList.getSpecifications().replace("_", " "));
 
         holder.checkBox.setChecked(TasksList.isSelected());
-        if (holder.checkBox.isChecked()){
-            if (!selectedItems.contains(tasksListList.get(position))){
+        if (holder.checkBox.isChecked()) {
+            if (!selectedItems.contains(tasksListList.get(position))) {
                 selectedItems.add(tasksListList.get(position));
             }
         } else {
@@ -126,7 +126,7 @@ public class RecyclerViewTasksAdapter extends RecyclerView.Adapter<RecyclerViewT
         }
     }
 
-    public List<TasksList> getSelectedItems(){
+    public List<TasksList> getSelectedItems() {
         ArrayList<TasksList> selectedItemsList;
         selectedItemsList = selectedItems;
         return selectedItemsList;

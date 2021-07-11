@@ -67,7 +67,7 @@ public class TaskListScreen extends AppCompatActivity {
         });
     }
 
-    public void createButton(View v){
+    public void createButton(View v) {
         createButton();
     }
 
@@ -77,13 +77,15 @@ public class TaskListScreen extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void deleteButton(View v){
+    public void deleteButton(View v) {
         deleteButton();
     }
 
     private void deleteButton() {
-        createTask.setEnabled(false); createTask.setVisibility(View.INVISIBLE);
-        deleteTask.setEnabled(false); deleteTask.setVisibility(View.INVISIBLE);
+        createTask.setEnabled(false);
+        createTask.setVisibility(View.INVISIBLE);
+        deleteTask.setEnabled(false);
+        deleteTask.setVisibility(View.INVISIBLE);
         confirmDeletion.setVisibility(View.VISIBLE);
         cancelDeletion.setVisibility(View.VISIBLE);
 
@@ -91,8 +93,10 @@ public class TaskListScreen extends AppCompatActivity {
         taskAdapter.notifyDataSetChanged();
 
         confirmDeletion.setOnClickListener(v12 -> {
-            createTask.setEnabled(true); createTask.setVisibility(View.VISIBLE);
-            deleteTask.setEnabled(true); deleteTask.setVisibility(View.VISIBLE);
+            createTask.setEnabled(true);
+            createTask.setVisibility(View.VISIBLE);
+            deleteTask.setEnabled(true);
+            deleteTask.setVisibility(View.VISIBLE);
 
             confirmDeletion.setVisibility(View.INVISIBLE);
             cancelDeletion.setVisibility(View.INVISIBLE);
@@ -105,14 +109,14 @@ public class TaskListScreen extends AppCompatActivity {
             fileDataArray = readAndWrite.readTaskNameData("TaskNames.txt", true);
             DataStringSpecifications = readAndWrite.readTaskNameData("TaskSpecifications.txt", false);
 
-            for (TasksList i : selectedItems){
+            for (TasksList i : selectedItems) {
                 for (int e = 1; e < fileDataArray.length; e++) {
-                    if (i.getIDs().equals(fileDataArray[e][0])){
-                    String new_line_Name = "", new_line_Body = "";
-                    String old_line_Name = i.getIDs() + " " + i.getTitle() + " " + i.getStatus() + " " + fileDataArray[e][3];
-                    String old_line_Body = i.getIDs() + " " + i.getSpecifications();
-                    readAndWrite.replaceLines(old_line_Name, new_line_Name, "TaskNames.txt");
-                    readAndWrite.replaceLines(old_line_Body, new_line_Body, "TaskSpecifications.txt");
+                    if (i.getIDs().equals(fileDataArray[e][0])) {
+                        String new_line_Name = "", new_line_Body = "";
+                        String old_line_Name = i.getIDs() + " " + i.getTitle() + " " + i.getStatus() + " " + fileDataArray[e][3];
+                        String old_line_Body = i.getIDs() + " " + i.getSpecifications();
+                        readAndWrite.replaceLines(old_line_Name, new_line_Name, "TaskNames.txt");
+                        readAndWrite.replaceLines(old_line_Body, new_line_Body, "TaskSpecifications.txt");
                     }
                 }
             }
@@ -122,8 +126,10 @@ public class TaskListScreen extends AppCompatActivity {
         });
 
         cancelDeletion.setOnClickListener(v1 -> {
-            createTask.setEnabled(true); createTask.setVisibility(View.VISIBLE);
-            deleteTask.setEnabled(true); deleteTask.setVisibility(View.VISIBLE);
+            createTask.setEnabled(true);
+            createTask.setVisibility(View.VISIBLE);
+            deleteTask.setEnabled(true);
+            deleteTask.setVisibility(View.VISIBLE);
 
             confirmDeletion.setVisibility(View.INVISIBLE);
             cancelDeletion.setVisibility(View.INVISIBLE);

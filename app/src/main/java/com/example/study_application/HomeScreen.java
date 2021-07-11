@@ -161,7 +161,7 @@ public class HomeScreen extends AppCompatActivity {
         yData = new float[]{notStarted, uncompleted, completed};
     }
 
-    public void onClickCreateTask(View v){
+    public void onClickCreateTask(View v) {
         onClickCreateTask();
     }
 

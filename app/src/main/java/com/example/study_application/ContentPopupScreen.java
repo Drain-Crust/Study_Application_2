@@ -8,8 +8,6 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import java.util.Arrays;
-
 public class ContentPopupScreen extends AppCompatActivity {
     public static final String EXTRA_STRING_ID = "package com.example.study_application";
 
@@ -43,8 +41,8 @@ public class ContentPopupScreen extends AppCompatActivity {
 
 
         //changes the initial text and puts in the text from the data in the arrays
-        for(int i = 1; i < textNameData.length; i++){
-            if (textNameData[i][0].equals(number)){
+        for (int i = 1; i < textNameData.length; i++) {
+            if (textNameData[i][0].equals(number)) {
                 taskNames.setText(textNameData[i][1]);
                 taskSpecification.setText(textBodyData[i][1]);
                 taskCompletion.setText(textNameData[i][2]);

@@ -45,7 +45,7 @@ public class TasksList {
         this.expanded = expanded;
     }
 
-    public  boolean isSelected(){
+    public boolean isSelected() {
         return selected;
     }
 

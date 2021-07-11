@@ -61,10 +61,9 @@ public class TaskScreen extends AppCompatActivity {
         // time multiplied by 1000 as without it you cant get the specific minutes
         TimeLeft = time * 1000;
         originalTimeValue = time * 1000;
-        BreakTimeLeft = 1500000;
 
         updateCountDownText(timeBarText, TimeLeft);
-        updateCountDownText(BreakTimerTextView, BreakTimeLeft);
+
 
         //starts timer if pressed and makes it disappear
         startTimerButton.setOnClickListener(v -> {
@@ -90,7 +89,9 @@ public class TaskScreen extends AppCompatActivity {
             public void onTick(long leftTimeInMilliseconds) {
                 TimeLeft = leftTimeInMilliseconds;
                 updateCountDownText(timeBarText, TimeLeft);
-                timerBar.setProgress((int) ((TimeLeft/originalTimeValue)*100), true);
+                System.out.println(leftTimeInMilliseconds + "  " + originalTimeValue);
+
+                timerBar.setProgress((int) (leftTimeInMilliseconds * 100 / originalTimeValue), true);
             }
 
             @Override
@@ -121,7 +122,7 @@ public class TaskScreen extends AppCompatActivity {
         stopTimerButton.setVisibility(View.INVISIBLE);
         fileDataInformation();
 
-        if (BreakTimerRunning){
+        if (BreakTimerRunning) {
             BreakTimerRunning = false;
             countBreakTimer.cancel();
             String textNameDataOld = taskPosition + " " + taskNames + " " + taskCompletions + " " + taskTimes;
@@ -129,7 +130,7 @@ public class TaskScreen extends AppCompatActivity {
             readAndWrite.replaceLines(textNameDataOld, textNameDataNew, "TaskNames.txt");
         }
 
-        if (countdownTimeRunning){
+        if (countdownTimeRunning) {
             countdownTimeRunning = false;
             countDownTimer.cancel();
         }
@@ -139,8 +140,8 @@ public class TaskScreen extends AppCompatActivity {
     private void fileDataInformation() {
         String[][] textNameData = readAndWrite.readTaskNameData("TaskNames.txt", true);
 
-        for(int i = 1; i < textNameData.length; i++){
-            if (textNameData[i][0].equals(actualNumber)){
+        for (int i = 1; i < textNameData.length; i++) {
+            if (textNameData[i][0].equals(actualNumber)) {
                 taskTimes = textNameData[i][3];
                 taskNames = textNameData[i][1];
                 taskCompletions = textNameData[i][2];
@@ -173,7 +174,7 @@ public class TaskScreen extends AppCompatActivity {
             }
 
             @Override
-            public void onFinish(){
+            public void onFinish() {
                 Intent BreakTimerScreen = new Intent(TaskScreen.this, BreakTimerScreen.class);
 
                 stopTimer();

@@ -1,8 +1,8 @@
 package com.example.study_application;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 public class GoogleTasksScreen extends AppCompatActivity {
 
