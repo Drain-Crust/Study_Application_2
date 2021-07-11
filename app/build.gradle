@@ -40,6 +40,8 @@ dependencies {
     implementation 'com.google.firebase:firebase-database'
     implementation 'com.google.firebase:firebase-core'
     implementation 'com.google.firebase:firebase-database'
+    implementation 'com.google.android.gms:play-services-auth'
+
 
     implementation "com.github.skydoves:powerspinner:1.0.1"
 
