@@ -29,11 +29,11 @@ public class TaskCreateScreen extends AppCompatActivity {
         //checks if file exists if not then it will create
         // a file with the first values as placeholders
         if (fileDoesNotExist(FILE_NAME)) {
-            saveFile(FILE_NAME, "important", "important", "important");
+            saveFile("important", "important", "important");
         }
 
         if (fileDoesNotExist(FILE_SPECIFICATIONS)) {
-            saveFile(FILE_SPECIFICATIONS, "important", "important", "important");
+            saveFile("important", "important", "important");
         }
 
         //link to next or last page
@@ -60,7 +60,7 @@ public class TaskCreateScreen extends AppCompatActivity {
         return !file.exists();
     }
 
-    private void saveFile(String file, String text, String body, String TimeForTask) {
+    private void saveFile(String text, String body, String TimeForTask) {
         String id;
         String textNameData;
         String textBodyData;
@@ -106,7 +106,7 @@ public class TaskCreateScreen extends AppCompatActivity {
             assert focusView != null;
             focusView.requestFocus();
         } else {
-            saveFile(FILE_NAME, taskName.getText().toString(),
+            saveFile(taskName.getText().toString(),
                     taskSpecification.getText().toString(), taskTime.getText().toString());
             //brings user to last page
             finish();
