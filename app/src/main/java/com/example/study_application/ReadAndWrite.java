@@ -10,12 +10,18 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class ReadAndWrite extends AppCompatActivity {
 
     private ContextWrapper contextWrapper;
     private final Context mContext;
+    String[][] textBodyData;
+    String[][] textNameData;
+    String[] StringArrays;
+    String[] DataString;
+    Integer[] ids;
 
     public ReadAndWrite(Context mContext) {
         this.mContext = mContext;
@@ -23,13 +29,13 @@ public class ReadAndWrite extends AppCompatActivity {
 
     public String[][] readTaskNameData(String file, Boolean TextOrBody) {
         String fileData = readFile(file);
-        String[] DataString = fileData.split("\n");
+        DataString = fileData.split("\n");
 
         String StringArray = Arrays.toString(DataString);
-        String[] StringArrays = StringArray.split(",");
+        StringArrays = StringArray.split(",");
 
         if (!TextOrBody) {
-            String[][] textBodyData = new String[StringArrays.length][];
+            textBodyData = new String[StringArrays.length][];
             for (int i = 1; i < DataString.length; i++) {
                 String[] values = DataString[i].split(" ");
 
@@ -42,7 +48,7 @@ public class ReadAndWrite extends AppCompatActivity {
             }
             return textBodyData;
         } else {
-            String[][] textNameData = new String[StringArrays.length][];
+            textNameData = new String[StringArrays.length][];
             for (int i = 1; i < DataString.length; i++) {
                 String[] values = DataString[i].split(" ");
 
@@ -125,5 +131,25 @@ public class ReadAndWrite extends AppCompatActivity {
             write(fileName, fileContent.get(i));
         }
 
+    }
+
+    public String findBiggestId(){
+        String biggestId;
+        readTaskNameData("TaskNames.txt", true);
+        ids = new Integer[textNameData.length - 1];
+
+        for (int i = 1; i < DataString.length; i++){
+            int value = Integer.parseInt(textNameData[i][0]);
+            ids[i - 1] = value;
+        }
+
+        Arrays.sort(ids, Collections.reverseOrder());
+        int errorCheck = textNameData.length - 1;
+        if (errorCheck == 0){
+            biggestId = "1";
+        } else {
+            biggestId = String.valueOf(ids[0] + 1);
+        }
+        return biggestId;
     }
 }

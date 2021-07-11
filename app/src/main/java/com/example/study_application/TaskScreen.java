@@ -29,6 +29,7 @@ public class TaskScreen extends AppCompatActivity {
     private String taskPosition;
 
     private long TimeLeft;
+    private int originalTimeValue;
     private CountDownTimer countDownTimer;
     private CountDownTimer countBreakTimer;
     private String actualNumber;
@@ -59,8 +60,11 @@ public class TaskScreen extends AppCompatActivity {
         int time = Integer.parseInt(taskTimes);
         // time multiplied by 1000 as without it you cant get the specific minutes
         TimeLeft = time * 1000;
+        originalTimeValue = time * 1000;
+        BreakTimeLeft = 1500000;
 
-        updateCountDownText(timeBarText);
+        updateCountDownText(timeBarText, TimeLeft);
+        updateCountDownText(BreakTimerTextView, BreakTimeLeft);
 
         //starts timer if pressed and makes it disappear
         startTimerButton.setOnClickListener(v -> {
@@ -85,7 +89,8 @@ public class TaskScreen extends AppCompatActivity {
             @Override
             public void onTick(long leftTimeInMilliseconds) {
                 TimeLeft = leftTimeInMilliseconds;
-                updateCountDownText(timeBarText);
+                updateCountDownText(timeBarText, TimeLeft);
+                timerBar.setProgress((int) ((TimeLeft/originalTimeValue)*100), true);
             }
 
             @Override
@@ -104,9 +109,9 @@ public class TaskScreen extends AppCompatActivity {
         }.start();
     }
 
-    private void updateCountDownText(TextView timeText) {
-        int minutes = (int) (TimeLeft / 1000) / 60;
-        int seconds = (int) (TimeLeft / 1000) % 60;
+    private void updateCountDownText(TextView timeText, long timeLeft) {
+        int minutes = (int) (timeLeft / 1000) / 60;
+        int seconds = (int) (timeLeft / 1000) % 60;
         String timeLeftFormatted = String.format(Locale.getDefault(), "%02d:%02d", minutes, seconds);
         timeText.setText(timeLeftFormatted);
     }
@@ -157,14 +162,14 @@ public class TaskScreen extends AppCompatActivity {
 
     private void startBreakTimer() {
         // as we are using milliseconds i have to increase it by multiplying it by 1000 the 1500 originally is the 25 minute mark.
-        BreakTimeLeft = 15000;
+        BreakTimeLeft = 1500000;
         //creates new count down timer
-        countBreakTimer = new CountDownTimer(15000, 500) {
+        countBreakTimer = new CountDownTimer(BreakTimeLeft, 500) {
 
             @Override
             public void onTick(long leftTimeInMilliseconds) {
                 BreakTimeLeft = leftTimeInMilliseconds;
-                updateCountDownText(BreakTimerTextView);
+                updateCountDownText(BreakTimerTextView, BreakTimeLeft);
             }
 
             @Override

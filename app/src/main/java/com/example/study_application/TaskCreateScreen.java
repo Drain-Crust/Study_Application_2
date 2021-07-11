@@ -15,6 +15,7 @@ public class TaskCreateScreen extends AppCompatActivity {
     private EditText taskSpecification, taskName, taskTime;
 
     private final String FILE_NAME = "TaskNames.txt";
+    private final String FILE_SPECIFICATIONS = "TaskSpecifications.txt";
 
     private ReadAndWrite readAndWrite;
 
@@ -31,9 +32,8 @@ public class TaskCreateScreen extends AppCompatActivity {
             saveFile(FILE_NAME, "important", "important", "important");
         }
 
-        String fileTasks = "TaskSpecifications.txt";
-        if (fileDoesNotExist(fileTasks)) {
-            saveFile(fileTasks, "important", "important", "important");
+        if (fileDoesNotExist(FILE_SPECIFICATIONS)) {
+            saveFile(FILE_SPECIFICATIONS, "important", "important", "important");
         }
 
         //link to next or last page
@@ -61,7 +61,7 @@ public class TaskCreateScreen extends AppCompatActivity {
     }
 
     private void saveFile(String file, String text, String body, String TimeForTask) {
-        int id = 0;
+        String id;
         String textNameData;
         String textBodyData;
         //used so that no errors will occur with different spacing as i am using
@@ -71,18 +71,14 @@ public class TaskCreateScreen extends AppCompatActivity {
         String typeOfCompletion;
         typeOfCompletion = "not_started";
 
-        //checks if im creating a new file or adding to a file
-        String[][] dataForLength = readAndWrite.readTaskNameData(file, true);
-        for (int i = 0; i < dataForLength.length; i++) {
-            id = id + 1;
-        }
+        id = readAndWrite.findBiggestId();
 
         // this is the layout of how its going to be saved inside the text file.
         textNameData = id + " " + textName + " " + typeOfCompletion + " " + TimeForTask + "\n";
         textBodyData = id + " " + textBody + "\n";
 
-        readAndWrite.write("TaskSpecifications.txt", textBodyData);
-        readAndWrite.write(file, textNameData);
+        readAndWrite.write(FILE_SPECIFICATIONS, textBodyData);
+        readAndWrite.write(FILE_NAME, textNameData);
     }
 
     public void CreateTaskButton(View v) {
