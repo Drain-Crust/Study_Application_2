@@ -8,6 +8,8 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.util.Arrays;
+
 public class ContentPopupScreen extends AppCompatActivity {
     public static final String EXTRA_STRING_ID = "package com.example.study_application";
 
@@ -38,13 +40,17 @@ public class ContentPopupScreen extends AppCompatActivity {
         //gets sent data from last screen
         getInformation = getIntent();
         String number = getInformation.getStringExtra(RecyclerViewAdapter.EXTRA_NUMBER);
-        int actualNumber = Integer.parseInt(number);
+
 
         //changes the initial text and puts in the text from the data in the arrays
-        taskNames.setText(textNameData[actualNumber][1].replace("_"," "));
-        taskSpecification.setText(textBodyData[actualNumber][1].replace("_"," "));
-        taskCompletion.setText(textNameData[actualNumber][2].replace("_"," "));
-        taskTimes.setText(textNameData[actualNumber][3]);
+        for(int i = 1; i < textNameData.length; i++){
+            if (textNameData[i][0].equals(number)){
+                taskNames.setText(textNameData[i][1]);
+                taskSpecification.setText(textBodyData[i][1]);
+                taskCompletion.setText(textNameData[i][2]);
+                taskTimes.setText(textNameData[i][3]);
+            }
+        }
 
         //checks to see if the Start Task button has been pressed
         startTask.setOnClickListener(v -> sendData());

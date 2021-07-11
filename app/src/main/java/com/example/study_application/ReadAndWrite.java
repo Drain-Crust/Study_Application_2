@@ -15,10 +15,10 @@ import java.util.List;
 public class ReadAndWrite extends AppCompatActivity {
 
     private ContextWrapper contextWrapper;
-    private final Context context;
+    private final Context mContext;
 
-    public ReadAndWrite(Context context) {
-        this.context = context;
+    public ReadAndWrite(Context mContext) {
+        this.mContext = mContext;
     }
 
     public String[][] readTaskNameData(String file, Boolean TextOrBody) {
@@ -36,7 +36,7 @@ public class ReadAndWrite extends AppCompatActivity {
                 String IdSpecifications = values[0];
                 String TaskSpecification = values[1];
 
-                String[] valueSpecificationData = new String[]{IdSpecifications, TaskSpecification};
+                String[] valueSpecificationData = {IdSpecifications, TaskSpecification};
 
                 textBodyData[i] = valueSpecificationData;
             }
@@ -51,7 +51,7 @@ public class ReadAndWrite extends AppCompatActivity {
                 String taskCompletion = values[2];
                 String timeRequired = values[3];
 
-                String[] valueNameData = new String[]{IdName, taskName, taskCompletion, timeRequired};
+                String[] valueNameData = {IdName, taskName, taskCompletion, timeRequired};
 
                 textNameData[i] = valueNameData;
             }
@@ -61,7 +61,7 @@ public class ReadAndWrite extends AppCompatActivity {
 
     //code already explained
     public String readFile(String file) {
-        contextWrapper = new ContextWrapper(context);
+        contextWrapper = new ContextWrapper(mContext);
         String text = "";
         try {
             FileInputStream fis = contextWrapper.openFileInput(file);
@@ -72,28 +72,28 @@ public class ReadAndWrite extends AppCompatActivity {
             text = new String(buffer);
         } catch (Exception e) {
             e.printStackTrace();
-            Toast.makeText(context, "Error reading file", Toast.LENGTH_SHORT).show();
+            Toast.makeText(mContext, "Error reading file", Toast.LENGTH_SHORT).show();
         }
         return text;
     }
 
     //
     public void write(String file, String textData) {
-        contextWrapper = new ContextWrapper(context);
+        contextWrapper = new ContextWrapper(mContext);
         try {
             FileOutputStream fos = contextWrapper.openFileOutput(file, MODE_APPEND);
             fos.write(textData.getBytes());
             fos.close();
-            Toast.makeText(context, "saving file successful", Toast.LENGTH_SHORT).show();
+            Toast.makeText(mContext, "saving file successful", Toast.LENGTH_SHORT).show();
 
         } catch (Exception e) {
             e.printStackTrace();
-            Toast.makeText(context, "Error saving file", Toast.LENGTH_SHORT).show();
+            Toast.makeText(mContext, "Error saving file", Toast.LENGTH_SHORT).show();
         }
     }
 
     public void replaceLines(String oldFileLine, String newFileLine, String fileName) {
-        contextWrapper = new ContextWrapper(context);
+        contextWrapper = new ContextWrapper(mContext);
         String[] fileDataLines = readFile(fileName).split("\n");
 
         try {

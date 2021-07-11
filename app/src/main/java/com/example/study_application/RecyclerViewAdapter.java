@@ -49,6 +49,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         holder.carouselText.setText(Names.get(position).replace("_"," "));
         holder.layout.setOnClickListener(v -> {
             Log.d(TAG, "onClick: On an a button: " + Names.get(position));
+            Log.d(TAG, "onClick: On an a button: " + Ids.get(position));
             Intent toContentPopupScreen = new Intent(context, ContentPopupScreen.class);
             toContentPopupScreen.putExtra(EXTRA_NUMBER, Ids.get(position));
 

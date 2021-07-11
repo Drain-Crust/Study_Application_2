@@ -18,6 +18,7 @@ public class TaskScreen extends AppCompatActivity {
     private Button startTimerButton, stopTimerButton;
     private ProgressBar timerBar;
     private TextView timeBarText;
+    private TextView BreakTimerTextView;
 
     private Boolean BreakTimerRunning = false;
     private Boolean countdownTimeRunning = false;
@@ -30,7 +31,7 @@ public class TaskScreen extends AppCompatActivity {
     private long TimeLeft;
     private CountDownTimer countDownTimer;
     private CountDownTimer countBreakTimer;
-    private int actualNumber;
+    private String actualNumber;
     private long BreakTimeLeft;
 
     Intent HomeScreen;
@@ -47,11 +48,11 @@ public class TaskScreen extends AppCompatActivity {
         startTimerButton = findViewById(R.id.StartTimer);
         timeBarText = findViewById(R.id.timeBarText);
         stopTimerButton = findViewById(R.id.StopTimer);
+        BreakTimerTextView = findViewById(R.id.BreakTimerTextView);
 
         HomeScreen = new Intent(this, HomeScreen.class);
         Intent lastPageInformation = getIntent();
-        String number = lastPageInformation.getStringExtra(ContentPopupScreen.EXTRA_STRING_ID);
-        actualNumber = Integer.parseInt(number);
+        actualNumber = lastPageInformation.getStringExtra(ContentPopupScreen.EXTRA_STRING_ID);
 
         fileDataInformation();
 
@@ -59,7 +60,7 @@ public class TaskScreen extends AppCompatActivity {
         // time multiplied by 1000 as without it you cant get the specific minutes
         TimeLeft = time * 1000;
 
-        updateCountDownText();
+        updateCountDownText(timeBarText);
 
         //starts timer if pressed and makes it disappear
         startTimerButton.setOnClickListener(v -> {
@@ -84,7 +85,7 @@ public class TaskScreen extends AppCompatActivity {
             @Override
             public void onTick(long leftTimeInMilliseconds) {
                 TimeLeft = leftTimeInMilliseconds;
-                updateCountDownText();
+                updateCountDownText(timeBarText);
             }
 
             @Override
@@ -103,11 +104,11 @@ public class TaskScreen extends AppCompatActivity {
         }.start();
     }
 
-    private void updateCountDownText() {
+    private void updateCountDownText(TextView timeText) {
         int minutes = (int) (TimeLeft / 1000) / 60;
         int seconds = (int) (TimeLeft / 1000) % 60;
         String timeLeftFormatted = String.format(Locale.getDefault(), "%02d:%02d", minutes, seconds);
-        timeBarText.setText(timeLeftFormatted);
+        timeText.setText(timeLeftFormatted);
     }
 
     private void stopTimer() {
@@ -133,11 +134,14 @@ public class TaskScreen extends AppCompatActivity {
     private void fileDataInformation() {
         String[][] textNameData = readAndWrite.readTaskNameData("TaskNames.txt", true);
 
-        taskTimes = textNameData[actualNumber][3];
-        taskNames = textNameData[actualNumber][1];
-        taskCompletions = textNameData[actualNumber][2];
-        taskPosition = Integer.toString(actualNumber);
-
+        for(int i = 1; i < textNameData.length; i++){
+            if (textNameData[i][0].equals(actualNumber)){
+                taskTimes = textNameData[i][3];
+                taskNames = textNameData[i][1];
+                taskCompletions = textNameData[i][2];
+                taskPosition = Integer.toString(i);
+            }
+        }
 
         if (taskCompletions.equals("Uncompleted")) {
             startTimerButton.setText("Resume");
@@ -160,10 +164,11 @@ public class TaskScreen extends AppCompatActivity {
             @Override
             public void onTick(long leftTimeInMilliseconds) {
                 BreakTimeLeft = leftTimeInMilliseconds;
+                updateCountDownText(BreakTimerTextView);
             }
 
             @Override
-            public void onFinish() {
+            public void onFinish(){
                 Intent BreakTimerScreen = new Intent(TaskScreen.this, BreakTimerScreen.class);
 
                 stopTimer();
