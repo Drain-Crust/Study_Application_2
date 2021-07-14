@@ -121,8 +121,8 @@ public class TaskListScreen extends AppCompatActivity {
                 for (int e = 1; e < fileDataArray.length; e++) {
                     if (i.getIDs().equals(fileDataArray[e][0])) {
                         String new_line_Name = "", new_line_Body = "";
-                        String old_line_Name = i.getIDs() + " " + i.getTitle() + " " + i.getStatus() + " " + fileDataArray[e][3];
-                        String old_line_Body = i.getIDs() + " " + i.getSpecifications();
+                        String old_line_Name = i.getIDs() + " " + i.getTITLE() + " " + i.getSTATUS() + " " + fileDataArray[e][3];
+                        String old_line_Body = i.getIDs() + " " + i.getSPECIFICATIONS();
                         readAndWrite.replaceLines(old_line_Name, new_line_Name, "TaskNames.txt");
                         readAndWrite.replaceLines(old_line_Body, new_line_Body, "TaskSpecifications.txt");
                     }
@@ -155,7 +155,7 @@ public class TaskListScreen extends AppCompatActivity {
         for (TasksList item : tasksListList) {
 
             //adds the item to the new arraylist
-            if (item.getTitle().toLowerCase().contains(text.toLowerCase())) {
+            if (item.getTITLE().toLowerCase().contains(text.toLowerCase())) {
                 filteredList.add(item);
             }
         }

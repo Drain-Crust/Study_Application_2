@@ -48,7 +48,7 @@ public class RecyclerViewTasksAdapter extends RecyclerView.Adapter<RecyclerViewT
     //already explain in other java file
     @Override
     public void onBindViewHolder(@NotNull viewHolder holder, int position) {
-        TasksList TasksList = tasksListList.get(position);
+        TasksList tasksList = tasksListList.get(position);
 
         if (deletingTask) {
             holder.arrowButton.setVisibility(View.INVISIBLE);
@@ -60,20 +60,20 @@ public class RecyclerViewTasksAdapter extends RecyclerView.Adapter<RecyclerViewT
         }
 
         holder.taskTitleTextView.setOnClickListener(view -> {
-            TasksList.setExpanded(!TasksList.isExpanded());
+            tasksList.setExpanded(!tasksList.isExpanded());
             notifyItemChanged(position);
         });
 
         holder.checkBox.setOnClickListener(v -> {
-            TasksList.setSelected(!TasksList.isSelected());
+            tasksList.setSelected(!tasksList.isSelected());
             notifyItemChanged(position);
         });
 
-        holder.taskTitleTextView.setText(TasksList.getTitle().replace("_", " "));
-        holder.taskStatusTextView.setText(TasksList.getStatus().replace("_", " "));
-        holder.specificationTextTextView.setText(TasksList.getSpecifications().replace("_", " "));
+        holder.taskTitleTextView.setText(tasksList.getTITLE().replace("_", " "));
+        holder.taskStatusTextView.setText(tasksList.getSTATUS().replace("_", " "));
+        holder.specificationTextTextView.setText(tasksList.getSPECIFICATIONS().replace("_", " "));
 
-        holder.checkBox.setChecked(TasksList.isSelected());
+        holder.checkBox.setChecked(tasksList.isSelected());
         if (holder.checkBox.isChecked()) {
             if (!selectedItems.contains(tasksListList.get(position))) {
                 selectedItems.add(tasksListList.get(position));
@@ -82,13 +82,13 @@ public class RecyclerViewTasksAdapter extends RecyclerView.Adapter<RecyclerViewT
             selectedItems.remove(tasksListList.get(position));
         }
 
-        boolean isExpanded = TasksList.isExpanded();
+        boolean isExpanded = tasksList.isExpanded();
         holder.expandableLayout.setVisibility(isExpanded ? View.VISIBLE : View.GONE);
-        ArrowAnimation.toggleArrow(holder.arrowButton, TasksList.isExpanded());
+        ArrowAnimation.toggleArrow(holder.arrowButton, tasksList.isExpanded());
 
         holder.startTask.setOnClickListener(v -> {
             Intent toTaskScreen = new Intent(context, TaskScreen.class);
-            toTaskScreen.putExtra(EXTRA_NUMBER, TasksList.getIDs());
+            toTaskScreen.putExtra(EXTRA_NUMBER, tasksList.getIDs());
             context.startActivity(toTaskScreen);
         });
     }

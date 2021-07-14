@@ -45,7 +45,6 @@ public class BreakTimerScreen extends AppCompatActivity {
     }
 
     private void startBreakTimer() {
-
         //creates new count down timer
         countBreakTimer = new CountDownTimer(300000, 500) {
 
@@ -64,7 +63,6 @@ public class BreakTimerScreen extends AppCompatActivity {
                     stopButton.setVisibility(View.VISIBLE);
                     stopButton.setOnClickListener(v -> finish());
                 }
-
             }
         }.start();
     }

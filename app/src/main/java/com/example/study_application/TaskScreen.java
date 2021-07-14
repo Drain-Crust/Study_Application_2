@@ -45,7 +45,7 @@ public class TaskScreen extends AppCompatActivity {
 
         readAndWrite = new ReadAndWrite(TaskScreen.this);
 
-        timerBar = findViewById(R.id.timerBar); // haven't finished time bar
+        timerBar = findViewById(R.id.timerBar);
         startTimerButton = findViewById(R.id.StartTimer);
         timeBarText = findViewById(R.id.timeBarText);
         stopTimerButton = findViewById(R.id.StopTimer);

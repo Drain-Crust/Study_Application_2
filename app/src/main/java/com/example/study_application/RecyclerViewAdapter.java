@@ -23,16 +23,16 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     private static final String TAG = "RecyclerViewAdapter";
 
     //vars
-    private final ArrayList<String> Names;
-    private final ArrayList<String> Ids;
-    private final Context context;
+    private final ArrayList<String> NAMES;
+    private final ArrayList<String> IDS;
+    private final Context CONTEXT;
 
     public RecyclerViewAdapter(Context context, ArrayList<String> Names, ArrayList<String> Ids) {
         //used get the information from the homeScreen so i don't have to
         // make the method of reading and writing a file inside the recyclerview
-        this.Names = Names;
-        this.Ids = Ids;
-        this.context = context;
+        this.NAMES = Names;
+        this.IDS = Ids;
+        this.CONTEXT = context;
     }
 
     @NonNull
@@ -46,36 +46,36 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     // this is what updates the recycler view
     @Override
     public void onBindViewHolder(@NonNull viewHolder holder, int position) {
-        holder.carouselText.setText(Names.get(position).replace("_", " "));
+        holder.carouselText.setText(NAMES.get(position).replace("_", " "));
         holder.layout.setOnClickListener(v -> {
-            Log.d(TAG, "onClick: On an a button: " + Names.get(position));
-            Log.d(TAG, "onClick: On an a button: " + Ids.get(position));
-            Intent toContentPopupScreen = new Intent(context, ContentPopupScreen.class);
-            toContentPopupScreen.putExtra(EXTRA_NUMBER, Ids.get(position));
+            Log.d(TAG, "onClick: On an a button: " + NAMES.get(position));
+            Log.d(TAG, "onClick: On an a button: " + IDS.get(position));
+            Intent toContentPopupScreen = new Intent(CONTEXT, ContentPopupScreen.class);
+            toContentPopupScreen.putExtra(EXTRA_NUMBER, IDS.get(position));
 
             // this code is used for the transition between the cardView to another layout
             Pair layout = Pair.create(holder.layout, "shared_container");
             Pair textName = Pair.create(holder.carouselButton, "transition_button");
             Pair textBody = Pair.create(holder.carouselText, "transition_text");
-            ActivityOptionsCompat transitionToNextScreen = ActivityOptionsCompat.makeSceneTransitionAnimation((Activity) context, layout, textName, textBody);
+            ActivityOptionsCompat transitionToNextScreen = ActivityOptionsCompat.makeSceneTransitionAnimation((Activity) CONTEXT, layout, textName, textBody);
 
             //goes to the next screen
-            context.startActivity(toContentPopupScreen, transitionToNextScreen.toBundle());
+            CONTEXT.startActivity(toContentPopupScreen, transitionToNextScreen.toBundle());
         });
 
         //checks if the button inside the layout is clicked instead
         holder.carouselButton.setOnClickListener(v -> {
-            Intent toTaskScreen = new Intent(context, TaskScreen.class);
-            toTaskScreen.putExtra(EXTRA_NUMBER, Ids.get(position));
+            Intent toTaskScreen = new Intent(CONTEXT, TaskScreen.class);
+            toTaskScreen.putExtra(EXTRA_NUMBER, IDS.get(position));
             //sends user straight to the task start screen
-            context.startActivity(toTaskScreen);
+            CONTEXT.startActivity(toTaskScreen);
         });
     }
 
     //finds the amount of items for the recyclerview
     @Override
     public int getItemCount() {
-        return Names.size();
+        return NAMES.size();
     }
 
     //this code makes it so that i can call these names to

@@ -4,18 +4,18 @@ import org.jetbrains.annotations.NotNull;
 
 public class TasksList {
 
-    private final String title;
+    private final String TITLE;
     private final String IDs;
-    private final String status;
-    private final String Specifications;
+    private final String STATUS;
+    private final String SPECIFICATIONS;
     private boolean selected;
     private boolean expanded;
 
     public TasksList(String IDs, String title, String status, String Specifications) {
         this.IDs = IDs;
-        this.title = title;
-        this.status = status;
-        this.Specifications = Specifications;
+        this.TITLE = title;
+        this.STATUS = status;
+        this.SPECIFICATIONS = Specifications;
         this.expanded = false;
         this.selected = false;
     }
@@ -25,16 +25,16 @@ public class TasksList {
         return IDs;
     }
 
-    public String getTitle() {
-        return title;
+    public String getTITLE() {
+        return TITLE;
     }
 
-    public String getStatus() {
-        return status;
+    public String getSTATUS() {
+        return STATUS;
     }
 
-    public String getSpecifications() {
-        return Specifications;
+    public String getSPECIFICATIONS() {
+        return SPECIFICATIONS;
     }
 
     public boolean isExpanded() {
@@ -58,9 +58,9 @@ public class TasksList {
     public @NotNull String toString() {
         return "TasksList{" +
                 "IDs='" + IDs + '\'' +
-                ", title='" + title + '\'' +
-                ", status='" + status + '\'' +
-                ", Specifications='" + Specifications + '\'' +
+                ", title='" + TITLE + '\'' +
+                ", status='" + STATUS + '\'' +
+                ", Specifications='" + SPECIFICATIONS + '\'' +
                 ", expanded=" + expanded + '\'' +
                 ", selected='" + selected + '}';
     }
