@@ -104,6 +104,7 @@ public class TaskScreen extends AppCompatActivity {
                     readAndWrite.replaceLines(textNameDataOld, textNameDataNew, "TaskNames.txt");
                     //starts next screen
                     startActivity(HomeScreen);
+                    finish();
                 }
             }
         }.start();
