@@ -17,11 +17,8 @@ public class ReadAndWrite extends AppCompatActivity {
 
     private ContextWrapper contextWrapper;
     private final Context mContext;
-    String[][] textBodyData;
-    String[][] textNameData;
-    String[] StringArrays;
-    String[] DataString;
-    Integer[] ids;
+    private String[][] textNameData;
+    private String[] DataString;
 
     public ReadAndWrite(Context mContext) {
         this.mContext = mContext;
@@ -32,10 +29,10 @@ public class ReadAndWrite extends AppCompatActivity {
         DataString = fileData.split("\n");
 
         String StringArray = Arrays.toString(DataString);
-        StringArrays = StringArray.split(",");
+        String[] stringArrays = StringArray.split(",");
 
         if (!TextOrBody) {
-            textBodyData = new String[StringArrays.length][];
+            String[][] textBodyData = new String[stringArrays.length][];
             for (int i = 1; i < DataString.length; i++) {
                 String[] values = DataString[i].split(" ");
 
@@ -48,7 +45,7 @@ public class ReadAndWrite extends AppCompatActivity {
             }
             return textBodyData;
         } else {
-            textNameData = new String[StringArrays.length][];
+            textNameData = new String[stringArrays.length][];
             for (int i = 1; i < DataString.length; i++) {
                 String[] values = DataString[i].split(" ");
 
@@ -136,7 +133,7 @@ public class ReadAndWrite extends AppCompatActivity {
     public String findBiggestId() {
         String biggestId;
         readTaskNameData("TaskNames.txt", true);
-        ids = new Integer[textNameData.length - 1];
+        Integer[] ids = new Integer[textNameData.length - 1];
 
         for (int i = 1; i < DataString.length; i++) {
             int value = Integer.parseInt(textNameData[i][0]);
