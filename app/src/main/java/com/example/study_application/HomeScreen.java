@@ -50,8 +50,8 @@ public class HomeScreen extends AppCompatActivity {
     private ArrayList<String> Ids = new ArrayList<>();
 
     //placeholder data
-    float[] yData = {36.5f, 42.4f, 22.3f};
-    String[] xData = new String[]{"Not Started", "Uncompleted", "Completed"};
+    private float[] yData = {36.5f, 42.4f, 22.3f};
+    private final String[] X_DATA = new String[]{"Not Started", "Uncompleted", "Completed"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,7 +97,6 @@ public class HomeScreen extends AppCompatActivity {
 
     private void readData() {
         fileDataArray = readAndWrite.readTaskNameData("TaskNames.txt", true);
-
         //this for loop separates the different levels of completeness of task
         // this data is used to form the pie graph
         for (int i = 1; i < fileDataArray.length; i++) {
@@ -116,7 +115,6 @@ public class HomeScreen extends AppCompatActivity {
                     completed += 1;
                     break;
             }
-
         }
         // yData is the data shown on the pie graph
         // while xData is the data shown beneath the pie graph such as the names
@@ -149,7 +147,7 @@ public class HomeScreen extends AppCompatActivity {
         //puts the y and x data inside a ArrayList
         List<PieEntry> pieEntries = new ArrayList<>();
         for (int i = 0; i < yData.length; i++) {
-            pieEntries.add(new PieEntry(yData[i], xData[i]));
+            pieEntries.add(new PieEntry(yData[i], X_DATA[i]));
         }
 
         //creates another Arraylist using the values of pie entries as one of the inputs

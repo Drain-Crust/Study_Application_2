@@ -88,7 +88,7 @@ public class RecyclerViewTasksAdapter extends RecyclerView.Adapter<RecyclerViewT
 
         holder.startTask.setOnClickListener(v -> {
             Intent toTaskScreen = new Intent(context, TaskScreen.class);
-            toTaskScreen.putExtra(EXTRA_NUMBER, tasksList.getIDs());
+            toTaskScreen.putExtra(EXTRA_NUMBER, tasksList.getIDS());
             context.startActivity(toTaskScreen);
         });
     }

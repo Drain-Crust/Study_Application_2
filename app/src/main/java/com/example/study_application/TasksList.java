@@ -5,14 +5,14 @@ import org.jetbrains.annotations.NotNull;
 public class TasksList {
 
     private final String TITLE;
-    private final String IDs;
+    private final String IDS;
     private final String STATUS;
     private final String SPECIFICATIONS;
     private boolean selected;
     private boolean expanded;
 
     public TasksList(String IDs, String title, String status, String Specifications) {
-        this.IDs = IDs;
+        this.IDS = IDs;
         this.TITLE = title;
         this.STATUS = status;
         this.SPECIFICATIONS = Specifications;
@@ -21,8 +21,8 @@ public class TasksList {
     }
 
     //used private variables so to use them i have to call the variables through methods set and get
-    public String getIDs() {
-        return IDs;
+    public String getIDS() {
+        return IDS;
     }
 
     public String getTITLE() {
@@ -57,7 +57,7 @@ public class TasksList {
     @Override
     public @NotNull String toString() {
         return "TasksList{" +
-                "IDs='" + IDs + '\'' +
+                "IDs='" + IDS + '\'' +
                 ", title='" + TITLE + '\'' +
                 ", status='" + STATUS + '\'' +
                 ", Specifications='" + SPECIFICATIONS + '\'' +

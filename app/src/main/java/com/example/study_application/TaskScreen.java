@@ -19,6 +19,8 @@ public class TaskScreen extends AppCompatActivity {
     private ProgressBar timerBar;
     private TextView timeBarText;
     private TextView BreakTimerTextView;
+    private CountDownTimer countDownTimer;
+    private CountDownTimer countBreakTimer;
 
     private Boolean BreakTimerRunning = false;
     private Boolean countdownTimeRunning = false;
@@ -30,8 +32,6 @@ public class TaskScreen extends AppCompatActivity {
 
     private long TimeLeft;
     private int originalTimeValue;
-    private CountDownTimer countDownTimer;
-    private CountDownTimer countBreakTimer;
     private String actualNumber;
     private long BreakTimeLeft;
 
@@ -63,7 +63,6 @@ public class TaskScreen extends AppCompatActivity {
         originalTimeValue = time * 1000;
 
         updateCountDownText(timeBarText, TimeLeft);
-
 
         //starts timer if pressed and makes it disappear
         startTimerButton.setOnClickListener(v -> {

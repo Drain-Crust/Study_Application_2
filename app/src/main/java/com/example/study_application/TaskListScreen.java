@@ -119,10 +119,10 @@ public class TaskListScreen extends AppCompatActivity {
 
             for (TasksList i : selectedItems) {
                 for (int e = 1; e < fileDataArray.length; e++) {
-                    if (i.getIDs().equals(fileDataArray[e][0])) {
+                    if (i.getIDS().equals(fileDataArray[e][0])) {
                         String new_line_Name = "", new_line_Body = "";
-                        String old_line_Name = i.getIDs() + " " + i.getTITLE() + " " + i.getSTATUS() + " " + fileDataArray[e][3];
-                        String old_line_Body = i.getIDs() + " " + i.getSPECIFICATIONS();
+                        String old_line_Name = i.getIDS() + " " + i.getTITLE() + " " + i.getSTATUS() + " " + fileDataArray[e][3];
+                        String old_line_Body = i.getIDS() + " " + i.getSPECIFICATIONS();
                         readAndWrite.replaceLines(old_line_Name, new_line_Name, "TaskNames.txt");
                         readAndWrite.replaceLines(old_line_Body, new_line_Body, "TaskSpecifications.txt");
                     }

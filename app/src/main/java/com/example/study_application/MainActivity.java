@@ -21,7 +21,7 @@ import com.google.firebase.auth.GoogleAuthProvider;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "good";
-    private final int RC_SIGN_IN = 69; //declare variable
+    private final int RC_SIGN_IN = 0; //declare variable
 
     private GoogleSignInClient googleSignInClient;
 
