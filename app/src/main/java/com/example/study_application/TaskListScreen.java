@@ -1,16 +1,28 @@
 package com.example.study_application;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,6 +44,8 @@ public class TaskListScreen extends AppCompatActivity {
 
     private ReadAndWrite readAndWrite;
 
+    private DrawerLayout drawer;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,11 +58,25 @@ public class TaskListScreen extends AppCompatActivity {
         deleteTask = findViewById(R.id.deleteButton);
         confirmDeletion = findViewById(R.id.confirmDeletionButton);
         cancelDeletion = findViewById(R.id.cancelButton);
+        Toolbar toolBar = findViewById(R.id.toolBar);
+        drawer = findViewById(R.id.navigation_layout);
+        NavigationView navigationView = findViewById(R.id.nav_view);
         EditText searchFilter = findViewById(R.id.searchTextView);
 
         //gets data from file and displays it in the recyclerview
         initData();
         initRecyclerView();
+
+        //checks if any item was clicked on the navigation view.
+        navigationView.setNavigationItemSelectedListener(this::onNavigationItemSelected);
+
+        //checks if the drawer button has been clicked
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolBar,
+                R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.addDrawerListener(toggle);
+        toggle.syncState();
+
+        navigationView.bringToFront();
 
         //used to check if the EditText area has changed.
         searchFilter.addTextChangedListener(new TextWatcher() {
@@ -65,6 +93,26 @@ public class TaskListScreen extends AppCompatActivity {
                 filter(s.toString());
             }
         });
+    }
+
+    @SuppressLint("NonConstantResourceId")
+    private boolean onNavigationItemSelected(@NonNull @NotNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.nav_main_page:
+                Intent toHomeScreen = new Intent(TaskListScreen.this, HomeScreen.class);
+                startActivity(toHomeScreen);
+                break;
+            case R.id.nav_message:
+                Intent toTaskListScreen = new Intent(TaskListScreen.this, TaskListScreen.class);
+                startActivity(toTaskListScreen);
+                break;
+            case R.id.nav_logout:
+                Intent toSignInScreen = new Intent(TaskListScreen.this, MainActivity.class);
+                startActivity(toSignInScreen);
+                break;
+        }
+        drawer.closeDrawer(GravityCompat.START);
+        return true;
     }
 
     public void createButton(View v) {
@@ -168,6 +216,16 @@ public class TaskListScreen extends AppCompatActivity {
 
         for (int i = 1; i < fileDataArray.length; i++) {
             tasksListList.add(new TasksList(fileDataArray[i][0], fileDataArray[i][1], fileDataArray[i][2], DataStringSpecifications[i][1]));
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+            FirebaseAuth.getInstance().signOut();
+        } else {
+            super.onBackPressed();
         }
     }
 

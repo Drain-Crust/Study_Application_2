@@ -46,7 +46,6 @@ public class HomeScreen extends AppCompatActivity {
     //the different widgets used
     private DrawerLayout drawer;
     private Button taskCreate;
-    private NavigationView navigationView;
     private RecyclerView recyclerView;
     private PieChart pieChart;
 
@@ -76,7 +75,7 @@ public class HomeScreen extends AppCompatActivity {
         Toolbar toolBar = findViewById(R.id.toolBar);
         taskCreate = findViewById(R.id.task_create);
         drawer = findViewById(R.id.navigation_layout);
-        navigationView = findViewById(R.id.nav_view);
+        NavigationView navigationView = findViewById(R.id.nav_view);
         recyclerView = findViewById(R.id.recyclerView);
         pieChart = findViewById(R.id.pieCharts);
 
@@ -102,14 +101,17 @@ public class HomeScreen extends AppCompatActivity {
     @SuppressLint("NonConstantResourceId")
     private boolean onNavigationItemSelected(@NonNull @NotNull MenuItem item) {
         switch (item.getItemId()) {
+            case R.id.nav_main_page:
+                Intent toHomeScreen = new Intent(HomeScreen.this, HomeScreen.class);
+                startActivity(toHomeScreen);
+                break;
             case R.id.nav_message:
-                System.out.println("working 1");
-                Intent intent_1 = new Intent(HomeScreen.this, TaskListScreen.class);
-                startActivity(intent_1);
+                Intent toTaskListScreen = new Intent(HomeScreen.this, TaskListScreen.class);
+                startActivity(toTaskListScreen);
                 break;
             case R.id.nav_logout:
-                Intent intent_4 = new Intent(HomeScreen.this, MainActivity.class);
-                startActivity(intent_4);
+                Intent toSignInScreen = new Intent(HomeScreen.this, MainActivity.class);
+                startActivity(toSignInScreen);
                 break;
         }
         drawer.closeDrawer(GravityCompat.START);
@@ -245,6 +247,5 @@ public class HomeScreen extends AppCompatActivity {
         readData();
         addDataSet();
         initRecyclerView();
-        navigationView.bringToFront();
     }
 }
