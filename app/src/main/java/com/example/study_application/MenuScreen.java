@@ -19,25 +19,25 @@ import com.google.android.material.navigation.NavigationView;
 import org.jetbrains.annotations.NotNull;
 
 public class MenuScreen extends AppCompatActivity {
-    private final DrawerLayout drawer;
+    private final DrawerLayout DRAWER;
     private final Context CONTEXT;
-    Activity activity;
+    private final Activity ACTIVITY;
 
     public MenuScreen(Context context) {
         this.CONTEXT = context;
-        this.activity = (Activity) CONTEXT;
-        drawer = activity.findViewById(R.id.navigation_layout);
+        this.ACTIVITY = (Activity) CONTEXT;
+        DRAWER = ACTIVITY.findViewById(R.id.navigation_layout);
     }
 
     public void toSetDrawer() {
-        Toolbar toolBar = activity.findViewById(R.id.toolBar);
-        NavigationView navigationView = activity.findViewById(R.id.nav_view);
+        Toolbar toolBar = ACTIVITY.findViewById(R.id.toolBar);
+        NavigationView navigationView = ACTIVITY.findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this::onNavigationItemSelected);
 
         //checks if the drawer button has been clicked
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle((Activity) CONTEXT, drawer, toolBar,
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle((Activity) CONTEXT, DRAWER, toolBar,
                 R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.addDrawerListener(toggle);
+        DRAWER.addDrawerListener(toggle);
         toggle.syncState();
 
         navigationView.bringToFront();
@@ -64,7 +64,7 @@ public class MenuScreen extends AppCompatActivity {
         if(!destination.getComponent().getClassName().equals(CONTEXT.getClass().getName())){
             contextWrapper.startActivity(destination);
         }
-        drawer.closeDrawer(GravityCompat.START);
+        DRAWER.closeDrawer(GravityCompat.START);
         return true;
     }
 }
