@@ -124,14 +124,14 @@ public class TaskScreen extends AppCompatActivity {
         if (BreakTimerRunning) {
             BreakTimerRunning = false;
             countBreakTimer.cancel();
-            String textNameDataOld = taskPosition + " " + taskNames + " " + taskCompletions + " " + taskTimes;
-            String textNameDataNew = taskPosition + " " + taskNames + " " + "Uncompleted" + " " + (TimeLeft / 1000);
-            readAndWrite.replaceLines(textNameDataOld, textNameDataNew, "TaskNames.txt");
         }
 
         if (countdownTimeRunning) {
             countdownTimeRunning = false;
             countDownTimer.cancel();
+            String textNameDataOld = taskPosition + " " + taskNames + " " + taskCompletions + " " + taskTimes;
+            String textNameDataNew = taskPosition + " " + taskNames + " " + "Uncompleted" + " " + (TimeLeft / 1000);
+            readAndWrite.replaceLines(textNameDataOld, textNameDataNew, "TaskNames.txt");
         }
     }
 
