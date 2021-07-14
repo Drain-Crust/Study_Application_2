@@ -61,7 +61,7 @@ public class MenuScreen extends AppCompatActivity {
             default:
                 throw new IllegalStateException("Unexpected value: " + item.getItemId());
         }
-        if(!destination.getComponent().getClassName().equals(CONTEXT.getClass().getName())){
+        if (!destination.getComponent().getClassName().equals(CONTEXT.getClass().getName())) {
             contextWrapper.startActivity(destination);
         }
         DRAWER.closeDrawer(GravityCompat.START);
