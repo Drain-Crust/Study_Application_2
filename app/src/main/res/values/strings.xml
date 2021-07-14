@@ -85,6 +85,8 @@
     <string name="textViewBreakTimeOptionContinue">Continue</string>
     <string name="textViewBreakTimeText">Take A Break</string>
     <string name="confirmDeletion">Confirm</string>
+    <string name="deleteButtonText">-</string>
+    <string name="confirmDeleteText">x</string>
 
 
 </resources>

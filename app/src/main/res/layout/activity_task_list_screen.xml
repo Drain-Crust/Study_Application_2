@@ -65,7 +65,7 @@
                 android:background="@drawable/circle_button"
                 android:backgroundTint="@color/lighter_blue"
                 android:onClick="deleteButton"
-                android:text="-"
+                android:text="@string/deleteButtonText"
                 android:textAlignment="center"
                 android:textColor="@color/icons"
                 android:textSize="30sp" />
@@ -80,7 +80,7 @@
                 android:background="@drawable/circle_button"
                 android:backgroundTint="@color/red"
                 android:onClick="deleteButton"
-                android:text="x"
+                android:text="@string/confirmDeleteText"
                 android:textAlignment="center"
                 android:textColor="@color/icons"
                 android:textSize="30sp"
