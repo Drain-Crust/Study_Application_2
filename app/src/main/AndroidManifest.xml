@@ -19,9 +19,11 @@
         android:theme="@style/Theme.Design.NoActionBar">
         <activity
             android:name=".BreakTimerScreen"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Poppup" />
         <activity
             android:name=".ContentPopupScreen"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Poppup" />
         <activity
             android:name=".TaskCreateScreen"
@@ -29,13 +31,18 @@
 
         <meta-data
             android:name="android.max_aspect"
-            android:value="5.0" />
+            android:value="2.0" />
 
-        <activity android:name=".GoogleTasksScreen" />
-        <activity android:name=".TaskListScreen" />
-        <activity android:name=".TaskScreen" />
-        <activity android:name=".HomeScreen" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".GoogleTasksScreen"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".TaskListScreen"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".TaskScreen"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".HomeScreen"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".MainActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
