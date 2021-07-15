@@ -18,11 +18,12 @@ public class TaskScreen extends AppCompatActivity {
     private Button startTimerButton, stopTimerButton;
     private ProgressBar timerBar;
     private TextView timeBarText;
-    private TextView BreakTimerTextView;
+    private TextView breakTimerTextView;
     private CountDownTimer countDownTimer;
     private CountDownTimer countBreakTimer;
+    private int completeUncomplete = 0;
 
-    private Boolean BreakTimerRunning = false;
+    private Boolean breakTimerRunning = false;
     private Boolean countdownTimeRunning = false;
 
     private String taskNames;
@@ -34,6 +35,7 @@ public class TaskScreen extends AppCompatActivity {
     private int originalTimeValue;
     private String actualNumber;
     private long BreakTimeLeft;
+
 
     Intent HomeScreen;
     ReadAndWrite readAndWrite;
@@ -49,7 +51,7 @@ public class TaskScreen extends AppCompatActivity {
         startTimerButton = findViewById(R.id.StartTimer);
         timeBarText = findViewById(R.id.timeBarText);
         stopTimerButton = findViewById(R.id.StopTimer);
-        BreakTimerTextView = findViewById(R.id.BreakTimerTextView);
+        breakTimerTextView = findViewById(R.id.BreakTimerTextView);
 
         HomeScreen = new Intent(this, HomeScreen.class);
         Intent lastPageInformation = getIntent();
@@ -70,7 +72,7 @@ public class TaskScreen extends AppCompatActivity {
             startTimerButton.setVisibility(View.INVISIBLE);
             stopTimerButton.setVisibility(View.VISIBLE);
             if (TimeLeft > 1500000) {
-                BreakTimerRunning = true;
+                breakTimerRunning = true;
                 startBreakTimer();
             }
             startTimer();
@@ -97,13 +99,9 @@ public class TaskScreen extends AppCompatActivity {
             public void onFinish() {
                 if (timeBarText.getText().equals("00:00")) {
                     fileDataInformation();
-
-                    //saves the new task data to the file
-                    String textNameDataOld = taskPosition + " " + taskNames + " " + taskCompletions + " " + taskTimes;
-                    String textNameDataNew = taskPosition + " " + taskNames + " " + "Completed" + " " + "0";
-                    readAndWrite.replaceLines(textNameDataOld, textNameDataNew, "TaskNames.txt");
+                    completeUncomplete = 1;
                     //starts next screen
-                    startActivity(HomeScreen);
+                    onBackPressed();
                 }
             }
         }.start();
@@ -121,8 +119,8 @@ public class TaskScreen extends AppCompatActivity {
         stopTimerButton.setVisibility(View.INVISIBLE);
         fileDataInformation();
 
-        if (BreakTimerRunning) {
-            BreakTimerRunning = false;
+        if (breakTimerRunning) {
+            breakTimerRunning = false;
             countBreakTimer.cancel();
         }
 
@@ -156,8 +154,19 @@ public class TaskScreen extends AppCompatActivity {
     public void onBackPressed() {
         startTimerButton.setVisibility(View.VISIBLE);
         stopTimerButton.setVisibility(View.GONE);
-        stopTimer();
+        if (completeUncomplete == 0) {
+            stopTimer();
+        } else {
+            saveCompleted();
+        }
         super.onBackPressed();
+    }
+
+    private void saveCompleted() {
+        //saves the new task data to the file
+        String textNameDataOld = taskPosition + " " + taskNames + " " + taskCompletions + " " + taskTimes;
+        String textNameDataNew = taskPosition + " " + taskNames + " " + "Completed" + " " + "0";
+        readAndWrite.replaceLines(textNameDataOld, textNameDataNew, "TaskNames.txt");
     }
 
     private void startBreakTimer() {
@@ -169,7 +178,7 @@ public class TaskScreen extends AppCompatActivity {
             @Override
             public void onTick(long leftTimeInMilliseconds) {
                 BreakTimeLeft = leftTimeInMilliseconds;
-                updateCountDownText(BreakTimerTextView, BreakTimeLeft);
+                updateCountDownText(breakTimerTextView, BreakTimeLeft);
             }
 
             @Override
