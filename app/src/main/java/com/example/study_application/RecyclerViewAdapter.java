@@ -46,17 +46,17 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     // this is what updates the recycler view
     @Override
     public void onBindViewHolder(@NonNull viewHolder holder, int position) {
-        holder.carouselText.setText(NAMES.get(position).replace("_", " "));
-        holder.layout.setOnClickListener(v -> {
+        holder.CAROUSEL_TEXT.setText(NAMES.get(position).replace("_", " "));
+        holder.LAYOUT.setOnClickListener(v -> {
             Log.d(TAG, "onClick: On an a button: " + NAMES.get(position));
             Log.d(TAG, "onClick: On an a button: " + IDS.get(position));
             Intent toContentPopupScreen = new Intent(CONTEXT, ContentPopupScreen.class);
             toContentPopupScreen.putExtra(EXTRA_NUMBER, IDS.get(position));
 
             // this code is used for the transition between the cardView to another layout
-            Pair layout = Pair.create(holder.layout, "shared_container");
-            Pair textName = Pair.create(holder.carouselButton, "transition_button");
-            Pair textBody = Pair.create(holder.carouselText, "transition_text");
+            Pair layout = Pair.create(holder.LAYOUT, "shared_container");
+            Pair textName = Pair.create(holder.CAROUSEL_BUTTON, "transition_button");
+            Pair textBody = Pair.create(holder.CAROUSEL_TEXT, "transition_text");
             ActivityOptionsCompat transitionToNextScreen = ActivityOptionsCompat.makeSceneTransitionAnimation((Activity) CONTEXT, layout, textName, textBody);
 
             //goes to the next screen
@@ -64,7 +64,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         });
 
         //checks if the button inside the layout is clicked instead
-        holder.carouselButton.setOnClickListener(v -> {
+        holder.CAROUSEL_BUTTON.setOnClickListener(v -> {
             Intent toTaskScreen = new Intent(CONTEXT, TaskScreen.class);
             toTaskScreen.putExtra(EXTRA_NUMBER, IDS.get(position));
             //sends user straight to the task start screen
@@ -81,16 +81,16 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     //this code makes it so that i can call these names to
     // change there object attached in places like on viewBindHolder
     public static class viewHolder extends RecyclerView.ViewHolder {
-        TextView carouselText;
-        Button carouselButton;
-        CardView layout;
+        final TextView CAROUSEL_TEXT;
+        final Button CAROUSEL_BUTTON;
+        final CardView LAYOUT;
 
         public viewHolder(@NonNull View itemView) {
             super(itemView);
-            carouselText = itemView.findViewById(R.id.carouselText);
-            carouselButton = itemView.findViewById(R.id.carouselButton);
-            carouselButton.bringToFront();
-            layout = itemView.findViewById(R.id.layout);
+            CAROUSEL_TEXT = itemView.findViewById(R.id.carouselText);
+            CAROUSEL_BUTTON = itemView.findViewById(R.id.carouselButton);
+            CAROUSEL_BUTTON.bringToFront();
+            LAYOUT = itemView.findViewById(R.id.layout);
         }
     }
 }

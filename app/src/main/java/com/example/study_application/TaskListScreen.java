@@ -118,7 +118,7 @@ public class TaskListScreen extends AppCompatActivity {
             RecyclerViewTasksAdapter.deletingTasks(false);
 
             // gets the selected items
-            selectedItems = taskAdapter.getSelectedItems();
+            selectedItems = taskAdapter.getSELECTED_ITEMS();
             System.out.println(selectedItems);
 
             // reloads the data arrays

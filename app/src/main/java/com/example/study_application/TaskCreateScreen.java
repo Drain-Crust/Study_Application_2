@@ -71,7 +71,11 @@ public class TaskCreateScreen extends AppCompatActivity {
         typeOfCompletion = "not_started";
 
         //get the next id
-        id = readAndWrite.findBiggestId();
+        try {
+            id = readAndWrite.findBiggestId();
+        } catch (Exception e){
+            id = "1";
+        } // check if there is any error
 
         // this is the layout of how its going to be saved inside the text file.
         textNameData = id + " " + textName + " " + typeOfCompletion + " " + TimeForTask + "\n";

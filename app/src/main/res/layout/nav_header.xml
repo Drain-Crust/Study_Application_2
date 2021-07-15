@@ -11,7 +11,7 @@
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:contentDescription="@string/navigationimage"
+        android:contentDescription="@string/NavigationImage"
         android:src="@mipmap/ic_launcher_round" />
 
     <TextView
@@ -25,6 +25,6 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/test_testtext_com"
+        android:text="@string/TestEmailText"
         android:textColor="@color/black" />
 </LinearLayout>

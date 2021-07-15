@@ -73,12 +73,12 @@
     <string name="TaskListNameTextView">Task List</string>
     <string name="TaskCompletion">TaskCompletion</string>
     <string name="TaskTime">TaskTime</string>
-    <string name="navigationimage">NavigationImage</string>
+    <string name="NavigationImage">NavigationImage</string>
     <string name="StartTaskTextView">Start</string>
     <string name="StopStartTaskTextView">Stop</string>
     <string name="background_triangle">backgroundTriangle</string>
     <string name="test_text">Test text</string>
-    <string name="test_testtext_com">test@testText.com</string>
+    <string name="TestEmailText">test@testText.com</string>
     <string name="breakEnd">Break Has Ended</string>
     <string name="textViewBreakTimeOptionYes">Yes</string>
     <string name="textViewBreakTimeOptionNo">NO</string>

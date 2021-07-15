@@ -24,14 +24,14 @@ public class RecyclerViewTasksAdapter extends RecyclerView.Adapter<RecyclerViewT
 
     // arrays
     private List<TasksList> tasksListList;
-    private final ArrayList<TasksList> selectedItems = new ArrayList<>();
+    private final ArrayList<TasksList> SELECTED_ITEMS = new ArrayList<>();
 
-    private final Context context;
+    private final Context CONTEXT;
 
     //already explain in other java file
     public RecyclerViewTasksAdapter(List<TasksList> tasksListList, Context Context) {
         this.tasksListList = tasksListList;
-        this.context = Context;
+        this.CONTEXT = Context;
     }
 
     public static void deletingTasks(boolean b) {
@@ -54,16 +54,16 @@ public class RecyclerViewTasksAdapter extends RecyclerView.Adapter<RecyclerViewT
         // this iterates through every task once taskAdapter.notifyDataSetChanged(); is called
         // and changes the arrows to a TextBox
         if (deletingTask) {
-            holder.arrowButton.setVisibility(View.INVISIBLE);
-            holder.checkBox.setVisibility(View.VISIBLE);
+            holder.ARROW_BUTTON.setVisibility(View.INVISIBLE);
+            holder.CHECK_BOX.setVisibility(View.VISIBLE);
 
         } else {
-            holder.arrowButton.setVisibility(View.VISIBLE);
-            holder.checkBox.setVisibility(View.INVISIBLE);
+            holder.ARROW_BUTTON.setVisibility(View.VISIBLE);
+            holder.CHECK_BOX.setVisibility(View.INVISIBLE);
         }
 
         // checks if the task has been clicked
-        holder.taskTitleTextView.setOnClickListener(view -> {
+        holder.TASK_TITLE_TEXT_VIEW.setOnClickListener(view -> {
             tasksList.setExpanded(!tasksList.isExpanded());
             //reloads the task
             notifyItemChanged(position);
@@ -71,36 +71,36 @@ public class RecyclerViewTasksAdapter extends RecyclerView.Adapter<RecyclerViewT
 
         //checks if the checkbox has been clicked
         // this needs to be here as a glitch occurs with the search where it would unTick itself
-        holder.checkBox.setOnClickListener(v -> {
+        holder.CHECK_BOX.setOnClickListener(v -> {
             tasksList.setSelected(!tasksList.isSelected());
             notifyItemChanged(position);
         });
 
         // replaces the underscores with spaces to make it look better
-        holder.taskTitleTextView.setText(tasksList.getTITLE().replace("_", " "));
-        holder.taskStatusTextView.setText(tasksList.getSTATUS().replace("_", " "));
-        holder.specificationTextTextView.setText(tasksList.getSPECIFICATIONS().replace("_", " "));
+        holder.TASK_TITLE_TEXT_VIEW.setText(tasksList.getTITLE().replace("_", " "));
+        holder.TASK_STATUS_TEXT_VIEW.setText(tasksList.getSTATUS().replace("_", " "));
+        holder.SPECIFICATION_TEXT_VIEW.setText(tasksList.getSPECIFICATIONS().replace("_", " "));
 
         //this makes sure that the textBox stays selected even after a filtered search
-        holder.checkBox.setChecked(tasksList.isSelected());
-        if (holder.checkBox.isChecked()) {
-            if (!selectedItems.contains(tasksListList.get(position))) {
-                selectedItems.add(tasksListList.get(position));
+        holder.CHECK_BOX.setChecked(tasksList.isSelected());
+        if (holder.CHECK_BOX.isChecked()) {
+            if (!SELECTED_ITEMS.contains(tasksListList.get(position))) {
+                SELECTED_ITEMS.add(tasksListList.get(position));
             }
         } else {
-            selectedItems.remove(tasksListList.get(position));
+            SELECTED_ITEMS.remove(tasksListList.get(position));
         }
 
         //makes sure that the task stays expanded after a filtered search
         boolean isExpanded = tasksList.isExpanded();
-        holder.expandableLayout.setVisibility(isExpanded ? View.VISIBLE : View.GONE);
-        ArrowAnimation.toggleArrow(holder.arrowButton, tasksList.isExpanded());
+        holder.EXPANDABLE_LAYOUT.setVisibility(isExpanded ? View.VISIBLE : View.GONE);
+        ArrowAnimation.toggleArrow(holder.ARROW_BUTTON, tasksList.isExpanded());
 
         //listens if the start button has been pressed
-        holder.startTask.setOnClickListener(v -> {
-            Intent toTaskScreen = new Intent(context, TaskScreen.class);
+        holder.START_TASK.setOnClickListener(v -> {
+            Intent toTaskScreen = new Intent(CONTEXT, TaskScreen.class);
             toTaskScreen.putExtra(EXTRA_NUMBER, tasksList.getIDS());
-            context.startActivity(toTaskScreen);
+            CONTEXT.startActivity(toTaskScreen);
         });
     }
 
@@ -118,30 +118,32 @@ public class RecyclerViewTasksAdapter extends RecyclerView.Adapter<RecyclerViewT
 
     //already explain in other java file
     static class viewHolder extends RecyclerView.ViewHolder {
-        ConstraintLayout expandableLayout;
-        TextView taskTitleTextView, taskStatusTextView, specificationTextTextView;
-        ImageView arrowButton;
-        Button startTask;
-        CheckBox checkBox;
+        final ConstraintLayout EXPANDABLE_LAYOUT;
+        final TextView TASK_TITLE_TEXT_VIEW;
+        final TextView TASK_STATUS_TEXT_VIEW;
+        final TextView SPECIFICATION_TEXT_VIEW;
+        final ImageView ARROW_BUTTON;
+        final Button START_TASK;
+        final CheckBox CHECK_BOX;
 
         public viewHolder(View itemView) {
             super(itemView);
-            expandableLayout = itemView.findViewById(R.id.expandableLayout);
-            taskTitleTextView = itemView.findViewById(R.id.taskTitleTextView);
-            taskStatusTextView = itemView.findViewById(R.id.status);
-            specificationTextTextView = itemView.findViewById(R.id.specificationTextTextView);
-            arrowButton = itemView.findViewById(R.id.viewMoreBtn);
-            startTask = itemView.findViewById(R.id.StartTask);
-            checkBox = itemView.findViewById(R.id.checkBox);
-            checkBox.bringToFront();
+            EXPANDABLE_LAYOUT = itemView.findViewById(R.id.expandableLayout);
+            TASK_TITLE_TEXT_VIEW = itemView.findViewById(R.id.taskTitleTextView);
+            TASK_STATUS_TEXT_VIEW = itemView.findViewById(R.id.status);
+            SPECIFICATION_TEXT_VIEW = itemView.findViewById(R.id.specificationTextTextView);
+            ARROW_BUTTON = itemView.findViewById(R.id.viewMoreBtn);
+            START_TASK = itemView.findViewById(R.id.StartTask);
+            CHECK_BOX = itemView.findViewById(R.id.checkBox);
+            CHECK_BOX.bringToFront();
         }
     }
 
     //sends the information from the tasks
     // selected from the the textBoxes to the taskList screen to be deleted
-    public List<TasksList> getSelectedItems() {
+    public List<TasksList> getSELECTED_ITEMS() {
         ArrayList<TasksList> selectedItemsList;
-        selectedItemsList = selectedItems;
+        selectedItemsList = SELECTED_ITEMS;
         return selectedItemsList;
     }
 }
