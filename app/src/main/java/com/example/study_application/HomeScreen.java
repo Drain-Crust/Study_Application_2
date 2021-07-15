@@ -5,7 +5,6 @@ package com.example.study_application;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
@@ -28,7 +27,6 @@ import java.util.List;
 import static com.github.mikephil.charting.utils.ColorTemplate.COLORFUL_COLORS;
 
 public class HomeScreen extends AppCompatActivity {
-    private static final String TAG = "MainActivity";
 
     //values used to determine the ratio of the pie chart
     private int notStarted = 0;
@@ -58,6 +56,8 @@ public class HomeScreen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_screen);
 
+        // allows for the methods inside ReadAndWrite.java to be able to be used. as well
+        // as the methods inside MenuScreen.java.
         readAndWrite = new ReadAndWrite(HomeScreen.this);
         MenuScreen menuScreen = new MenuScreen(HomeScreen.this);
 
@@ -76,11 +76,11 @@ public class HomeScreen extends AppCompatActivity {
         //creates the recycler view items and displays them
         initRecyclerView();
 
+        //creates the drawer
         menuScreen.toSetDrawer();
     }
 
     private void initRecyclerView() {
-        Log.d(TAG, "initRecyclerView: init recyclerView");
 
         //decided on how the recyclerview is going to face, vertical aor horizontal.
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
@@ -88,8 +88,10 @@ public class HomeScreen extends AppCompatActivity {
 
         recyclerView.bringToFront();
         recyclerView.setLayoutManager(layoutManager);
+
         // makes the different items of the recyclerview and orders it
         RecyclerViewAdapter adapter = new RecyclerViewAdapter(HomeScreen.this, Names, Ids);
+
         //calls upon the adapter that's been created (shows the recycler view)
         recyclerView.setAdapter(adapter);
     }
@@ -121,6 +123,7 @@ public class HomeScreen extends AppCompatActivity {
         yData = new float[]{notStarted, uncompleted, completed};
     }
 
+    // this allows the private method to be called as you cant directly call it.
     public void onClickCreateTask(View v) {
         onClickCreateTask();
     }
@@ -132,9 +135,9 @@ public class HomeScreen extends AppCompatActivity {
         startActivity(toTaskCreateScreen);
     }
 
-    // closes the drawer instead of going to last screen if the drawer is open
     @Override
     public void onBackPressed() {
+        // when the user press the back button it checks first if the drawer is open, if so it will close it first.
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
             FirebaseAuth.getInstance().signOut();

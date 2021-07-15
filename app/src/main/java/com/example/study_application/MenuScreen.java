@@ -23,6 +23,7 @@ public class MenuScreen extends AppCompatActivity {
     private final Context CONTEXT;
     private final Activity ACTIVITY;
 
+    // gets context and allows it to be used as a variable inside the method
     public MenuScreen(Context context) {
         this.CONTEXT = context;
         this.ACTIVITY = (Activity) CONTEXT;
@@ -30,8 +31,10 @@ public class MenuScreen extends AppCompatActivity {
     }
 
     public void toSetDrawer() {
+        // the ACTIVITY is there as it we need to specify the location of where this drawer is going to be located
         Toolbar toolBar = ACTIVITY.findViewById(R.id.toolBar);
         NavigationView navigationView = ACTIVITY.findViewById(R.id.nav_view);
+        // listens if any of the items inside the drawer are pressed and handles them in the method onNavigationItemSelected
         navigationView.setNavigationItemSelectedListener(this::onNavigationItemSelected);
 
         //checks if the drawer button has been clicked
@@ -45,10 +48,10 @@ public class MenuScreen extends AppCompatActivity {
 
     @SuppressLint("NonConstantResourceId")
     private boolean onNavigationItemSelected(@NonNull @NotNull MenuItem item) {
+        // context wrapper needed as it needs a starting point else it will be determined as null and give an error
         ContextWrapper contextWrapper = new ContextWrapper(CONTEXT);
         Intent destination;
         switch (item.getItemId()) {
-
             case R.id.nav_main_page:
                 destination = new Intent(CONTEXT, HomeScreen.class);
                 break;
@@ -61,6 +64,7 @@ public class MenuScreen extends AppCompatActivity {
             default:
                 throw new IllegalStateException("Unexpected value: " + item.getItemId());
         }
+        // checks if the item selected is the screen they are currently on. if so it will close the drawer instead.
         if (!destination.getComponent().getClassName().equals(CONTEXT.getClass().getName())) {
             contextWrapper.startActivity(destination);
         }

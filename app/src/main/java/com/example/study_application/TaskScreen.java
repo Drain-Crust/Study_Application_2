@@ -15,28 +15,32 @@ import java.util.Locale;
 
 public class TaskScreen extends AppCompatActivity {
 
+    // variables used to link to xml objects
     private Button startTimerButton, stopTimerButton;
     private ProgressBar timerBar;
     private TextView timeBarText;
     private TextView breakTimerTextView;
     private CountDownTimer countDownTimer;
     private CountDownTimer countBreakTimer;
-    private int completeIncomplete = 0;
 
+    // used to check if the timers are running
     private Boolean breakTimerRunning = false;
     private Boolean countdownTimeRunning = false;
+    private int completeIncomplete = 0;
 
+    //variables used to save to file
     private String taskNames;
     private String taskCompletions;
     private String taskTimes;
     private String taskPosition;
 
+    // variables used for the timers
     private long TimeLeft;
     private int originalTimeValue;
     private String actualNumber;
     private long BreakTimeLeft;
 
-
+    // possible next screens
     Intent HomeScreen;
     ReadAndWrite readAndWrite;
 
@@ -45,8 +49,10 @@ public class TaskScreen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_task_screen);
 
+        // linking ReadAndWrite to allow for the usage of its methods
         readAndWrite = new ReadAndWrite(TaskScreen.this);
 
+        // links the variables to xml objects
         timerBar = findViewById(R.id.timerBar);
         startTimerButton = findViewById(R.id.StartTimer);
         timeBarText = findViewById(R.id.timeBarText);
@@ -107,6 +113,7 @@ public class TaskScreen extends AppCompatActivity {
         }.start();
     }
 
+    // updates text for the timer
     private void updateCountDownText(TextView timeText, long timeLeft) {
         int minutes = (int) (timeLeft / 1000) / 60;
         int seconds = (int) (timeLeft / 1000) % 60;
@@ -114,6 +121,7 @@ public class TaskScreen extends AppCompatActivity {
         timeText.setText(timeLeftFormatted);
     }
 
+    //stops the timers and saves the current time.
     private void stopTimer() {
         startTimerButton.setVisibility(View.VISIBLE);
         stopTimerButton.setVisibility(View.INVISIBLE);
@@ -133,6 +141,7 @@ public class TaskScreen extends AppCompatActivity {
         }
     }
 
+    // gets file data information and links the file data to variables to be used inside of the class
     @SuppressLint("SetTextI18n")
     private void fileDataInformation() {
         String[][] textNameData = readAndWrite.readTaskNameData("TaskNames.txt", true);
@@ -154,6 +163,7 @@ public class TaskScreen extends AppCompatActivity {
     public void onBackPressed() {
         startTimerButton.setVisibility(View.VISIBLE);
         stopTimerButton.setVisibility(View.GONE);
+        // to determine if the user has completed the task or has left it uncompleted
         if (completeIncomplete == 0) {
             stopTimer();
         } else {

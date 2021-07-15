@@ -20,6 +20,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 
 public class MainActivity extends AppCompatActivity {
+    // used to find the errors if any in the logcat.
     private static final String TAG = "good";
     private final int RC_SIGN_IN = 0; //declare variable
 
@@ -64,6 +65,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    // this is mainly used as a way to logout after logging in to my application
     @Override
     protected void onStart() {
         super.onStart();

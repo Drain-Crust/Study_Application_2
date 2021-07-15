@@ -21,19 +21,18 @@ import java.util.List;
 
 public class TaskListScreen extends AppCompatActivity {
 
+    // buttons and recycler view
     private RecyclerView recyclerViewTasks;
     private RecyclerViewTasksAdapter taskAdapter;
-    private Button createTask;
-    private Button deleteTask;
-    private Button confirmDeletion;
-    private Button cancelDeletion;
+    private Button createTask, deleteTask, confirmDeletion, cancelDeletion;
 
-    //vars
+    // arrays
     private List<TasksList> tasksListList = new ArrayList<>();
     private List<TasksList> selectedItems = new ArrayList<>();
     private String[][] fileDataArray;
     private String[][] DataStringSpecifications;
 
+    // link to ReadAndWrite file.
     private ReadAndWrite readAndWrite;
 
 
@@ -45,6 +44,7 @@ public class TaskListScreen extends AppCompatActivity {
         readAndWrite = new ReadAndWrite(TaskListScreen.this);
         MenuScreen menuScreen = new MenuScreen(TaskListScreen.this);
 
+        //linking the variables to the xml counter parts
         recyclerViewTasks = findViewById(R.id.recyclerViewTasks);
         createTask = findViewById(R.id.createTaskTaskList);
         deleteTask = findViewById(R.id.deleteButton);
@@ -80,6 +80,7 @@ public class TaskListScreen extends AppCompatActivity {
     }
 
     private void createButton() {
+        //set to false so that it cant be clicked multiple times
         createTask.setEnabled(false);
         Intent intent = new Intent(this, TaskCreateScreen.class);
         startActivity(intent);
@@ -90,6 +91,7 @@ public class TaskListScreen extends AppCompatActivity {
     }
 
     private void deleteButton() {
+        // error prevention to not allow buttons to be clicked twice
         createTask.setEnabled(false);
         createTask.setVisibility(View.INVISIBLE);
         deleteTask.setEnabled(false);
@@ -100,23 +102,30 @@ public class TaskListScreen extends AppCompatActivity {
         RecyclerViewTasksAdapter.deletingTasks(true);
         taskAdapter.notifyDataSetChanged();
 
+        // listens if the confirm delete button has been pressed
         confirmDeletion.setOnClickListener(v12 -> {
+            // enables the buttons
             createTask.setEnabled(true);
             createTask.setVisibility(View.VISIBLE);
             deleteTask.setEnabled(true);
             deleteTask.setVisibility(View.VISIBLE);
 
+            //hides the delete buttons
             confirmDeletion.setVisibility(View.INVISIBLE);
             cancelDeletion.setVisibility(View.INVISIBLE);
 
+            // puts the textBoxes back to arrows
             RecyclerViewTasksAdapter.deletingTasks(false);
 
+            // gets the selected items
             selectedItems = taskAdapter.getSelectedItems();
             System.out.println(selectedItems);
 
+            // reloads the data arrays
             fileDataArray = readAndWrite.readTaskNameData("TaskNames.txt", true);
             DataStringSpecifications = readAndWrite.readTaskNameData("TaskSpecifications.txt", false);
 
+            // replaces the lines/deletes them.
             for (TasksList i : selectedItems) {
                 for (int e = 1; e < fileDataArray.length; e++) {
                     if (i.getIDS().equals(fileDataArray[e][0])) {
@@ -128,20 +137,25 @@ public class TaskListScreen extends AppCompatActivity {
                     }
                 }
             }
-
+            //updates the look of the recycler view to show the remaining tasks only
             taskAdapter.notifyDataSetChanged();
+            // reloads the data.
             onResume();
         });
 
+        // checks if the cancel deletion button has been pressed
         cancelDeletion.setOnClickListener(v1 -> {
+            // enables the buttons
             createTask.setEnabled(true);
             createTask.setVisibility(View.VISIBLE);
             deleteTask.setEnabled(true);
             deleteTask.setVisibility(View.VISIBLE);
 
+            // resets the visibility
             confirmDeletion.setVisibility(View.INVISIBLE);
             cancelDeletion.setVisibility(View.INVISIBLE);
 
+            // updates the recyclerview to turn the checkboxes back to arrows
             RecyclerViewTasksAdapter.deletingTasks(false);
             taskAdapter.notifyDataSetChanged();
         });
@@ -174,6 +188,7 @@ public class TaskListScreen extends AppCompatActivity {
         fileDataArray = readAndWrite.readTaskNameData("TaskNames.txt", true);
         DataStringSpecifications = readAndWrite.readTaskNameData("TaskSpecifications.txt", false);
 
+        // adds the tasks into an array
         for (int i = 1; i < fileDataArray.length; i++) {
             tasksListList.add(new TasksList(fileDataArray[i][0], fileDataArray[i][1], fileDataArray[i][2], DataStringSpecifications[i][1]));
         }
@@ -181,6 +196,7 @@ public class TaskListScreen extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
+        //same as the on back pressed in the home screen
         DrawerLayout drawer = findViewById(R.id.navigation_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);

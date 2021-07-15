@@ -4,6 +4,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class TasksList {
 
+    // initial variables
     private final String TITLE;
     private final String IDS;
     private final String STATUS;
@@ -11,6 +12,7 @@ public class TasksList {
     private boolean selected;
     private boolean expanded;
 
+    // allowing for the usage of the argument variables.
     public TasksList(String IDs, String title, String status, String Specifications) {
         this.IDS = IDs;
         this.TITLE = title;

@@ -36,8 +36,6 @@ public class TaskCreateScreen extends AppCompatActivity {
             saveFile("important", "important", "important");
         }
 
-        //link to next or last page
-
         taskTime = findViewById(R.id.TimeTask);
         taskName = findViewById(R.id.TaskName);
         taskSpecification = findViewById(R.id.TaskSpecification);
@@ -56,6 +54,7 @@ public class TaskCreateScreen extends AppCompatActivity {
     }
 
     private boolean fileDoesNotExist(String name) {
+        // tries to get file name if it cant it returns as false
         File file = getBaseContext().getFileStreamPath(name);
         return !file.exists();
     }
@@ -71,16 +70,19 @@ public class TaskCreateScreen extends AppCompatActivity {
         String typeOfCompletion;
         typeOfCompletion = "not_started";
 
+        //get the next id
         id = readAndWrite.findBiggestId();
 
         // this is the layout of how its going to be saved inside the text file.
         textNameData = id + " " + textName + " " + typeOfCompletion + " " + TimeForTask + "\n";
         textBodyData = id + " " + textBody + "\n";
 
+        //writing to both files
         readAndWrite.write(FILE_SPECIFICATIONS, textBodyData);
         readAndWrite.write(FILE_NAME, textNameData);
     }
 
+    // allow for the private method to be called
     public void CreateTaskButton(View v) {
         attemptCreateTask();
     }
@@ -89,6 +91,7 @@ public class TaskCreateScreen extends AppCompatActivity {
     private void attemptCreateTask() {
         View focusView = null;
 
+        // used for error handling to check if any areas are left blank.
         if (taskTime.getText().toString().equals("") || taskName.getText().toString().equals("") || taskSpecification.getText().toString().equals("")) {
             if (taskTime.getText().toString().equals("")) {
                 taskTime.setError("Time is to short try again");

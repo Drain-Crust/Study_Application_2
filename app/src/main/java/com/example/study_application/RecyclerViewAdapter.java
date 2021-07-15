@@ -22,7 +22,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     public static final String EXTRA_NUMBER = "package com.example.study_application";
     private static final String TAG = "RecyclerViewAdapter";
 
-    //vars
+    //arrays
     private final ArrayList<String> NAMES;
     private final ArrayList<String> IDS;
     private final Context CONTEXT;
