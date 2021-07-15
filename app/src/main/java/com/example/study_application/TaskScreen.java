@@ -21,7 +21,7 @@ public class TaskScreen extends AppCompatActivity {
     private TextView breakTimerTextView;
     private CountDownTimer countDownTimer;
     private CountDownTimer countBreakTimer;
-    private int completeUncomplete = 0;
+    private int completeIncomplete = 0;
 
     private Boolean breakTimerRunning = false;
     private Boolean countdownTimeRunning = false;
@@ -99,7 +99,7 @@ public class TaskScreen extends AppCompatActivity {
             public void onFinish() {
                 if (timeBarText.getText().equals("00:00")) {
                     fileDataInformation();
-                    completeUncomplete = 1;
+                    completeIncomplete = 1;
                     //starts next screen
                     onBackPressed();
                 }
@@ -154,7 +154,7 @@ public class TaskScreen extends AppCompatActivity {
     public void onBackPressed() {
         startTimerButton.setVisibility(View.VISIBLE);
         stopTimerButton.setVisibility(View.GONE);
-        if (completeUncomplete == 0) {
+        if (completeIncomplete == 0) {
             stopTimer();
         } else {
             saveCompleted();
