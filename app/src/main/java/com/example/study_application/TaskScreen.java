@@ -100,12 +100,10 @@ public class TaskScreen extends AppCompatActivity {
 
                     //saves the new task data to the file
                     String textNameDataOld = taskPosition + " " + taskNames + " " + taskCompletions + " " + taskTimes;
-                    String textNameDataNew = taskPosition + " " + taskNames + " " + "Completed" + " " + 0;
+                    String textNameDataNew = taskPosition + " " + taskNames + " " + "Completed" + " " + "0";
                     readAndWrite.replaceLines(textNameDataOld, textNameDataNew, "TaskNames.txt");
                     //starts next screen
-                    finish();
                     startActivity(HomeScreen);
-
                 }
             }
         }.start();
@@ -146,7 +144,7 @@ public class TaskScreen extends AppCompatActivity {
                 taskTimes = textNameData[i][3];
                 taskNames = textNameData[i][1];
                 taskCompletions = textNameData[i][2];
-                taskPosition = Integer.toString(i);
+                taskPosition = textNameData[i][0];
             }
         }
 
