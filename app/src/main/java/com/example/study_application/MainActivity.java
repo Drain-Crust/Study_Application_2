@@ -47,9 +47,7 @@ public class MainActivity extends AppCompatActivity {
 
         //listens if the login button is clicked
         loginButton.setOnClickListener(v -> {
-            if (v.getId() == R.id.login_button) {
-                signIn();
-            }
+            signIn();
         });
 
         // Configure Google Sign In
@@ -58,11 +56,8 @@ public class MainActivity extends AppCompatActivity {
                 .requestEmail()
                 .build();
 
-
         // Build a GoogleSignInClient with the options specified by gso.
         googleSignInClient = GoogleSignIn.getClient(this, googleSignInOptions);
-
-
     }
 
     // this is mainly used as a way to logout after logging in to my application

@@ -101,14 +101,17 @@ public class TaskCreateScreen extends AppCompatActivity {
                 taskTime.setError("Time is to short try again");
                 focusView = taskTime;
             }
+
             if (taskSpecification.getText().toString().equals("")) {
                 taskSpecification.setError("Specification is to short try again");
                 focusView = taskSpecification;
             }
+
             if (taskName.getText().toString().equals("")) {
                 taskName.setError("Name is to short try again");
                 focusView = taskTime;
             }
+
             //will change depending on what the user writes inside each text box.
             assert focusView != null;
             focusView.requestFocus();
