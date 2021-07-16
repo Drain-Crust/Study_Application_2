@@ -30,7 +30,7 @@ public class BreakTimerScreen extends AppCompatActivity {
         progressBreakBar = findViewById(R.id.progressBreakBar);
 
         // as we are using milliseconds i have to increase it by multiplying it by 1000 the 300 originally is the 5 minute mark.
-        breakTimeLeft = 6000;
+        breakTimeLeft = 300000;
 
         //showing the amount of time on screen before starting
         updateCountDownText();
@@ -52,7 +52,7 @@ public class BreakTimerScreen extends AppCompatActivity {
     //the timer used to start the 5 minute timer
     private void startBreakTimer() {
         //creates new count down timer
-        countBreakTimer = new CountDownTimer(6000, 500) {
+        countBreakTimer = new CountDownTimer(300000, 500) {
 
             //is used to check every tick
             @Override
